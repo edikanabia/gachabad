@@ -229,6 +229,11 @@ style choice_button is default:
 style choice_button_text is default:
     properties gui.text_properties("choice_button")
 
+## Repeat that screen
+screen repeatthat():
+    textbutton "repeat that?"
+    
+
 
 ## Quick Menu screen ###########################################################
 ##
