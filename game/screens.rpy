@@ -236,10 +236,14 @@ transform repeatthatpos:
     align (1.0, 0.75)
 
 screen repeatthat():
-    
-    textbutton "repeat that?":
-        at repeatthatpos
-        action Call("repeatcheck")
+    if repeat_active:
+        textbutton "repeat that?":
+            at repeatthatpos
+            action Call("repeatcheck")
+    else:
+        textbutton "repeat that?":
+            at repeatthatpos
+            
 
 
 
