@@ -8,7 +8,7 @@ label start:
     scene bg black
     #script subject to change. idk what the pov is or if there's a narrator.
     show screen repeatthat
-    $ narrator = Character(what_style="bold")
+    
     "It's a lazy Saturday,{w=0.5} and everyone in the Spelltower is cooped up indoors..."
     "Especially Cassiopeia.{w=0.5} Cassiopeia has been enamored with a new game he downloaded onto his new phone just last week!"
     "It's called...{w=0.5} um...{w=0.5} Well,{w=0.5} he can't remember what it's called.{w=0.5} But he's absolutely hooked!"

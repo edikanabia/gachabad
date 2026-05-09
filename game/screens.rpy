@@ -230,8 +230,13 @@ style choice_button_text is default:
     properties gui.text_properties("choice_button")
 
 ## Repeat that screen
+transform repeatthatpos:
+    align (1.0, 0.75)
+
 screen repeatthat():
-    textbutton "repeat that?" action NullAction()
+    textbutton "repeat that?":
+        at repeatthatpos
+        action Call("repeatcheck")
 
 
 
@@ -252,7 +257,7 @@ screen quick_menu():
             style "quick_menu"
 
             textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
+            #textbutton _("History") action ShowMenu('history')
             textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
             textbutton _("Auto") action Preference("auto-forward", "toggle")
             textbutton _("Save") action ShowMenu('save')
@@ -308,7 +313,7 @@ screen navigation():
 
         else:
 
-            textbutton _("History") action ShowMenu("history")
+            #textbutton _("History") action ShowMenu("history")
 
             textbutton _("Save") action ShowMenu("save")
 
