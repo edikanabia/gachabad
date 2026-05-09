@@ -231,8 +231,8 @@ style choice_button_text is default:
 
 ## Repeat that screen
 screen repeatthat():
-    textbutton "repeat that?"
-    
+    textbutton "repeat that?" action NullAction()
+
 
 
 ## Quick Menu screen ###########################################################

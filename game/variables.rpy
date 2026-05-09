@@ -12,7 +12,10 @@ default number_of_rolls = 0
 default number_of_pity = 0
 default money_spent = 0.00
 default is_pity_roll = False
+default repeat_active = True
 #endregion
+
+
 
 #region Images and Transforms
 
