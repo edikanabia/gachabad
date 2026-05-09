@@ -109,6 +109,8 @@ screen say(who, what):
 
         text what id "what"
 
+    on "show" action IncrementVariable("since_last_repeat")
+
 
     ## If there's a side image, display it above the text. Do not display on the
     ## phone variant - there's no room.
@@ -234,6 +236,7 @@ transform repeatthatpos:
     align (1.0, 0.75)
 
 screen repeatthat():
+    
     textbutton "repeat that?":
         at repeatthatpos
         action Call("repeatcheck")

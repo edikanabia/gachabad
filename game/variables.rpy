@@ -7,11 +7,16 @@
 #endregion
 
 #region Gameplay Variables
+#Gacha pull mechanics
 default is_first_roll = True
 default number_of_rolls = 0
 default number_of_pity = 0
 default money_spent = 0.00
 default is_pity_roll = False
+
+#repeat that mechanic
+default repeat_count = 0
+default since_last_repeat = 0 #increments every line.
 default repeat_active = True
 #endregion
 
