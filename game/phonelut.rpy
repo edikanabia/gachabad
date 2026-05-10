@@ -1,8 +1,12 @@
 label lookuptable(index):
     #index is equal to a global variable that keeps track of where in the script you are
-    #the test index is -1.
+    #the test index is -1. if the index is null or 0, nothing happens.
+    #it looks like we'll be manually setting the regions in which a phone interaction will trigger a dialogue.
     if index == -1:
         n "This is Niecy telling you to get off that damn phone!"
+        return
+    else:
+        $ renpy.notify("No problem here.") #empty this out to nothing
         return
 
     return

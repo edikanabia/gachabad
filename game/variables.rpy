@@ -20,7 +20,10 @@ default since_last_repeat = 0 #increments every line.
 default repeat_active = True
 
 #phone interrupt mechanic
-default story_index = 0
+default story_index = 0 #where in the story the player is
+default gabriel_present = False #true if gabriel is on screen
+default will_bother_niecy = False #true if an action will bother niecy at a particular moment
+default niecy_tolerance = 0 #counts the number of times you've irritated her
 #endregion
 
 

@@ -231,10 +231,13 @@ style choice_button is default:
 style choice_button_text is default:
     properties gui.text_properties("choice_button")
 
-## Repeat that screen
+#######################
+
+## Position "repeat that" button at the bottom right, above the dialogue box
 transform repeatthatpos:
     align (1.0, 0.75)
 
+# Repeat That? mechanic button is active when it can be clicked and disabled when it cannot be
 screen repeatthat():
     if repeat_active:
         textbutton "repeat that?":
@@ -244,8 +247,13 @@ screen repeatthat():
         textbutton "repeat that?":
             at repeatthatpos
 
+############################
+
+#Position the button stand-in for the phone at the center of the screen
 transform testphonepos:
     align (0.5, 0.5)
+
+#the button stand-in calls the phone-lut with the current story_index if the index isn't 0.
 screen testphone():
     textbutton "I'm-a so distracting!":
         at testphonepos
