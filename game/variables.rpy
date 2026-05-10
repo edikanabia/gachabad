@@ -18,6 +18,9 @@ default is_pity_roll = False
 default repeat_count = 0
 default since_last_repeat = 0 #increments every line.
 default repeat_active = True
+
+#phone interrupt mechanic
+default story_index = 0
 #endregion
 
 

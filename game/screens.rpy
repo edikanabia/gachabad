@@ -243,8 +243,13 @@ screen repeatthat():
     else:
         textbutton "repeat that?":
             at repeatthatpos
-            
 
+transform testphonepos:
+    align (0.5, 0.5)
+screen testphone():
+    textbutton "I'm-a so distracting!":
+        at testphonepos
+        action Call("lookuptable", story_index)
 
 
 ## Quick Menu screen ###########################################################
