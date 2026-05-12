@@ -7,7 +7,7 @@ label start:
     #scene cg ceiling
     scene bg black
 
-    #show screen repeatthat
+    show screen repeatthat
     #show screen testphone
     $ story_index = -1
     "It's a lazy Saturday,{w=0.2} and everyone in the Spelltower is cooped up indoors..."
@@ -33,8 +33,9 @@ label start:
     "He knows that voice.{w=0.2} It's Niecy!"
     "...she cannot see him playing this game!"
     menu:
-        "No":
-            n "Yesssss you are!"
+        "Say no":
+            "Cassiopeia thinks he hears someone chuckle."
+            n "Oooookay...{w=0.2} I guess he's not in here!"
             pass
         "Shake your head":
             n "Did something move under the- {nw=0.5}"
@@ -51,7 +52,7 @@ label start:
             "Niecy assumes he must be looking at something lascivious,{w=0.2} like exposed ankles or toe tanlines."
             "She throws the cover back over him and leaves the room."
             "The end!"
-            #it's not a dusty game without an early false ending
+            #it's not a dusty game without an early false ending!
             return
 
     

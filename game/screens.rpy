@@ -235,7 +235,7 @@ style choice_button_text is default:
 
 ## Position "repeat that" button at the bottom right, above the dialogue box
 transform repeatthatpos:
-    align (1.0, 0.75)
+    align (1.0, 0.70)
 
 # Repeat That? mechanic button is active when it can be clicked and disabled when it cannot be
 screen repeatthat():
@@ -802,8 +802,10 @@ screen preferences():
                     bar value Preference("text speed")
 
                     label _("Auto-Forward Time")
-
-                    bar value Preference("auto-forward time")
+                    hbox:
+                        textbutton _("Short") action Preference("auto-forward time", 1)
+                        textbutton _("Medium") action Preference("auto-forward time", 15)
+                        textbutton _("Long") action Preference("auto-forward time", 30)
 
                 vbox:
 
