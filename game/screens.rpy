@@ -239,6 +239,7 @@ transform repeatthatpos:
 
 # Repeat That? mechanic button is active when it can be clicked and disabled when it cannot be
 screen repeatthat():
+
     if repeat_active:
         textbutton "repeat that?":
             at repeatthatpos
@@ -251,13 +252,17 @@ screen repeatthat():
 
 #Position the button stand-in for the phone at the center of the screen
 transform testphonepos:
-    align (0.5, 0.5)
+    align (0.65, 0.5)
 
 #the button stand-in calls the phone-lut with the current story_index if the index isn't 0.
 screen testphone():
     textbutton "I'm-a so distracting!":
         at testphonepos
         action Call("lookuptable", story_index)
+
+#screen phone1():
+#    modal False
+#    drag 
 
 
 ## Quick Menu screen ###########################################################

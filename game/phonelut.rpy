@@ -5,6 +5,10 @@ label lookuptable(index):
     if index == -1:
         n "This is Niecy telling you to get off that damn phone!"
         return
+    elif index== 1:
+        n "Cas?{w=0.2} Did you hear me?"
+        n "How long is this going to take?"
+        pass
     else:
         $ renpy.notify("No problem here.") #empty this out to nothing
         return

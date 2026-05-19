@@ -22,8 +22,7 @@ label start:
     #show screen phone
 
     "The guy Cassiopeia wants is in the time-limited banner today.{w=0.2} It's the last opportunity to get him before the next season starts---tomorrow!"
-    "It would be a good time to try for the guy during some downtime."
-
+    "It would be a good time to try for the guy during some downtime." #set interact to false on this line until the gacha roll occurs.
     #the first roll will always fail
     $ is_first_roll = False
 
@@ -55,11 +54,45 @@ label start:
             "The end!"
             #it's not a dusty game without an early false ending!
             return
-
     
+    "Cassiopeia turns the screen so Niecy can see."
+    c "This."
+    #show screen phone, pause, then hide the phone and continue.
+    n "Oh.{w=0.2} Anyway,{w=0.2} wanna go out and do something?"
+    c "Like what?"
+    n "I don't know,{w=0.2} but it's Saturday.{w=0.2} There's probably something fun we could do."
+    n "We could always just go to a park and hang."
+    c "..."
+    n "Cas?"
+    c "Hm?"
+    n "Does that sound good?"
+    c "Yeah,{w=0.2} hang on."
+    show screen testphone
+    n "Okay...{nw=1.0}"(interact=False)
+    n "Um,{w=0.2} how long is that gonna take?"
+    $ story_index = 1
+    $ phone_option = False
+    menu:
+        "Answer":
+            $ story_index = 0
+            c "Until I get the guy I want."
+            n "Um..."
+            n "Surely this can wait."
+            c "No,{w=0.2} the season ends today."
+            n "What does that mean?"
+            c "It means today is the last day I can get him.{w=0.2} I HAVE to get him now."
 
 
+    $ story_index = 0
+    n "...Cas,{w=0.2} I don't think this game is very good for you..."
 
+    #end of intro.
+    return
+
+label partone:
+    
+    "{i}From now on, dialogue will automatically proceed based on your preferences.{/i}"
+    "{i}You can change the duration of the auto-advance in the Preferences menu.{/i}"
     return
 
 label phoneinterrupttest:

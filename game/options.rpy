@@ -207,3 +207,6 @@ init python:
 ## by a slash.
 
 # define build.itch_project = "renpytom/test-project"
+
+# Rollback is not enabled for this game (it is a game about paying attention.)
+# define config.rollback_enabled = False
