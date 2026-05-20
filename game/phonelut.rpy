@@ -8,7 +8,9 @@ label lookuptable(index):
     elif index== 1:
         n "Cas?{w=0.2} Did you hear me?"
         n "How long is this going to take?"
-        pass
+        $ renpy.pop_call()
+        jump start.phonereturn1
+        
     else:
         $ renpy.notify("No problem here.") #empty this out to nothing
         return

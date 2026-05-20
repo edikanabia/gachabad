@@ -71,7 +71,6 @@ label start:
     n "Okay...{nw=1.0}"(interact=False)
     n "Um,{w=0.2} how long is that gonna take?"
     $ story_index = 1
-    $ phone_option = False
     menu:
         "Answer":
             $ story_index = 0
@@ -82,8 +81,8 @@ label start:
             n "What does that mean?"
             c "It means today is the last day I can get him.{w=0.2} I HAVE to get him now."
 
-
-    $ story_index = 0
+    label .phonereturn1:
+        $ story_index = 0
     n "...Cas,{w=0.2} I don't think this game is very good for you..."
 
     #end of intro.
