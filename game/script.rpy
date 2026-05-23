@@ -60,6 +60,8 @@ label start:
             "The end!"
             #it's not a dusty game without an early false ending!
             return
+        "Say it's porn to chase her off" if persistent.girlfriend_flag:
+            jump jorkinit
     
     "Cassiopeia turns the screen so Niecy can see."
     c "This."
@@ -92,6 +94,63 @@ label start:
     n "...Cas,{w=0.25} I don't think this game is very good for you..."
 
     #end of intro.
+    return
+
+
+label jorkinit:
+    c "Jorkin' it."
+    n "With no hands,{w=0.25} buddy?"
+    menu:
+        "She's not buying it."
+        "Double down":
+            c "Uh-huh."
+            "She gives him a once-over."
+            n "Looks like it's slow-going."
+            menu:
+                "Commit to the bit":
+                    c "These things take time,{w=0.25} you know?"
+                    n "Oh,{w=0.25} I'm sure."
+                    c "Well,{w=0.25} I'm gonna need some privacy.{w=0.25} Because I'm jorkin' it."
+                    n "No you're not."
+                    c "Yes I am."
+                    n "{cps=*0.5}Nooooo{/cps} you're not!"
+                    c "{i}Yes,{w=0.25}{/i} I am!"
+                    "Niecy gives Cassiopeia one more chance to tell the truth before..."
+                    "Hold on,{w=0.25} before what?{w=0.25} What's she gonna do!?{w=0.25} Her lips curl into a mischievous smile..."
+                    menu:
+                        "I'm totally jorkin' it, dog":
+                            n "Then you don't have a problem with me joining you,{w=0.25} do you?{w=0.25} {i}If{/i} that's what you're doing."
+                            menu:
+                                "I don't":
+                                    pass
+                                "I do":
+                                    n "Exactly.{w=0.25} Why are you trying to get rid of me so bad?"
+                                    c "Because...{w=0.25} I'm playing my stupid game on my stupid phone.{w=0.25} Okay!?"
+                                    n "Well yeah,{w=0.25} but other than that."
+                                    c "That's it."
+                                    n "...Seriously?"
+                                    c "Yeah."
+                                    "Niecy sighs."
+                                    n "Cas...{w=0.25} {size=*0.5}Cassie.{/size}{w=0.25} You have an important decision to make:{w=0.25}{p=0.25}Which is more important to you?{w=0.25} Your girlfriend,{w=0.25} or your fucking telephone?"
+                                    menu:
+                                        "Touch of a woman":
+                                            n "Good answer,{w=0.25} sweet pea."
+                                            pass
+                                        "My goddamn telephone":
+                                            n "Well,{w=0.25} it can't be helped."
+                                            pass
+
+
+                                    pass
+                            pass
+                        "Okay fine I'm on my stupid phone":
+                            pass
+                    pass
+                "Drop the façade":
+                    pass
+            pass
+        "Bail":
+            pass
     return
 
 label partone:

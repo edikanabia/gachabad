@@ -47,7 +47,8 @@ label theguy:
 
 label postguy:
     "It's a lazy Saturday at the Spelltower,{w=0.25} and Cassiopeia is nowhere to be found."
-    "This morning,{w=0.25} when he tried to log in,{w=0.25} he got an error message saying the game needed to be updated."
-    "Cassiopeia was sure his game was up-to-date,{w=0.25} but since he's not sure how to fix this error,{w=0.25} he has no choice but to set the game aside for now."
-    "He's on a date with his beloved girlfriend,{w=0.25} Niecy,{w=0.25} and he couldn't be happier."
+    "Last week on Sunday,{w=0.25} when he tried to log in,{w=0.25} he got an error message saying the game needed to be updated."
+    "Cassiopeia was sure his game was up-to-date,{w=0.25} but since he didn't know how to fix this error,{w=0.25} he had no choice but to set the game aside."
+    "Well,{w=0.25} he hasn't thought about that game for a while."
+    "He's on a date with Niecy right now and he couldn't be happier."
     return

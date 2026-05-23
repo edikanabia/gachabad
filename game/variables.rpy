@@ -1,7 +1,8 @@
 #region Persistent Variables
 default persistent.got_the_guy = False
 default persistent.true_reset_visible = False
-
+default persistent.completed_playthroughs = 0
+default persistent.girlfriend_flag = True
 
 
 #endregion
