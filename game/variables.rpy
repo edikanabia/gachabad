@@ -1,6 +1,6 @@
-#region Constants
-#define pity_threshold = 100
-
+#region Persistent Variables
+default persistent.got_the_guy = False
+default persistent.true_reset_visible = False
 
 
 
@@ -8,6 +8,7 @@
 
 #region Gameplay Variables
 #Gacha pull mechanics
+#define pity_threshold = 100
 default is_first_roll = True
 default number_of_rolls = 0
 default number_of_pity = 0
