@@ -38,3 +38,8 @@ label repeatcheck:
     #player can currently rollback into the history screen. 
     #prevent player from accessing rollback when game is closer to finished
     return
+
+label theguy:
+    c "I got the guy."
+    n "You got the guy?" #Speaker depends on who's on screen right now. 
+    c "I got the guy! {w=0.25}Oh my god,{w=0.25} I got the guy!"

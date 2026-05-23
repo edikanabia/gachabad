@@ -10,7 +10,7 @@ label start:
     show screen repeatthat
     #show screen testphone
     $ story_index = -1
-    "It's a lazy Saturday,{w=0.2} and everyone in the Spelltower is cooped up indoors..."
+    "It's a lazy Saturday,{w=0.2} and everyone in the Spelltower is cooped up indoors..." 
     "Especially Cassiopeia.{w=0.2} Cassiopeia has been enamored with a new game he downloaded onto his new phone just last week!"
     "It's called...{w=0.2} um...{w=0.2} Well,{w=0.2} he can't remember what it's called.{w=0.2} But he's absolutely hooked!"
     $ story_index = 0

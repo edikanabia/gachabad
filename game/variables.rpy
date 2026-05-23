@@ -14,6 +14,8 @@ default number_of_pity = 0
 default money_spent = 0.00
 default is_pity_roll = False
 
+#timer mechanics
+
 #repeat that mechanic
 default repeat_count = 0
 default since_last_repeat = 0 #increments every line.
