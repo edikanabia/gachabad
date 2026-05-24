@@ -39,6 +39,7 @@ label repeatcheck:
     #prevent player from accessing rollback when game is closer to finished
     return
 
+#ending
 label theguy:
     c "I got the guy."
     n "You got the guy?" #Speaker depends on who's on screen right now. 

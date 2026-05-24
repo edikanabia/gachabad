@@ -6,6 +6,7 @@ label start:
 
     #scene cg ceiling
     scene bg black
+    jump scammer
 
     if persistent.got_the_guy:
         jump postguy
@@ -96,7 +97,7 @@ label start:
     #end of intro.
     return
 
-
+#story path
 label jorkinit:
     c "Jorkin' it."
     n "With no hands,{w=0.25} buddy?"
@@ -122,7 +123,14 @@ label jorkinit:
                             n "Then you don't have a problem with me joining you,{w=0.25} do you?{w=0.25} {i}If{/i} that's what you're doing."
                             menu:
                                 "I don't":
-                                    pass
+                                    n "Wow!{w=0.25} {size=*0.75}Oh wow...{/size}"
+                                    n "Well!{w=0.25} Here I go!"
+                                    #fade to white
+                                    show cg white with Dissolve(2.0)
+                                    "For the rest of the afternoon,{w=0.25} Cassiopeia forgot all about the guy that he wanted..."
+                                    #the end!
+                                    return
+                                    
                                 "I do":
                                     n "Exactly.{w=0.25} Why are you trying to get rid of me so bad?"
                                     c "Because...{w=0.25} I'm playing my stupid game on my stupid phone.{w=0.25} Okay!?"
@@ -131,13 +139,14 @@ label jorkinit:
                                     n "...Seriously?"
                                     c "Yeah."
                                     "Niecy sighs."
-                                    n "Cas...{w=0.25} {size=*0.5}Cassie.{/size}{w=0.25} You have an important decision to make:{w=0.25}{p=0.25}Which is more important to you?{w=0.25} Your girlfriend,{w=0.25} or your fucking telephone?"
+                                    n "Cas...{w=0.25} {size=*0.85}Cassie.{/size}{w=0.25} You have an important decision to make:{w=0.25}{p=0.25}Which is more important to you?{w=0.25} Your girlfriend,{w=0.25} or your fucking telephone?"
                                     menu:
                                         "Touch of a woman":
                                             n "Good answer,{w=0.25} sweet pea."
                                             pass
                                         "My goddamn telephone":
                                             n "Well,{w=0.25} it can't be helped."
+                                            #jump to the rest of the game...
                                             pass
 
 
@@ -153,6 +162,41 @@ label jorkinit:
             pass
     return
 
+label scammer:
+    c "Ah!{w=0.25} Uh-oh..."
+    i "Cassiopeia?"
+    #screenshake
+    g "{size=*2}Cassiopeia!{/size}" #probably a lot more angry
+    i "What's going on?"
+    g "Tell him to stop spending my money on gacha games,{w=0.25} mage."
+    i "Why?{w=0.25} He's not a child."
+    g "I've been trying to talk sense into him all day!{w=0.25} He needs to hear it from someone like you."
+    i 'Someone "like me" how?'
+    g "You know,{w=0.25} someone who can embarrass him into straightening out!{w=0.25} You always do that."
+    i "I don't know,{w=0.25} Gabriel.{w=0.25} If you don't want him spending your money,{w=0.25} don't give him your credit card."
+    g "Oh,{w=0.25} come on.{w=0.25} I'm not a tyrant."
+    e "Yes you are."(multiple=2)
+    c "Yes you are..." (multiple=2)
+
+    
+
+    #show cg edphone
+    #show screen balance
+    i "Heh.{w=0.25} Sucker..."
+    #play sound ringtone
+    #$ renpy.pause(1.0)
+    #show cg impostor
+    i "Hello?"
+    i "Yes,{w=0.25} we've pinpointed the psychological profile of the ideal player for our new type of game."
+    i "Should I proceed to the second phase of Operation Ruin All Video Games Forever?"
+    i "Yes,{w=0.25} sir.{w=0.25} Right away,{w=0.25} sir."
+    #play sound hangup
+
+
+    return
+
+
+#placeholder
 label partone:
     
     "{i}When you see this icon,{w=0.25} dialogue will automatically proceed based on your preferences.{/i}"

@@ -163,6 +163,41 @@ style say_dialogue:
 
     adjust_spacing False
 
+style block1_multiple2_say_window:
+    xalign 0.5
+    xfill True
+    yalign gui.textbox_yalign
+    ysize gui.textbox_height
+
+    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+
+style block1_multiple2_say_dialogue:
+    xsize 558
+    
+
+style block2_multiple2_say_window:
+    xalign 0.5
+    xfill True
+    yalign gui.textbox_yalign
+    ysize gui.textbox_height
+
+    background None  
+
+style block2_multiple2_say_dialogue:
+
+    xsize 558
+    xalign 1.0
+    xpos 1498
+    textalign 1.0
+
+style block2_multiple2_say_label:
+    xpos 1260
+    xalign 1.0
+
+
+
+
+
 ## Input screen ################################################################
 ##
 ## This screen is used to display renpy.input. The prompt parameter is used to
@@ -263,6 +298,11 @@ screen testphone():
 #screen phone1():
 #    modal False
 #    drag 
+
+#transform balancepos:
+
+screen balance():
+    text "[money_spent]" #at balancepos
 
 
 ## Quick Menu screen ###########################################################

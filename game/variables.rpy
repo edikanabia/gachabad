@@ -38,6 +38,7 @@ default niecy_tolerance = 0 #counts the number of times you've irritated her
 image bg black = Solid("#000")
 image bg white = Solid("#fff")
 
+image cg white = Solid("#fff")
 
 
 #image cg ceiling
@@ -60,7 +61,10 @@ define c = Character("Cassiopeia")
 define n = Character("Niecy")
 define g = Character("Gabriel")
 define e = Character("Ed")
+define i = Character("impostor_name", dynamic=True)
 
+default impostor_name = "Ed"
+#impostor name is Ed unless the game has been cleared
 
 
 #endregion
