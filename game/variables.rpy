@@ -39,6 +39,7 @@ image bg black = Solid("#000")
 image bg white = Solid("#fff")
 
 image cg white = Solid("#fff")
+image cg green = Solid("#486316")
 
 
 #image cg ceiling

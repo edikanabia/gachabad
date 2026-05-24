@@ -98,6 +98,43 @@ label start:
     return
 
 #story path
+label gabriel1:
+    n "Oh!{w=0.25} Hey,{w=0.25} Gabriel!{w=0.25} How was your nap?"
+    g "It's not done...{w=0.25} I'm about to go back to sleep,{w=0.25} but..."
+    g "Piapia...{w=0.25} did you make a purchase recently?"
+    $ story_index = 2
+    menu:
+        "Yes":
+            $ story_index = 0
+            g "That's okay...{w=0.25} Just don't forget to let me know ahead of time."
+            return
+        "No":
+            $ story_index = 0
+            g "Umm...{w=0.25} yeah you did,{w=0.25} but that's okay..."
+            g "Just let me know next time,{w=0.25} and don't make a habit of lying..."
+            return
+    label .ignore1:
+        $ story_index = 3
+        g "Did you buy something!?"
+        menu:
+            "Yes":
+                pass
+            "No":
+                pass
+    label .ignore2:
+        g "You're not even listening..."
+        n "It's okay.{w=0.25} I can handle this."
+        g "Are you sure?"
+        
+    return
+
+#story path
+label gabriel2:
+    g "Piapia,{w=0.25} I gave you that card because I wanted you to be able to practice some autonomy."
+    g "You've been so responsible iwith it up until now.{w=0.25} What happened!?"
+    return
+
+#story path
 label jorkinit:
     c "Jorkin' it."
     n "With no hands,{w=0.25} buddy?"
@@ -162,24 +199,50 @@ label jorkinit:
             pass
     return
 
+#ending
+label weed:
+    show cg green with Dissolve(2.0)
+    "Cassiopeia greened out!"
+    return
+
+
+#ending
+label realed:
+    c ""
+    e "I'm a trickster,{w=0.25} not a terrorist."
+    return
+
+#ending
 label scammer:
     c "Ah!{w=0.25} Uh-oh..."
     i "Cassiopeia?"
     #screenshake
     g "{size=*2}Cassiopeia!{/size}" #probably a lot more angry
     i "What's going on?"
-    g "Tell him to stop spending my money on gacha games,{w=0.25} mage."
-    i "Why?{w=0.25} He's not a child."
+    g "Good,{w=0.25} you caught him.{w=0.25} Tell him stop spending my money on gacha games."
+    i "Why?{w=0.25} He's not a child.{w=0.25} He can handle himself."
+    c "Yeah,{w=0.25} I-I can handle myself!"
+    g "No,{w=0.25} you've developed a gambling addiction over a mediocre RPG."
+    i "Well...{w=0.25} It's not gambling if there's no monetary value involved."
+
     g "I've been trying to talk sense into him all day!{w=0.25} He needs to hear it from someone like you."
-    i 'Someone "like me" how?'
+    i 'What do you mean "someone like me?"'
     g "You know,{w=0.25} someone who can embarrass him into straightening out!{w=0.25} You always do that."
-    i "I don't know,{w=0.25} Gabriel.{w=0.25} If you don't want him spending your money,{w=0.25} don't give him your credit card."
+    i "I don't know,{w=0.25} Gabriel.{w=0.25} It sounds like you bear the responsibility for this."
+    i "If you don't want him spending your money,{w=0.25} don't give him your credit card."
     g "Oh,{w=0.25} come on.{w=0.25} I'm not a tyrant."
-    e "Yes you are."(multiple=2)
+    i "Yes you are."(multiple=2)
     c "Yes you are..." (multiple=2)
+    g "No,{w=0.25} I'm not-{w=0.25} I don't want to be-{w=0.25} Ngh!{w=0.25} You two are being impossible today!"
+    #gabriel leaves
 
-    
-
+    c "Ed...{w=0.25} Thanks for standing up for me back there."
+    i "Of course,{w=0.25} Cassiopeia.{w=0.25} I wouldn't think twice before helping you."
+    c "Wow,{w=0.25} you've really changed a lot!{w=0.25} You must have had a serious change of heart."
+    i "Er,{w=0.25} yes.{w=0.25} I have."
+    c "You know I'm really happy to hear that.{w=0.25} I thought it'd never happen..."
+    c "I guess...{w=0.25} I'll see you around,{w=0.25} then!"
+    i "See you later,{w=0.25} man."
     #show cg edphone
     #show screen balance
     i "Heh.{w=0.25} Sucker..."

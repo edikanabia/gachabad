@@ -172,8 +172,7 @@ style block1_multiple2_say_window:
     background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
 
 style block1_multiple2_say_dialogue:
-    xsize 558
-    
+    xsize 558 
 
 style block2_multiple2_say_window:
     xalign 0.5
