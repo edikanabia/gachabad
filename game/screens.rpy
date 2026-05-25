@@ -294,14 +294,44 @@ screen testphone():
         at testphonepos
         action Call("lookuptable", story_index)
 
-#screen phone1():
-#    modal False
-#    drag 
+screen testphone2():
+    textbutton "I'm a gambling addiction!":
+        at testphonepos
+        
 
-#transform balancepos:
+
+
+transform balancepos:
+    align 0.5
 
 screen balance():
-    text "[money_spent]" #at balancepos
+    text "Buy Luna Clocks to make this timer go down faster! [hours]:[minutes_10s][minutes]:[seconds_10s][seconds]" xalign 0.5 yalign 0.5
+    if seconds > 0:
+        #ones place second timer
+        timer 1.0: 
+            action IncrementVariable("seconds", amount=-1)
+            repeat True
+    else:
+        #tens place second timer
+        timer 1.0:
+            action [SetVariable("seconds", 9), IncrementVariable("seconds_10s", -1)]
+        
+        #ones place minute timer
+        if seconds_10s <= 0:
+            timer 1.0 action [SetVariable("seconds_10s", 6), IncrementVariable("minutes", -1)]
+            if minutes <= 0:
+                timer 1.0 action [SetVariable("minutes", 10), IncrementVariable("minutes_10s", -1)]
+                
+                if minutes_10s <= 0:
+                    timer 1.0 action [SetVariable("minutes_10s", 6), IncrementVariable("hours", -1)]
+                    if hours <=0:
+                        timer 1.0 action [SetVariable("hours", 3)]
+
+
+
+    
+    
+
 
 
 ## Quick Menu screen ###########################################################

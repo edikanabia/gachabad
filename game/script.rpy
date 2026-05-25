@@ -6,6 +6,7 @@ label start:
 
     #scene cg ceiling
     scene bg black
+
     jump scammer
 
     if persistent.got_the_guy:
@@ -214,6 +215,8 @@ label realed:
 
 #ending
 label scammer:
+
+    show screen balance
     c "Ah!{w=0.25} Uh-oh..."
     i "Cassiopeia?"
     #screenshake
