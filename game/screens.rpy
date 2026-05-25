@@ -304,7 +304,7 @@ screen testphone2():
 transform balancepos:
     align 0.5
 
-screen balance():
+screen timer():
     text "Buy Luna Clocks to make this timer go down faster! [hours]:[minutes_10s][minutes]:[seconds_10s][seconds]" xalign 0.5 yalign 0.5
     if seconds > 0:
         #ones place second timer
@@ -327,6 +327,8 @@ screen balance():
                     if hours <=0:
                         timer 1.0 action [SetVariable("hours", 3)]
 
+screen timerdisplay():
+    text "[hours]:[minutes_10s][minutes]:[seconds_10s][seconds]" xalign 0.5 yalign 0.75
 
 
     

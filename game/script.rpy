@@ -216,7 +216,8 @@ label realed:
 #ending
 label scammer:
 
-    show screen balance
+
+    
     c "Ah!{w=0.25} Uh-oh..."
     i "Cassiopeia?"
     #screenshake
@@ -227,6 +228,7 @@ label scammer:
     c "Yeah,{w=0.25} I-I can handle myself!"
     g "No,{w=0.25} you've developed a gambling addiction over a mediocre RPG."
     i "Well...{w=0.25} It's not gambling if there's no monetary value involved."
+
 
     g "I've been trying to talk sense into him all day!{w=0.25} He needs to hear it from someone like you."
     i 'What do you mean "someone like me?"'
