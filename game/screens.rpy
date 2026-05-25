@@ -297,6 +297,7 @@ screen testphone():
 screen testphone2():
     textbutton "I'm a gambling addiction!":
         at testphonepos
+        action Function(roll_obj, gacha_puller)
         
 
 

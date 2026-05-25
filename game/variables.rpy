@@ -36,6 +36,7 @@ init 1 python:
         total_rolls = 0
         pity_threshold = 100
         def __init__(self, set_of_all_guys):
+            self.__total_rolls = 0
             self.__pity_count = 0
             self.__pity_active = False
             self.__commons = []
@@ -76,9 +77,9 @@ init 1 python:
 
 
         def pull_guy(self):
-            total_rolls += 1 #keeps track of all rolls
+            self.total_rolls += 1 #keeps track of all rolls
             self.__pity_count += 1 #keeping track of the pity roll counter
-            if self.__pity_count >= pity_threshold:
+            if self.__pity_count >= self.pity_threshold:
                 self.__pity_active == True #if the pity counter reaches the threshold, the pity roll is active
 
             if self.__is_first_roll == True:
@@ -104,6 +105,7 @@ init 1 python:
             return self.__pity_active
 
 default gacha_puller = Gacha(all_guys)
+default roll_obj = Gacha.pull_guy
 
 default money_spent = 0       
 default gems = 115

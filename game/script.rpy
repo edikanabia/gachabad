@@ -3,10 +3,9 @@
 # The game starts here.
 
 label start:
-
     #scene cg ceiling
     scene bg black
-
+    show screen testphone2
     jump scammer
 
     if persistent.got_the_guy:
@@ -221,7 +220,7 @@ label scammer:
     c "Ah!{w=0.25} Uh-oh..."
     i "Cassiopeia?"
     #screenshake
-    g "{size=*2}Cassiopeia!{/size}" #probably a lot more angry
+    g "{size=*2}Cassiopeia!{/size}"  #probably a lot more angry
     i "What's going on?"
     g "Good,{w=0.25} you caught him.{w=0.25} Tell him stop spending my money on gacha games."
     i "Why?{w=0.25} He's not a child.{w=0.25} He can handle himself."
