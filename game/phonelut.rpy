@@ -4,24 +4,36 @@ label lookuptable(index):
     #it looks like we'll be manually setting the regions in which a phone interaction will trigger a dialogue.
 
     if index == -1:
+        $ story_index = 0
         #test index
         n "This is Niecy telling you to get off that damn phone!"
         return
     elif index == 1:
+        $ story_index = 0
         #in start, after Niecy asks how long he's gonna play the game
         n "Cas?{w=0.25} Did you hear me?"
         n "How long is this going to take?"
         $ renpy.pop_call()
         jump start.phonereturn1
     elif index == 2:
+        $ story_index = 0
         g "Cassiopeia!"
         $ renpy.pop_call()
         jump gabriel1.ignore1
     elif index == 3:
+        $ story_index = 0
         g "Are you kidding me!?"
         n "He's been glued to this thing for hours,{w=0.25} apparently.{w=0.25} Don't mind him."
         $ renpy.pop_call()
         jump gabriel1.ignore2
+    elif index == 4:
+        $ story_index = 0
+        e "How many fingers am I holding up?"
+        n "Leave the man alone,{w=0.25} Ed."
+        e "Whatever."
+        
+        $ renpy.pop_call()
+        jump quieres.ignore
     else:
         $ renpy.notify("No problem here.") #empty this out to nothing
         return

@@ -297,10 +297,11 @@ screen testphone():
 screen testphone2():
     textbutton "I'm a gambling addiction!":
         at testphonepos
-        action Function(roll_obj, gacha_puller)
+        action Function(roll_obj, gacha_puller) #need to find a way to get the return value out of the callable
         
 
-
+screen deliciousgummy():
+    textbutton "delicious gummy" align(0.5, 0.6) action Jump("weed")
 
 transform balancepos:
     align 0.5
@@ -328,7 +329,8 @@ screen timer():
                     if hours <=0:
                         timer 1.0 action [SetVariable("hours", 3)]
 
-screen timerdisplay():
+#this screen will become the timer countdown in the game
+screen countdown():
     text "[hours]:[minutes_10s][minutes]:[seconds_10s][seconds]" xalign 0.5 yalign 0.75
 
 

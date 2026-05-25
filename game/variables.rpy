@@ -3,7 +3,7 @@ default persistent.got_the_guy = False
 default persistent.true_reset_visible = False
 default persistent.completed_playthroughs = 0
 default persistent.girlfriend_flag = True
-
+default persistent.first_playthrough = True
 
 #endregion
 
@@ -132,7 +132,9 @@ default will_bother_niecy = False #true if an action will bother niecy at a part
 default niecy_tolerance = 0 #counts the number of times you've irritated her
 #endregion
 
-
+#story variables/inventory
+default has_gummy = False
+default gummy_line_countdown = 5 #after five lines, the greenout scene will play (unless you reach another ending.)
 
 #region Images and Transforms
 

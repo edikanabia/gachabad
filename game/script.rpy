@@ -5,16 +5,16 @@
 label start:
     #scene cg ceiling
     scene bg black
-    show screen testphone2
-    jump scammer
+    #show screen testphone2
+    #jump scammer
 
     if persistent.got_the_guy:
         jump postguy
     else:
         pass
 
-    show screen repeatthat
-    #show screen testphone
+    #show screen repeatthat
+    show screen testphone
     $ story_index = -1
     "It's a lazy Saturday at the Spelltower,{w=0.25} and everyone is cooped up indoors..." 
     "Especially Cassiopeia.{w=0.25} Cassiopeia has been enamored with a new game he downloaded onto his new phone just last week!"
@@ -24,7 +24,7 @@ label start:
     "The day he downloaded it,{w=0.25} he showed it to Gabriel in a euphoric frenzy."
     "But Gabriel,{w=0.25} in typical Gabriel fashion,{w=0.25} took one look at it and called him a moron."
     "So now he has to play it under the covers,{w=0.25} where no one can see his shame."
-
+    call quieres
     #show screen phone
 
     "The guy Cassiopeia wants is in the time-limited banner today.{w=0.25} It's the last opportunity to get him before the next season starts---tomorrow!"
@@ -199,9 +199,39 @@ label jorkinit:
             pass
     return
 
+label quieres:
+    #show ed
+    e "Yo."
+    n "What's up?"
+    e "Anyone else see a demon prowling around?{w=0.25} I thought I saw one go into the break room."
+    n "Maybe it's because you took the Edible That Makes You See Demons and Forget You Took the Edible That Makes You See Demons?"
+    e "Oh yeah...{w=0.25} That's probably one of my best inventions."
+    n "Not even close to your top 75."
+    e "Everyone's a critic." #ed annoyed
+    e "Yo C-man,{w=0.25} you want one?"
+    $ story_index = 4
+    menu:
+        "Sure":
+            pass
+        "What did you call me":
+            pass
+    $ has_gummy = True
+
+    label .ignore:
+        e "See ya."
+    if has_gummy:
+        c "So...{w=0.25} what happens if I take this?"
+        n "Don't eat that."
+        show screen deliciousgummy
+    return
+
 #ending
 label weed:
+    #stop auto forward
+    c "OH-{nw=0.25}"
     show cg green with Dissolve(2.0)
+    #play sound greened
+    #if music is playing stop the music
     "Cassiopeia greened out!"
     return
 
@@ -221,8 +251,12 @@ label scammer:
     i "Cassiopeia?"
     #screenshake
     g "{size=*2}Cassiopeia!{/size}"  #probably a lot more angry
+    #show gabriel
+    g "Oh,{w=0.25} good,{w=0.25} you caught him."
+    i "Gabriel. {w=0.25}...Wipe your drool."
+    #gabriel wipes his drool
     i "What's going on?"
-    g "Good,{w=0.25} you caught him.{w=0.25} Tell him stop spending my money on gacha games."
+    g "Tell him stop spending my money on gacha games."
     i "Why?{w=0.25} He's not a child.{w=0.25} He can handle himself."
     c "Yeah,{w=0.25} I-I can handle myself!"
     g "No,{w=0.25} you've developed a gambling addiction over a mediocre RPG."
