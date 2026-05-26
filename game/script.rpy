@@ -206,7 +206,7 @@ label quieres:
     e "Anyone else see a demon prowling around?{w=0.25} I thought I saw one go into the break room."
     n "Maybe it's because you took the Edible That Makes You See Demons and Forget You Took the Edible That Makes You See Demons?"
     e "Oh yeah...{w=0.25} That's probably one of my best inventions."
-    n "Not even close to your top 75."
+    n "It's not even close to your top 75."
     e "Everyone's a critic." #ed annoyed
     e "Yo C-man,{w=0.25} you want one?"
     $ story_index = 4
