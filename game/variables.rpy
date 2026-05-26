@@ -151,11 +151,12 @@ init 1 python:
             self.total_rolls += 1 #keeps track of all rolls
             self.__pity_count += 1 #keeping track of the pity roll counter
             if self.__pity_count >= self.pity_threshold:
-                self.__pity_active == True #if the pity counter reaches the threshold, the pity roll is active
+                self.__pity_active = True #if the pity counter reaches the threshold, the pity roll is active
 
             if self.__is_first_roll == True:
                 this_guy = self.__gacha_rand(self.__first_pool) #first pull randomizer
                 self.__is_first_roll = False #turns off first pull flag
+                #this_guy.image added to gallery (list of guys)
                 return this_guy
             elif self.__pity_active:
                 this_guy = self.__gacha_rand(self.__pity_pool) #pity randomizer
@@ -220,8 +221,14 @@ image cg covers 2 = Image("cg_covers_2.png")
 #image cg thatsit
 #chase sequence cg might be more elaborate
 
-
-
+#gabriel's talk sprites
+image gabriel neutral = Image("ch_gabriel_neutral.png")
+image gabriel smug = Image("ch_gabriel_smug.png")
+image gabriel concern = Image("ch_gabriel_concern.png")
+image gabriel annoyed = Image("ch_gabriel_annoyed.png")
+image gabriel unimpressed = Image("ch_gabriel_unimpressed.png")
+image gabriel groggy = Image("ch_gabriel_groggy.png")
+image gabriel rage = Image("ch_gabriel_rage.png")
 
 #endregion
 
