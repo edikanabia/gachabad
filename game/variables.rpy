@@ -24,6 +24,10 @@ init 0 python:
     else:
         impostor_name = "Ed"
 
+    repeat_count = 0
+    since_last_repeat = 0 #increments every line.
+    repeat_active = True
+
     class Guy:
         def __init__(self, name, image, rarity, is_the_guy=False):
             self.name = name
@@ -34,6 +38,58 @@ init 0 python:
                 self.rarity = 1
                 #rarity auto set to uncommon if I make a mistake
             self.is_the_guy = is_the_guy
+
+    def count_repeat(event, interact=True, **kwargs):
+        if event is "end":
+            global since_last_repeat
+            since_last_repeat +=1
+
+    class Spontaneous:
+        def __init__(self, label, priority, group, jump=False, lines_until=0):
+            self.label = label #string
+            self.priority = priority #int
+            self.group = group #string
+            self.jump = jump #where jump is true and call is false
+            self.lines_until = lines_until #int
+    
+    class SpontaneousHandler:
+        def __init__(self):
+            self.current_spontaneous = None
+            
+        def add_spontaneous(self, spontaneous):
+            self.current_spontaneous = spontaneous #we'll see if we can pull the data from just the object
+            renpy.notify("added [self.current_spontaneous.label]")
+            
+        def update_spontaneous(self, event, interact=True, **kwargs):
+            if event is "end":
+                if self.current_spontaneous == None:
+                    #return early because there's nothing to update
+                    return
+                    
+                else:
+                    self.current_spontaneous.lines_until -= 1
+                    if self.current_spontaneous.lines_until <=0:
+                        match self.current_spontaneous.jump:
+                            case True:
+                                label = self.current_spontaneous.label
+                                self.current_spontaneous = None
+                                renpy.jump(label)
+                            case False:
+                                label = self.current_spontaneous.label
+                                self.current_spontaneous = None
+                                renpy.call(label)
+                    else:
+                        return
+
+            else:
+                return
+            
+define greenout_time = renpy.random.randint(5, 15)
+define greenout = Spontaneous("weed", 0, "weed", jump=True, lines_until=greenout_time)
+define spontaneous_handler = SpontaneousHandler()
+define config.all_character_callbacks = [count_repeat, spontaneous_handler.update_spontaneous]
+
+    
 
 
 #make a bunch of test guys
@@ -132,11 +188,6 @@ default minutes = 0
 default minutes_10s = 0
 default hours = 3
 
-
-#repeat that mechanic
-default repeat_count = 0
-default since_last_repeat = 0 #increments every line.
-default repeat_active = True
 
 #phone interrupt mechanic
 default story_index = 0 #where in the story the player is

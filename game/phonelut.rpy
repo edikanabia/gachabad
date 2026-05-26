@@ -42,6 +42,7 @@ label lookuptable(index):
 
 label repeatcheck:
     #flags will change the specifics of who says what
+    $ repeat_count += 1
     $ repeat_active = False #disable the repeat that button
 
     if since_last_repeat <= 4:

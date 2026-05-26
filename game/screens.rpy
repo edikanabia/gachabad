@@ -109,8 +109,6 @@ screen say(who, what):
 
         text what id "what"
 
-    on "show" action IncrementVariable("since_last_repeat")
-
 
     ## If there's a side image, display it above the text. Do not display on the
     ## phone variant - there's no room.
@@ -301,7 +299,7 @@ screen testphone2():
         
 
 screen deliciousgummy():
-    textbutton "delicious gummy" align(0.5, 0.6) action [Jump("weed"), Hide(screen=None)]
+    textbutton "delicious gummy" align(0.5, 0.6) action [RollForward(), Hide(screen=None)]
 
 transform balancepos:
     align 0.5
@@ -418,7 +416,7 @@ screen navigation():
             textbutton _("Save") action ShowMenu("save")
         
         if persistent.true_reset_visible:
-            textbutton _("Reset") action [Function(persistent._clear, progress=True),Function(renpy.full_restart)]
+            textbutton _("Reset") action [Function(persistent._clear),Function(renpy.full_restart)]
 
         textbutton _("Load") action ShowMenu("load")
 

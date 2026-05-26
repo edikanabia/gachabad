@@ -13,7 +13,8 @@ label start:
     else:
         pass
 
-    #show screen repeatthat
+    $ spontaneous_handler.add_spontaneous(greenout)
+    show screen repeatthat
     show screen testphone
     $ story_index = -1
     "It's a lazy Saturday at the Spelltower,{w=0.25} and everyone is cooped up indoors..." 
@@ -262,6 +263,7 @@ label quieres:
 #ending
 label weed:
     #stop auto forward
+    
     c "OH-{nw=0.25}"
     show cg green with Dissolve(2.0)
     #play sound greened
