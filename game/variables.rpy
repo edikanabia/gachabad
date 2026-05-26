@@ -83,9 +83,11 @@ init 0 python:
 
             else:
                 return
+
+    greenout_time = 0
             
-define greenout_time = renpy.random.randint(5, 15)
-define greenout = Spontaneous("weed", 0, "weed", jump=True, lines_until=greenout_time)
+
+define greenout = Spontaneous("weed", 0, "weed", jump=True, lines_until=5)
 define spontaneous_handler = SpontaneousHandler()
 define config.all_character_callbacks = [count_repeat, spontaneous_handler.update_spontaneous]
 

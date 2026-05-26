@@ -12,8 +12,9 @@ label start:
         jump postguy
     else:
         pass
-
+    $ greenout.lines_until = renpy.random.randint(0,3)
     $ spontaneous_handler.add_spontaneous(greenout)
+    
     show screen repeatthat
     show screen testphone
     $ story_index = -1
