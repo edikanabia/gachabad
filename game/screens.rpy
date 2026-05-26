@@ -301,7 +301,7 @@ screen testphone2():
         
 
 screen deliciousgummy():
-    textbutton "delicious gummy" align(0.5, 0.6) action Jump("weed")
+    textbutton "delicious gummy" align(0.5, 0.6) action [Jump("weed"), Hide(screen=None)]
 
 transform balancepos:
     align 0.5
@@ -416,6 +416,9 @@ screen navigation():
             #textbutton _("History") action ShowMenu("history")
 
             textbutton _("Save") action ShowMenu("save")
+        
+        if persistent.true_reset_visible:
+            textbutton _("Reset") action [Function(persistent._clear, progress=True),Function(renpy.full_restart)]
 
         textbutton _("Load") action ShowMenu("load")
 

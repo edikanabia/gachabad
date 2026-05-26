@@ -62,6 +62,11 @@ label repeatcheck:
     #prevent player from accessing rollback when game is closer to finished
     return
 
+label facecover:
+    n "..." #shocked
+    n "{size=*0.5}At least pretend to pay attention...{/size}"
+    return
+
 #ending
 label theguy:
     c "I got the guy."

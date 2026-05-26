@@ -24,8 +24,8 @@ label start:
     "The day he downloaded it,{w=0.25} he showed it to Gabriel in a euphoric frenzy."
     "But Gabriel,{w=0.25} in typical Gabriel fashion,{w=0.25} took one look at it and called him a moron."
     "So now he has to play it under the covers,{w=0.25} where no one can see his shame."
-    call quieres
-    #show screen phone
+    #call quieres #testing the weed mechanic
+    show screen testphone
 
     "The guy Cassiopeia wants is in the time-limited banner today.{w=0.25} It's the last opportunity to get him before the next season starts---tomorrow!"
     "It would be a good time to try for the guy during some downtime." #set interact to false on this line until the gacha roll occurs.
@@ -44,29 +44,38 @@ label start:
             n "Oooookay...{w=0.25} I guess he's not in here!"
             pass
         "Shake your head":
+            #play sound covers
             n "Did something move under the- {nw=0.5}"
             pass
 
-    #scene cg covers
     #play sound fwoom
+    show bg white with Dissolve(1.0)
+    pause 1.0
+    show cg covers 0 with Dissolve(0.5)
 
     n "What are you doing?"
     menu:
         "Show her the phone":
             pass
         "Do not":
+            show cg covers 1
             "Cassiopeia holds the phone close to his chest and shakes his head."
             "Niecy assumes he must be looking at something lascivious,{w=0.25} like exposed ankles or toe tanlines."
             "She throws the cover back over him and leaves the room."
             "The end!"
             #it's not a dusty game without an early false ending!
+            $ persistent.true_reset_visible = True
             return
         "Say it's porn to chase her off" if persistent.girlfriend_flag:
             jump jorkinit
+        "Don't move or say anything" if persistent.ed_not_niecy:
+            jump realed
     
     "Cassiopeia turns the screen so Niecy can see."
     c "This."
-    #show screen phone, pause, then hide the phone and continue.
+    label .showphone:
+        #show screen phone, pause, then hide the phone and continue.
+        pass
     n "Oh.{w=0.25} Anyway,{w=0.25} wanna go out and do something?"
     c "Like what?"
     n "I don't know,{w=0.25} but it's Saturday.{w=0.25} There's probably something fun we could do."
@@ -134,9 +143,18 @@ label gabriel2:
     g "You've been so responsible iwith it up until now.{w=0.25} What happened!?"
     return
 
+#storypath
+label realed:
+    e "Yo.{w=0.25} Get up."
+
+    e "I'm a trickster,{w=0.25} not a terrorist."
+    return
+
+
 #story path
 label jorkinit:
     c "Jorkin' it."
+    show cg covers 2 with Dissolve(0.2)
     n "With no hands,{w=0.25} buddy?"
     menu:
         "She's not buying it."
@@ -169,34 +187,50 @@ label jorkinit:
                                     return
                                     
                                 "I do":
+                                    show cg covers 1 with Dissolve(0.2)
                                     n "Exactly.{w=0.25} Why are you trying to get rid of me so bad?"
                                     c "Because...{w=0.25} I'm playing my stupid game on my stupid phone.{w=0.25} Okay!?"
                                     n "Well yeah,{w=0.25} but other than that."
                                     c "That's it."
+                                    show cg covers 0 with Dissolve(0.2)
+                                    pause 1.0
                                     n "...Seriously?"
                                     c "Yeah."
                                     "Niecy sighs."
                                     n "Cas...{w=0.25} {size=*0.85}Cassie.{/size}{w=0.25} You have an important decision to make:{w=0.25}{p=0.25}Which is more important to you?{w=0.25} Your girlfriend,{w=0.25} or your fucking telephone?"
                                     menu:
                                         "Touch of a woman":
-                                            n "Good answer,{w=0.25} sweet pea."
-                                            pass
+                                            show cg covers 2 with Dissolve(0.2)
+                                            n "Good answer,{w=0.25} sweet pea.{w=0.25} Now,{w=0.25} c'mere!"
+                                            return
                                         "My goddamn telephone":
-                                            n "Well,{w=0.25} it can't be helped."
-                                            #jump to the rest of the game...
-                                            pass
+
+                                            n "Huh."
+                                            n "Can we talk about it?"
+                                            "Cassiopeia shrinks into his bed."
+                                            n ""
+                                            
+                                            return
 
 
                                     pass
                             pass
                         "Okay fine I'm on my stupid phone":
                             pass
-                    pass
+
                 "Drop the façade":
-                    pass
-            pass
+                    c "Yeah..."
+                    n "Not in the mood,{w=0.25} huh?"
+                    c "Not really...{w=0.25} I mean,{w=0.25} I'm not {i}opposed{/i} to getting in the mood."
+                    c "I'm just...{w=0.25} doing something else."
+                    n "So,{w=0.25} what is it?"
+            
         "Bail":
-            pass
+            "Cassiopeia sighs."
+            c "No..."
+            c "I'm doing this."
+            
+    jump start.showphone
     return
 
 label quieres:
@@ -236,11 +270,6 @@ label weed:
     return
 
 
-#ending
-label realed:
-    c ""
-    e "I'm a trickster,{w=0.25} not a terrorist."
-    return
 
 #ending
 label scammer:

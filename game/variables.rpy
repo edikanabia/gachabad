@@ -1,9 +1,16 @@
 #region Persistent Variables
-default persistent.got_the_guy = False
+#playthrough flags
 default persistent.true_reset_visible = False
 default persistent.completed_playthroughs = 0
-default persistent.girlfriend_flag = True
 default persistent.first_playthrough = True
+
+#story path flags
+default persistent.got_the_guy = False
+default persistent.girlfriend_flag = True
+default persistent.ed_not_niecy = False
+
+#ending flags
+default persistent.scammer_flag = False
 
 #endregion
 
@@ -11,16 +18,22 @@ default persistent.first_playthrough = True
 #Gacha pull mechanics
 
 init 0 python:
+    impostor_name = ""
+    if persistent.scammer_flag:
+        impostor_name = "Ed?"
+    else:
+        impostor_name = "Ed"
+
     class Guy:
         def __init__(self, name, image, rarity, is_the_guy=False):
             self.name = name
             self.image = image #where image is the name of the file provided as a string
-            self.is_the_guy = is_the_guy
             if rarity >= 0 and rarity < 5:
                 self.rarity = rarity
             else:
                 self.rarity = 1
                 #rarity auto set to uncommon if I make a mistake
+            self.is_the_guy = is_the_guy
 
 
 #make a bunch of test guys
@@ -142,15 +155,20 @@ default gummy_line_countdown = 5 #after five lines, the greenout scene will play
 image bg black = Solid("#000")
 image bg white = Solid("#fff")
 image bg green = Solid("#486316")
+image bg room cassiopeia = Image("bg_cas_room.png")
 
 image cg white = Solid("#fff")
 image cg green = Solid("#486316")
-
-
+image cg covers 0 = Image("cg_covers_0.png")
+image cg covers 1 = Image("cg_covers_1.png")
+image cg covers 2 = Image("cg_covers_2.png")
 #image cg ceiling
 #image cg warning
 #image cg thatsit
 #chase sequence cg might be more elaborate
+
+
+
 
 #endregion
 
@@ -169,7 +187,7 @@ define g = Character("Gabriel")
 define e = Character("Ed")
 define i = Character("impostor_name", dynamic=True)
 
-default impostor_name = "Ed"
+
 #impostor name is Ed unless the game has been cleared
 
 
