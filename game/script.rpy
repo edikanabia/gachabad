@@ -7,13 +7,13 @@ label start:
     scene bg black
     #show screen testphone2
     #jump scammer
-
+    
     if persistent.got_the_guy:
         jump postguy
     else:
         pass
-    $ greenout.lines_until = renpy.random.randint(0,3)
-    $ spontaneous_handler.add_spontaneous(greenout)
+    #$ greenout.lines_until = renpy.random.randint(0,3)
+    #$ spontaneous_handler.add_spontaneous(greenout)
     
     show screen repeatthat
     show screen testphone
@@ -26,7 +26,7 @@ label start:
     "The day he downloaded it,{w=0.25} he showed it to Gabriel in a euphoric frenzy."
     "But Gabriel,{w=0.25} in typical Gabriel fashion,{w=0.25} took one look at it and called him a moron."
     "So now he has to play it under the covers,{w=0.25} where no one can see his shame."
-    #call quieres #testing the weed mechanic
+    call quieres #testing the weed mechanic
     show screen testphone
 
     "The guy Cassiopeia wants is in the time-limited banner today.{w=0.25} It's the last opportunity to get him before the next season starts---tomorrow!"
@@ -48,7 +48,17 @@ label start:
         "Shake your head":
             #play sound covers
             n "Did something move under the- {nw=0.5}"
-            pass
+        "Don't move or say anything" if persistent.ed_not_niecy:
+            "Cassiopeia lay on his bed in silence until he hears the footsteps recede."
+            "Now he's in the dark and quiet."
+            "Underneath his blanket fort (com-fort-er?) is the perfect nowhere to do nothing."
+            "Disconnected from space,{w=0.25} disconnected from time,{w=0.25} in the recesses and crevices,{w=0.25} in the lulls in speech,{w=0.25} in thought."
+            "Nowheres are everywhere,{w=0.25} created and collapsed in an instant.{w=0.25} Thousands of millions of people have wandered into a nowhere at least once."
+            "These nowheres are collectively known as the Void."
+            "Cassiopeia settles into his nowhere,{w=0.25} his eyelids hanging half-open under his phone's bluish glow, {w=0.25}veiled to the people mulling about the Spelltower."
+            "At least that's what would have happened if he live didn't in a world where his familiar tormentor the warlock Ed is The Premier Void-Hopper."
+            
+            jump realed
 
     #play sound fwoom
     show bg white with Dissolve(1.0)
@@ -70,8 +80,6 @@ label start:
             return
         "Say it's porn to chase her off" if persistent.girlfriend_flag:
             jump jorkinit
-        "Don't move or say anything" if persistent.ed_not_niecy:
-            jump realed
     
     "Cassiopeia turns the screen so Niecy can see."
     c "This."
@@ -147,8 +155,9 @@ label gabriel2:
 
 #storypath
 label realed:
+    
     e "Yo.{w=0.25} Get up."
-
+    
     e "I'm a trickster,{w=0.25} not a terrorist."
     return
 
@@ -180,6 +189,20 @@ label jorkinit:
                             n "Then you don't have a problem with me joining you,{w=0.25} do you?{w=0.25} {i}If{/i} that's what you're doing."
                             menu:
                                 "I don't":
+                                    #there's also the idea for the game loop here where you pull out your phone and she gets mad at you
+                                    #if you click on it.
+                                    #c "I'm not in the mood for anything really intense,{w=0.25} though."
+                                    #n "That's OK. Let's just cuddle."
+                                    #"She shuffles into bed with Cassiopeia."
+                                    #show phone, start autoplay
+                                    #n "This is nice, {w=0.25}isn't it?"
+                                    #if phoneclick
+                                    #n "Cassiopeia, {w=0.25}are you serious right now? {w=0.25}You can't get off your phone long enough to just cuddle with me?"
+                                    #c "I can't-{w=0.25} I don't-"
+                                    #n "Sweetheart, {w=0.25}this is what I was saying. {w=0.25}You've been glued to that thing since you got it."
+                                    #n "Can't you just spend time in the moment?"
+                                    #c "No! {w=0.25}I can't stop!{w=0.25} I can't stop thinking about it!"
+                                    #
                                     n "Wow!{w=0.25} {size=*0.75}Oh wow...{/size}"
                                     n "Well!{w=0.25} Here I go!"
                                     #fade to white
@@ -191,7 +214,7 @@ label jorkinit:
                                 "I do":
                                     show cg covers 1 with Dissolve(0.2)
                                     n "Exactly.{w=0.25} Why are you trying to get rid of me so bad?"
-                                    c "Because...{w=0.25} I'm playing my stupid game on my stupid phone.{w=0.25} Okay!?"
+                                    c "Because...{w=0.25} I'm playing my stupid game on my stupid phone.{w=0.25} OK!?"
                                     n "Well yeah,{w=0.25} but other than that."
                                     c "That's it."
                                     show cg covers 0 with Dissolve(0.2)
@@ -199,6 +222,7 @@ label jorkinit:
                                     n "...Seriously?"
                                     c "Yeah."
                                     "Niecy sighs."
+                                    show cg covers 2 with Dissolve(0.2)
                                     n "Cas...{w=0.25} {size=*0.85}Cassie.{/size}{w=0.25} You have an important decision to make:{w=0.25}{p=0.25}Which is more important to you?{w=0.25} Your girlfriend,{w=0.25} or your fucking telephone?"
                                     menu:
                                         "Touch of a woman":
@@ -207,10 +231,13 @@ label jorkinit:
                                             return
                                         "My goddamn telephone":
 
+                                            show cg covers 0 with Dissolve(0.2)
                                             n "Huh."
                                             n "Can we talk about it?"
                                             "Cassiopeia shrinks into his bed."
-                                            n ""
+                                            n "No?"
+                                            c "We can!{w=0.25} I just...{w=0.25} I don't...{w=0.25} I don't know what I was thinking.{w=0.25} I don't know why I said that."
+                                            n "I don't either..."
                                             
                                             return
 
@@ -293,7 +320,6 @@ label scammer:
     c "Yeah,{w=0.25} I-I can handle myself!"
     g "No,{w=0.25} you've developed a gambling addiction over a mediocre RPG."
     i "Well...{w=0.25} It's not gambling if there's no monetary value involved."
-
 
     g "I've been trying to talk sense into him all day!{w=0.25} He needs to hear it from someone like you."
     i 'What do you mean "someone like me?"'

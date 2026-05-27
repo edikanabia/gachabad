@@ -299,7 +299,7 @@ screen testphone2():
         
 
 screen deliciousgummy():
-    textbutton "delicious gummy" align(0.5, 0.6) action [RollForward(), Hide(screen=None)]
+    textbutton "delicious gummy" align(0.5, 0.6) action [Jump("weed"), Hide(screen=None)]
 
 transform balancepos:
     align 0.5

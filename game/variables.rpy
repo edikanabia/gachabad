@@ -216,19 +216,39 @@ image cg green = Solid("#486316")
 image cg covers 0 = Image("cg_covers_0.png")
 image cg covers 1 = Image("cg_covers_1.png")
 image cg covers 2 = Image("cg_covers_2.png")
+image cg covers 3 = Image("cg_covers_3.png")
+image cg covers 4 = Image("cg_covers_4.png")
 #image cg ceiling
 #image cg warning
 #image cg thatsit
 #chase sequence cg might be more elaborate
 
 #gabriel's talk sprites
+#pose 1
 image gabriel neutral = Image("ch_gabriel_neutral.png")
 image gabriel smug = Image("ch_gabriel_smug.png")
 image gabriel concern = Image("ch_gabriel_concern.png")
 image gabriel annoyed = Image("ch_gabriel_annoyed.png")
 image gabriel unimpressed = Image("ch_gabriel_unimpressed.png")
+#pose 2
 image gabriel groggy = Image("ch_gabriel_groggy.png")
 image gabriel rage = Image("ch_gabriel_rage.png")
+
+#niecy's talk sprites
+#pose 1
+image niecy neutral = Image("ch_niecy_neutral.png")
+image niecy smile open = Image("ch_niecy_smile_open.png")
+image niecy smile close = Image("ch_niecy_smile_close.png")
+image niecy smile speed = Image("ch_niecy_smile_speed.png")
+image niecy concern = Image ("ch_niecy_concern.png")
+image niecy confuse = Image("ch_niecy_confuse.png")
+image niecy coy = Image("ch_niecy_coy.png")
+image niecy unimpressed = Image("ch_niecy_unimpressed.png")
+
+#pose 2
+image niecy angry = Image("ch_niecy_anger.png")
+image niecy relief = Image("ch_niecy_relief.png")
+image niecy uhoh = Image("ch_niecy_uhoh.png")
 
 #endregion
 
