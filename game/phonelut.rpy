@@ -73,12 +73,20 @@ label facecover:
     return
 
 label rolldisplay(pulls):
-    show screen gachadebug
     $ can_pull = False
+    $ gems_to_spend = pulls * pull_cost
+    if gems_to_spend > gems:
+        show text "Not enough gems!"
+        pause 1.0
+        hide text with dissolve
+        $ can_pull = True
+        return
+    $ gems -= gems_to_spend
 
     $ iterator = 0
     while iterator < pulls:
         $ current_guy = gacha_puller.pull_guy()
+        
         image guy:
             current_guy.image
             align (0.5, 0.5)
@@ -89,9 +97,16 @@ label rolldisplay(pulls):
         pause 1.0
         hide guy with dissolve
         #hide text with dissolve
+        #it might help to end the pulls early and jump out of the loop the moment cassiopeia pulls the guy
+        if current_guy.is_the_guy:
+            $ guy_end = True
+            #but as of right now, jumping directly from the loop,
+            #$ renpy.pop_call()
+            #jump theguy
+            return
         $ iterator += 1
     
-    hide screen gachadebug
+
     $ can_pull = True
     return
 
@@ -100,6 +115,8 @@ label theguy:
     c "I got the guy."
     n "You got the guy?" #Speaker depends on who's on screen right now. 
     c "I got the guy! {w=0.25}Oh my god,{w=0.25} I got the guy!"
+    #persistent variable is commented out for testing other routes.
+    #$ persistent.got_the_guy = True
     return
 
 label endthegame:

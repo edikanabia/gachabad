@@ -7,7 +7,8 @@ label start:
     scene bg black
     #show screen testphone2
     #jump scammer
-    jump theendlessloop
+    show screen gachadebug
+    jump timerland
     if persistent.got_the_guy:
         jump postguy
     else:
@@ -389,6 +390,14 @@ label partone:
 label phoneinterrupttest:
     g "Cassiopeia!{w=0.25} Surely,{w=0.25} this game can't be more important than your girlfriend."
     
+    return
+
+label timerland:
+    show screen timer
+    show screen countdown
+    show screen storefront
+    while True:
+        "This is a test of the storebuttons."
     return
 
 #test loop

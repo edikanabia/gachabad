@@ -136,7 +136,7 @@ init 1 python:
             #the last value in the pool are the weights
             self.__normal_pool = [self.__commons, self.__uncommons, self.__rares, self.__super_rares, self.__ultra_rares, [55,92,97,99,100]]
             self.__first_pool = [self.__commons, self.__uncommons, self.__rares, self.__super_rares, [55,90,97,100]] #the first pull will never get the guy
-            self.__pity_pool = [self.__rares, self.__super_rares, self.__ultra_rares, [45,45,100]]
+            self.__pity_pool = [self.__rares, self.__super_rares, self.__ultra_rares, [45,90,100]]
             self.__is_first_roll = True
         
         def __gacha_rand(self, pool):
@@ -198,9 +198,9 @@ default roll_obj = Gacha.pull_guy
 default can_pull = True
 default guy_end = False
 
-default money_spent = 0       
-default gems = 115
 
+default gems = 150
+define pull_cost = 7
 
 #timer mechanics
 
@@ -209,6 +209,23 @@ default seconds_10s = 0
 default minutes = 0
 default minutes_10s = 0
 default hours = 3
+
+init python:
+    import decimal as d
+    money_spent = d.Decimal('0.00')
+    #define all decimal objects here.
+    gem_price_1 = d.Decimal('0.99')
+    gem_price_2 = d.Decimal('4.99')
+    gem_price_3 = d.Decimal('19.99')
+    gem_price_4 = d.Decimal('29.99')
+    gem_price_5 = d.Decimal('49.99')
+    gem_price_6 = d.Decimal('99.99')
+    def update_money(amount):
+        #since we only need to add money, it won't be too complex.
+        #it accepts one argument.
+        global money_spent
+        money_spent += amount
+    
 
 
 #phone interrupt mechanic

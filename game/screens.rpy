@@ -309,15 +309,14 @@ screen gachadebug():
         text "Pity count: [gacha_puller.get_pity_count()]"
         text "Pity next roll: [gacha_puller.get_pity_active()]"
         text "Is first roll: [gacha_puller.get_is_first_roll()]"
+        text "Gems: [gems]"
+        text "Money spent: $[money_spent]"
 
 screen deliciousgummy():
     textbutton "delicious gummy" align(0.5, 0.6) action [Jump("weed"), Hide(screen=None)]
 
-transform balancepos:
-    align 0.5
-
 screen timer():
-    text "Buy Luna Clocks to make this timer go down faster! [hours]:[minutes_10s][minutes]:[seconds_10s][seconds]" xalign 0.5 yalign 0.5
+    text "Buy Luna Clocks to make this timer go down faster! [hours]:[minutes_10s][minutes]:[seconds_10s][seconds]" color "#0000"
     if seconds > 0:
         #ones place second timer
         timer 1.0: 
@@ -341,8 +340,20 @@ screen timer():
 
 #this screen will become the timer countdown in the game
 screen countdown():
-    text "[hours]:[minutes_10s][minutes]:[seconds_10s][seconds]" xalign 0.5 yalign 0.75
+    vbox:
+        text "[hours]:[minutes_10s][minutes]:[seconds_10s][seconds]"
+        xalign 0.5 yalign 0.5
 
+screen storefront():
+    vbox:
+        text "Gem Shop"
+        textbutton "99 gems" action Function(update_money, gem_price_1)
+        textbutton "499 gems + 100 bonus gems" action Function(update_money, gem_price_2)
+        textbutton "999 gems + 200 bonus gems" action Function(update_money, gem_price_3)
+        textbutton "1999 gems + 400 bonus gems" action Function(update_money, gem_price_4)
+        textbutton "4999 gems + 800 bonus gems" action Function(update_money, gem_price_5)
+        textbutton "9999 gems + 1600 bonus gems" action Function(update_money, gem_price_6)
+        align (1.0, 0.0)
 
     
     
