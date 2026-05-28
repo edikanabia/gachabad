@@ -155,8 +155,26 @@ label gabriel2:
 
 #storypath
 label realed:
-    
+    show cg covers 3 with Dissolve(0.2)
     e "Yo.{w=0.25} Get up."
+    c "Ed!"
+    c "You look handsome today."
+    #email notification
+    c "Oh,{w=0.25} one second."
+    #it's an email sent to the entire building. It reads
+    #Intervention Scheduling:
+    #Hello all,
+    #Cassiopeia thinks I'm hot despite dating our beatuiful and intelligent receptionist and bookkeeper Niecy.
+    #Please respond to this email with availability so we can arrange an intervention about the perils of cheating.
+    #Best,
+    #Dr. Mulligan, Tower Mage
+    #It already has a response.
+    #Re: Intervention Scheduling
+    #Ken Klippenstein: UNTAG ME
+    
+    c "Ed,{w=0.25} you're so mean to me."
+    e "Tell it to the judge."
+    c ""
     
     e "I'm a trickster,{w=0.25} not a terrorist."
     return
