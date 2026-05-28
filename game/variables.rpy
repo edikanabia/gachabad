@@ -95,17 +95,19 @@ define config.all_character_callbacks = [count_repeat, spontaneous_handler.updat
 
 
 #make a bunch of test guys
-define test_guy_0 = Guy("theguy1", "placeholder_heart.png", 0)
-define test_guy_1 = Guy("theguy2", "placeholder_heart.png", 1)
-define test_guy_2 = Guy("theguy3", "placeholder_heart.png", 2)
-define test_guy_3 = Guy("theguy4", "placeholder_heart.png", 3)
-define test_guy_4 = Guy("theguy5", "placeholder_heart.png", 4)
-define all_guys = {test_guy_0, test_guy_1, test_guy_2, test_guy_3, test_guy_4}
+define test_guy_0 = Guy("theguy1", "ph_mint_heart.png", 0)
+define test_guy_1 = Guy("theguy2", "ph_brown_heart.png", 1)
+define test_guy_2 = Guy("theguy3", "ph_purple_heart.png", 2)
+define test_guy_3 = Guy("theguy4", "ph_mitski.png", 3)
+define test_guy_4 = Guy("theguy5", "ph_baba.png", 4)
+define test_the_guy = Guy("he's The GUY", "ph_the_guy.png",4, is_the_guy = True)
+define all_guys = {test_guy_0, test_guy_1, test_guy_2, test_guy_3, test_guy_4, test_the_guy}
+
 
 init 1 python:
     class Gacha:
         total_rolls = 0
-        pity_threshold = 100
+        pity_threshold = 25
         def __init__(self, set_of_all_guys):
             self.__total_rolls = 0
             self.__pity_count = 0
@@ -132,9 +134,9 @@ init 1 python:
                         
                 pass
             #the last value in the pool are the weights
-            self.__normal_pool = [self.__commons, self.__uncommons, self.__rares, self.__super_rares, self.__ultra_rares, [55,90,97,99,100]]
+            self.__normal_pool = [self.__commons, self.__uncommons, self.__rares, self.__super_rares, self.__ultra_rares, [55,92,97,99,100]]
             self.__first_pool = [self.__commons, self.__uncommons, self.__rares, self.__super_rares, [55,90,97,100]] #the first pull will never get the guy
-            self.__pity_pool = [self.__rares, self.__super_rares, self.__ultra_rares, [45,45,10]]
+            self.__pity_pool = [self.__rares, self.__super_rares, self.__ultra_rares, [45,45,100]]
             self.__is_first_roll = True
         
         def __gacha_rand(self, pool):
@@ -148,24 +150,33 @@ init 1 python:
 
 
         def pull_guy(self):
-            self.total_rolls += 1 #keeps track of all rolls
-            self.__pity_count += 1 #keeping track of the pity roll counter
-            if self.__pity_count >= self.pity_threshold:
-                self.__pity_active = True #if the pity counter reaches the threshold, the pity roll is active
 
             if self.__is_first_roll == True:
                 this_guy = self.__gacha_rand(self.__first_pool) #first pull randomizer
                 self.__is_first_roll = False #turns off first pull flag
+                self.__total_rolls += 1 #keeps track of all rolls
+                self.__pity_count += 1 #keeping track of the pity roll counter
+                if self.__pity_count >= self.pity_threshold:
+                    self.__pity_active = True #if the pity counter reaches the threshold, the pity roll will be active for the next roll
                 #this_guy.image added to gallery (list of guys)
-                return this_guy
+                return this_guy[0]
             elif self.__pity_active:
                 this_guy = self.__gacha_rand(self.__pity_pool) #pity randomizer
                 self.__pity_count = 0 #resets count and turns off pity roll
                 self.__pity_active = False
-                return this_guy
+                self.__total_rolls += 1 #keeps track of all rolls
+                self.__pity_count += 1 #keeping track of the pity roll counter
+                if self.__pity_count >= self.pity_threshold:
+                    self.__pity_active = True #if the pity counter reaches the threshold, the pity roll will be active for the next roll                
+                return this_guy[0]
             else:
                 this_guy = self.__gacha_rand(self.__normal_pool) #regular randomizer
-                return this_guy
+                self.__total_rolls += 1 #keeps track of all rolls
+                self.__pity_count += 1 #keeping track of the pity roll counter
+                if self.__pity_count >= self.pity_threshold:
+                    self.__pity_active = True #if the pity counter reaches the threshold, the pity roll will be active for the next roll
+                return this_guy[0]
+
 
             #the object that comes out of pull guy should be a Guy object
         
@@ -176,8 +187,16 @@ init 1 python:
         def get_pity_active(self):
             return self.__pity_active
 
+        def get_total_rolls(self):
+            return self.__total_rolls
+
+        def get_is_first_roll(self):
+            return self.__is_first_roll
+
 default gacha_puller = Gacha(all_guys)
 default roll_obj = Gacha.pull_guy
+default can_pull = True
+default guy_end = False
 
 default money_spent = 0       
 default gems = 115
@@ -223,6 +242,47 @@ image cg covers 4 = Image("cg_covers_4.png")
 #image cg thatsit
 #chase sequence cg might be more elaborate
 
+#cutins
+#note: to show multiple cutins at once, use the "as" statement to dyanmically assign a new tag to the second cutin
+transform handpos:
+    pos (800, 700)
+    pause 1.0
+    pos (150, 50)
+
+image cutin gummy1 = Image("ci_ed_appears.png")
+layeredimage cutin gummy2:
+    always:
+        "ci_gummy_background"
+    attribute gummy:
+        image:
+            "ci_gummy_gummy"
+        pos (300, 380)
+  
+    group hand:
+        attribute fist:
+            image:
+                "ci_gummy_hand_fist"
+                pos (0, 0)
+                
+                
+            
+                
+            
+        attribute splay:
+            image:
+                "ci_gummy_hand_splay"
+                pos (150, 50)
+        
+
+image cutinraw = LayeredImageProxy("cutin gummy2")
+image maskedcutin = AlphaMask("cutinraw", "ci_gummy_mask.png")
+        
+
+        
+    
+    
+
+
 #gabriel's talk sprites
 #pose 1
 image gabriel neutral = Image("ch_gabriel_neutral.png")
@@ -246,7 +306,7 @@ image niecy coy = Image("ch_niecy_coy.png")
 image niecy unimpressed = Image("ch_niecy_unimpressed.png")
 
 #pose 2
-image niecy angry = Image("ch_niecy_anger.png")
+image niecy angry = Image("ch_niecy_angry.png")
 image niecy relief = Image("ch_niecy_relief.png")
 image niecy uhoh = Image("ch_niecy_uhoh.png")
 

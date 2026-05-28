@@ -1,3 +1,4 @@
+#game mechanic
 label lookuptable(index):
     #index is equal to a global variable that keeps track of where in the script you are
     #the test index is -1. if the index is null or 0, nothing happens.
@@ -16,6 +17,7 @@ label lookuptable(index):
         $ renpy.pop_call()
         jump start.phonereturn1
     elif index == 2:
+        #Gabriel appearing for the first time
         $ story_index = 0
         g "Cassiopeia!"
         $ renpy.pop_call()
@@ -40,6 +42,7 @@ label lookuptable(index):
 
     return
 
+#game mechanic
 label repeatcheck:
     #flags will change the specifics of who says what
     $ repeat_count += 1
@@ -63,9 +66,33 @@ label repeatcheck:
     #prevent player from accessing rollback when game is closer to finished
     return
 
+#game mechanic
 label facecover:
     n "..." #shocked
     n "{size=*0.5}At least pretend to pay attention...{/size}"
+    return
+
+label rolldisplay(pulls):
+    show screen gachadebug
+    $ can_pull = False
+
+    $ iterator = 0
+    while iterator < pulls:
+        $ current_guy = gacha_puller.pull_guy()
+        image guy:
+            current_guy.image
+            align (0.5, 0.5)
+
+        show guy with dissolve
+        #show text "the guy's name"
+        
+        pause 1.0
+        hide guy with dissolve
+        #hide text with dissolve
+        $ iterator += 1
+    
+    hide screen gachadebug
+    $ can_pull = True
     return
 
 #ending
@@ -73,6 +100,9 @@ label theguy:
     c "I got the guy."
     n "You got the guy?" #Speaker depends on who's on screen right now. 
     c "I got the guy! {w=0.25}Oh my god,{w=0.25} I got the guy!"
+    return
+
+label endthegame:
     return
 
 label postguy:

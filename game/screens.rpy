@@ -293,10 +293,22 @@ screen testphone():
         action Call("lookuptable", story_index)
 
 screen testphone2():
-    textbutton "I'm a gambling addiction!":
-        at testphonepos
-        action Function(roll_obj, gacha_puller) #need to find a way to get the return value out of the callable
-        
+    vbox:
+        textbutton "Roll once":
+            sensitive (can_pull == True)
+            action Call("rolldisplay", 1)
+        textbutton "Roll ten times":
+            sensitive (can_pull == True)
+            action Call("rolldisplay", 10)
+        at truecenter
+    
+
+screen gachadebug():
+    vbox:
+        text "Total rolls: [gacha_puller.get_total_rolls()]"
+        text "Pity count: [gacha_puller.get_pity_count()]"
+        text "Pity next roll: [gacha_puller.get_pity_active()]"
+        text "Is first roll: [gacha_puller.get_is_first_roll()]"
 
 screen deliciousgummy():
     textbutton "delicious gummy" align(0.5, 0.6) action [Jump("weed"), Hide(screen=None)]

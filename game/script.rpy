@@ -7,7 +7,7 @@ label start:
     scene bg black
     #show screen testphone2
     #jump scammer
-    
+    jump theendlessloop
     if persistent.got_the_guy:
         jump postguy
     else:
@@ -16,7 +16,7 @@ label start:
     #$ spontaneous_handler.add_spontaneous(greenout)
     
     show screen repeatthat
-    show screen testphone
+    show screen testphone2
     $ story_index = -1
     "It's a lazy Saturday at the Spelltower,{w=0.25} and everyone is cooped up indoors..." 
     "Especially Cassiopeia.{w=0.25} Cassiopeia has been enamored with a new game he downloaded onto his new phone just last week!"
@@ -297,9 +297,14 @@ label quieres:
         "What did you call me":
             pass
     $ has_gummy = True
+    show cutin gummy1 with dissolve:
+        align (0.2, 0.4)
+    pause 1.0
+    show maskedcutin as cutin2 with dissolve
 
     label .ignore:
         e "See ya."
+
     if has_gummy:
         c "So...{w=0.25} what happens if I take this?"
         n "Don't eat that."
@@ -380,7 +385,17 @@ label partone:
     "{i}You can change the duration of Auto-Advance in the Preferences menu.{/i}"
     return
 
+#testing
 label phoneinterrupttest:
     g "Cassiopeia!{w=0.25} Surely,{w=0.25} this game can't be more important than your girlfriend."
     
+    return
+
+#test loop
+label theendlessloop:
+    while True:
+        show screen testphone2
+        "Click the gacha button and mark the result."
+        if guy_end:
+            jump theguy
     return
