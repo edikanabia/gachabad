@@ -312,37 +312,27 @@ screen gachadebug():
         text "Gems: [gems]"
         text "Money spent: $[money_spent]"
 
+screen rolldisplay(pulls):
+    #add image displayable
+    
+    pass
+
+
+
 screen deliciousgummy():
-    textbutton "delicious gummy" align(0.5, 0.6) action [Jump("weed"), Hide(screen=None)]
+    imagebutton idle "sc_gummy.png" hover "sc_gummy_hover.png" pos (1500, 650) action [Hide(screen=None), Call("cantfeelshit")]
 
 screen timer():
-    text "Buy Luna Clocks to make this timer go down faster! [hours]:[minutes_10s][minutes]:[seconds_10s][seconds]" color "#0000"
-    if seconds > 0:
-        #ones place second timer
-        timer 1.0: 
-            action IncrementVariable("seconds", amount=-1)
-            repeat True
-    else:
-        #tens place second timer
-        timer 1.0:
-            action [SetVariable("seconds", 9), IncrementVariable("seconds_10s", -1)]
-        
-        #ones place minute timer
-        if seconds_10s <= 0:
-            timer 1.0 action [SetVariable("seconds_10s", 6), IncrementVariable("minutes", -1)]
-            if minutes <= 0:
-                timer 1.0 action [SetVariable("minutes", 10), IncrementVariable("minutes_10s", -1)]
-                
-                if minutes_10s <= 0:
-                    timer 1.0 action [SetVariable("minutes_10s", 6), IncrementVariable("hours", -1)]
-                    if hours <=0:
-                        timer 1.0 action [SetVariable("hours", 3)]
+    text "Get gems when the timer finishes. Buy Luna Clocks to make this timer go down faster! [current_time]" color "#0000"
+
 
 #this screen will become the timer countdown in the game
 screen countdown():
     vbox:
-        text "[hours]:[minutes_10s][minutes]:[seconds_10s][seconds]"
+        #text "[hours]:[minutes_10s][minutes]:[seconds_10s][seconds]"
+        text "[current_time] remaining. \nGet gems when the timer resets!"
         xalign 0.5 yalign 0.5
+        timer 1.0 action Function(decrement_timer) repeat True
 
 screen storefront():
     vbox:
@@ -354,6 +344,13 @@ screen storefront():
         textbutton "4999 gems + 800 bonus gems" action Function(update_money, gem_price_5)
         textbutton "9999 gems + 1600 bonus gems" action Function(update_money, gem_price_6)
         align (1.0, 0.0)
+
+        text "Luna Clocks"
+        textbutton "1-minute reduction" action Function(buy_time, 60,time_price_1)
+        textbutton "10-minute reduction" action Function(buy_time, 600,time_price_2)
+        textbutton "30-minute reduction" action Function(buy_time, 1800,time_price_3)
+        textbutton "1-hour reduction" action Function(buy_time, 3600,time_price_4)
+        textbutton "Full reset" action Function(buy_time, 10800,time_price_5)
 
     
     

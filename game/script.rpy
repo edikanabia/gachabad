@@ -7,8 +7,8 @@ label start:
     scene bg black
     #show screen testphone2
     #jump scammer
-    show screen gachadebug
-    jump timerland
+    #show screen gachadebug
+    #jump timerland
     if persistent.got_the_guy:
         jump postguy
     else:
@@ -17,8 +17,9 @@ label start:
     #$ spontaneous_handler.add_spontaneous(greenout)
     
     show screen repeatthat
-    show screen testphone2
+    #show screen testphone2
     $ story_index = -1
+    call quieres #testing the weed mechanic
     "It's a lazy Saturday at the Spelltower,{w=0.25} and everyone is cooped up indoors..." 
     "Especially Cassiopeia.{w=0.25} Cassiopeia has been enamored with a new game he downloaded onto his new phone just last week!"
     "It's called...{w=0.25} um...{w=0.25} Well,{w=0.25} he can't remember what it's called.{w=0.25} But he's absolutely hooked!"
@@ -27,7 +28,7 @@ label start:
     "The day he downloaded it,{w=0.25} he showed it to Gabriel in a euphoric frenzy."
     "But Gabriel,{w=0.25} in typical Gabriel fashion,{w=0.25} took one look at it and called him a moron."
     "So now he has to play it under the covers,{w=0.25} where no one can see his shame."
-    call quieres #testing the weed mechanic
+    
     show screen testphone
 
     "The guy Cassiopeia wants is in the time-limited banner today.{w=0.25} It's the last opportunity to get him before the next season starts---tomorrow!"
@@ -281,6 +282,13 @@ label jorkinit:
     jump start.showphone
     return
 
+label cantfeelshit:
+    "..."
+    $ spontaneous_handler.add_spontaneous(greenout)
+    "Nothing happened..."
+    return
+
+#event
 label quieres:
     #show ed
     e "Yo."
@@ -305,6 +313,8 @@ label quieres:
 
     label .ignore:
         e "See ya."
+    hide cutin with dissolve
+    hide cutin2 with dissolve
 
     if has_gummy:
         c "So...{w=0.25} what happens if I take this?"
@@ -392,6 +402,7 @@ label phoneinterrupttest:
     
     return
 
+#test loop
 label timerland:
     show screen timer
     show screen countdown

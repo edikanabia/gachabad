@@ -58,7 +58,7 @@ init 0 python:
             
         def add_spontaneous(self, spontaneous):
             self.current_spontaneous = spontaneous #we'll see if we can pull the data from just the object
-            renpy.notify("added [self.current_spontaneous.label]")
+            
             
         def update_spontaneous(self, event, interact=True, **kwargs):
             if event is "end":
@@ -220,11 +220,51 @@ init python:
     gem_price_4 = d.Decimal('29.99')
     gem_price_5 = d.Decimal('49.99')
     gem_price_6 = d.Decimal('99.99')
+    time_price_1 = d.Decimal('1.49')
+    time_price_2 = d.Decimal('5.49')
+    time_price_3 = d.Decimal('9.49')
+    time_price_4 = d.Decimal('16.49')
+    time_price_5 = d.Decimal('27.49')
+    
+
     def update_money(amount):
         #since we only need to add money, it won't be too complex.
         #it accepts one argument.
         global money_spent
         money_spent += amount
+
+    import datetime as dt
+    timer_started = False
+    max_time = dt.timedelta(hours=3)
+    time_elapsed = 0
+    current_time = max_time
+    
+    def decrement_timer():
+        global time_elapsed
+        global current_time
+        if current_time.seconds <= 0:
+            current_time = max_time
+            time_elapsed = 0
+            return
+        time_elapsed += 1
+        current_time = dt.timedelta(seconds=max_time.seconds-time_elapsed)
+
+    def buy_time(amount_in_seconds, price):
+        global time_elapsed
+        global current_time
+        total_passed_time = time_elapsed + amount_in_seconds
+        time_check = max_time.seconds - total_passed_time
+        update_money(price)
+        if time_check < 0:
+            current_time = max_time
+            time_elapsed = 0
+            return
+        else:
+            time_elapsed += amount_in_seconds
+            current_time = dt.timedelta(seconds=max_time.seconds-time_elapsed)
+
+
+    
     
 
 
