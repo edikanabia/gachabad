@@ -7,8 +7,8 @@ label start:
     scene bg black
     #show screen testphone2
     #jump scammer
-    #show screen gachadebug
-    #jump timerland
+    show screen gachadebug
+    jump theendlessloop
     if persistent.got_the_guy:
         jump postguy
     else:
@@ -32,7 +32,8 @@ label start:
     show screen testphone
 
     "The guy Cassiopeia wants is in the time-limited banner today.{w=0.25} It's the last opportunity to get him before the next season starts---tomorrow!"
-    "It would be a good time to try for the guy during some downtime." #set interact to false on this line until the gacha roll occurs.
+    "It would be a good time to try for the guy during some downtime."
+    #call screen phone
     #the first roll will always fail
     $ is_first_roll = False
 
@@ -325,11 +326,12 @@ label quieres:
 #ending
 label weed:
     #stop auto forward
-    
-    c "OH-{nw=0.25}"
-    show cg green with Dissolve(2.0)
-    #play sound greened
     #if music is playing stop the music
+    c "Uh,{w=0.25} hold on."
+    c "I feel a little,{w=0.25} uh, {w=0.25}I feel a little..."
+    c "Uh...{nw=0.25}"
+
+    show cg green with Dissolve(2.0)
     "Cassiopeia greened out!"
     return
 
@@ -414,6 +416,7 @@ label timerland:
 #test loop
 label theendlessloop:
     while True:
+        show screen phone
         show screen testphone2
         "Click the gacha button and mark the result."
         if guy_end:

@@ -112,6 +112,7 @@ label rolldisplay(pulls):
 
 #ending
 label theguy:
+    #if the phone is on screen hide the phone
     c "I got the guy."
     n "You got the guy?" #Speaker depends on who's on screen right now. 
     c "I got the guy! {w=0.25}Oh my god,{w=0.25} I got the guy!"

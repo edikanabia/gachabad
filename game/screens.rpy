@@ -296,12 +296,14 @@ screen testphone2():
     vbox:
         textbutton "Roll once":
             sensitive (can_pull == True)
-            action Call("rolldisplay", 1)
+            action [Show("rolldisplay", transition=None, pulls=1)]
         textbutton "Roll ten times":
             sensitive (can_pull == True)
-            action Call("rolldisplay", 10)
+            action [Show("rolldisplay", transition=None, pulls=10)]
         at truecenter
     
+
+
 
 screen gachadebug():
     vbox:
@@ -311,11 +313,56 @@ screen gachadebug():
         text "Is first roll: [gacha_puller.get_is_first_roll()]"
         text "Gems: [gems]"
         text "Money spent: $[money_spent]"
+        text "Can pull: [can_pull]"
+        #textbutton "pull_toggle" action ToggleScreen("rolldisplay")
 
 screen rolldisplay(pulls):
-    #add image displayable
-    
+    default pulls = 1
+
+    #variables that add delay to images
+    default current_pull_index = 0
+    default final_pull_index = pulls - 1
+
+    #makes the player unable to pull while this is on screen and reactivates when it's done
+    on "show" action SetVariable("can_pull", False)
+
+    #checks how many gems the player is going to spend
+    default gems_to_spend = pulls * pull_cost
+    if gems_to_spend > gems:
+        text "Not enough gems!"
+        timer 1.0 action [Return(), Hide()] #kicks the player out of this screen
+    else:
+        #clears the list if it's not empty
+
+        if pulls >= 10:
+            # ten-pulls get one additional bonus pull
+            $ pulls +=1
+        
+        #Roll all the guys in the number of pulls, populating the list
+        for pull in range(0, pulls):
+            timer 0.01 action PullGuy()
+        if list_of_pulls:
+            add DynamicImage(list_of_pulls[current_pull_index].image)
+            if list_of_pulls[current_pull_index].is_the_guy:
+                timer 1.0 action [Return(), Jump("theguy"), Hide()]
+            elif current_pull_index < final_pull_index:
+                timer 1.0 action IncrementScreenVariable("current_pull_index") repeat True
+            else:
+                timer 1.0 action [Return(), Hide()]
+    on "hide" action [SetVariable("can_pull", True), list_of_pulls.clear]
     pass
+
+#transform gacha_get():
+
+
+
+screen phone():
+    drag:
+        imagemap:
+            auto "sc_phone_shop_%s.png"
+            hotspot (20, 80, 43,43) action [IncrementVariable("gems", 99), Function(update_money, gem_price_1)]
+        
+
 
 
 

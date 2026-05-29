@@ -101,7 +101,7 @@ define test_guy_2 = Guy("theguy3", "ph_purple_heart.png", 2)
 define test_guy_3 = Guy("theguy4", "ph_mitski.png", 3)
 define test_guy_4 = Guy("theguy5", "ph_baba.png", 4)
 define test_the_guy = Guy("he's The GUY", "ph_the_guy.png",4, is_the_guy = True)
-define all_guys = {test_guy_0, test_guy_1, test_guy_2, test_guy_3, test_guy_4, test_the_guy}
+define all_guys = {test_guy_0, test_guy_1, test_guy_2, test_guy_3, test_the_guy}
 
 
 init 1 python:
@@ -136,7 +136,7 @@ init 1 python:
             #the last value in the pool are the weights
             self.__normal_pool = [self.__commons, self.__uncommons, self.__rares, self.__super_rares, self.__ultra_rares, [55,92,97,99,100]]
             self.__first_pool = [self.__commons, self.__uncommons, self.__rares, self.__super_rares, [55,90,97,100]] #the first pull will never get the guy
-            self.__pity_pool = [self.__rares, self.__super_rares, self.__ultra_rares, [45,90,100]]
+            self.__pity_pool = [self.__rares, self.__super_rares, self.__ultra_rares, [0,0,100]]
             self.__is_first_roll = True
         
         def __gacha_rand(self, pool):
@@ -150,7 +150,7 @@ init 1 python:
 
 
         def pull_guy(self):
-
+            global current_guy
             if self.__is_first_roll == True:
                 this_guy = self.__gacha_rand(self.__first_pool) #first pull randomizer
                 self.__is_first_roll = False #turns off first pull flag
@@ -159,6 +159,7 @@ init 1 python:
                 if self.__pity_count >= self.pity_threshold:
                     self.__pity_active = True #if the pity counter reaches the threshold, the pity roll will be active for the next roll
                 #this_guy.image added to gallery (list of guys)
+                current_guy = this_guy[0]
                 return this_guy[0]
             elif self.__pity_active:
                 this_guy = self.__gacha_rand(self.__pity_pool) #pity randomizer
@@ -167,7 +168,8 @@ init 1 python:
                 self.__total_rolls += 1 #keeps track of all rolls
                 self.__pity_count += 1 #keeping track of the pity roll counter
                 if self.__pity_count >= self.pity_threshold:
-                    self.__pity_active = True #if the pity counter reaches the threshold, the pity roll will be active for the next roll                
+                    self.__pity_active = True #if the pity counter reaches the threshold, the pity roll will be active for the next roll         
+                current_guy = this_guy[0]     
                 return this_guy[0]
             else:
                 this_guy = self.__gacha_rand(self.__normal_pool) #regular randomizer
@@ -175,6 +177,7 @@ init 1 python:
                 self.__pity_count += 1 #keeping track of the pity roll counter
                 if self.__pity_count >= self.pity_threshold:
                     self.__pity_active = True #if the pity counter reaches the threshold, the pity roll will be active for the next roll
+                current_guy = this_guy[0]
                 return this_guy[0]
 
 
@@ -193,14 +196,32 @@ init 1 python:
         def get_is_first_roll(self):
             return self.__is_first_roll
 
+
 default gacha_puller = Gacha(all_guys)
 default roll_obj = Gacha.pull_guy
 default can_pull = True
 default guy_end = False
 
+default current_guy = test_guy_0
 
 default gems = 150
 define pull_cost = 7
+
+default list_of_pulls = []
+
+init 2 python:
+    class PullGuy(Action):
+        def __call__(self):
+            global gacha_puller
+            global current_guy
+            global list_of_pulls
+            current_guy = gacha_puller.pull_guy()
+            unassuming_local_guy = current_guy
+            list_of_pulls.append(unassuming_local_guy)
+            return current_guy
+
+        pass
+
 
 #timer mechanics
 
