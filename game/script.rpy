@@ -7,8 +7,8 @@ label start:
     scene bg black
     #show screen testphone2
     #jump scammer
-    show screen gachadebug
-    jump theendlessloop
+    #show screen gachadebug
+    #jump theendlessloop
     if persistent.got_the_guy:
         jump postguy
     else:
@@ -16,28 +16,26 @@ label start:
     #$ greenout.lines_until = renpy.random.randint(0,3)
     #$ spontaneous_handler.add_spontaneous(greenout)
     
-    show screen repeatthat
+    #show screen repeatthat
     #show screen testphone2
     $ story_index = -1
-    call quieres #testing the weed mechanic
+    #call quieres #testing the weed mechanic
+    #call screen tutorialize
     "It's a lazy Saturday at the Spelltower,{w=0.25} and everyone is cooped up indoors..." 
     "Especially Cassiopeia.{w=0.25} Cassiopeia has been enamored with a new game he downloaded onto his new phone just last week!"
     "It's called...{w=0.25} um...{w=0.25} Well,{w=0.25} he can't remember what it's called.{w=0.25} But he's absolutely hooked!"
     $ story_index = 0
-    $ preferences.afm_enable = True #we can use renpy code to enable auto-forward in the script.
+    #$ preferences.afm_enable = True #we can use renpy code to enable auto-forward in the script.
     "The day he downloaded it,{w=0.25} he showed it to Gabriel in a euphoric frenzy."
     "But Gabriel,{w=0.25} in typical Gabriel fashion,{w=0.25} took one look at it and called him a moron."
     "So now he has to play it under the covers,{w=0.25} where no one can see his shame."
-    
-    show screen testphone
 
-    "The guy Cassiopeia wants is in the time-limited banner today.{w=0.25} It's the last opportunity to get him before the next season starts---tomorrow!"
+    "The guy Cassiopeia wants is in the time-limited banner today.{w=0.25} It's the last opportunity to get him before the next season starts—tomorrow!"
     "It would be a good time to try for the guy during some downtime."
-    #call screen phone
+    #call screen banner
     #the first roll will always fail
-    $ is_first_roll = False
 
-    #hide screen phone
+    #hide screen banner
 
     #play sound door_open
     "???" "Cassiopeia?{w=0.25} Are you in here?"
@@ -50,7 +48,8 @@ label start:
             pass
         "Shake your head":
             #play sound covers
-            n "Did something move under the- {nw=0.5}"
+            n "Did something move under the... {nw=0.5}"
+            #play sound footsteps
         "Don't move or say anything" if persistent.ed_not_niecy:
             "Cassiopeia lay on his bed in silence until he hears the footsteps recede."
             "Now he's in the dark and quiet."
@@ -64,9 +63,8 @@ label start:
             jump realed
 
     #play sound fwoom
-    show bg white with Dissolve(1.0)
-    pause 1.0
-    show cg covers 0 with Dissolve(0.5)
+    show bg white with Dissolve(1.0) #wipe up
+    show cg covers 0 with Dissolve(0.2)
 
     n "What are you doing?"
     menu:
@@ -79,7 +77,7 @@ label start:
             "She throws the cover back over him and leaves the room."
             "The end!"
             #it's not a dusty game without an early false ending!
-            $ persistent.true_reset_visible = True
+            $ persistent.true_reset_visible = True #move this to the other endings when building
             return
         "Say it's porn to chase her off" if persistent.girlfriend_flag:
             jump jorkinit
@@ -98,62 +96,41 @@ label start:
     c "Hm?"
     n "Does that sound good?"
     c "Yeah,{w=0.25} hang on."
-    show screen testphone
-    n "Okay...{nw=1.0}"(interact=False)
+    show screen testphone 
+    n "Okay...{nw=1.0}"
     n "Um,{w=0.25} how long is that gonna take?"
     $ story_index = 1
     menu:
-        "Answer":
+        "Uhhh...":
             $ story_index = 0
-            c "Until I get the guy I want."
-            n "Um..."
-            n "Surely this can wait."
+            c "Until I get the guy I want?"
+            n "Well...{w=0.25} I don't want to be dismissive,{w=0.25} but...{w=0.25} can it wait?"
             c "No,{w=0.25} the season ends today."
-            n "What does that mean?"
-            c "It means today is the last day I can get him.{w=0.25} I HAVE to get him now."
+            n "Okay,{w=0.25} then,{w=0.25} I'll wait for you,{w=0.25} but while you do that..."
 
     label .phonereturn1:
         $ story_index = 0
-    n "...Cas,{w=0.25} I don't think this game is very good for you..."
+    n "...we definitely need to talk."
 
     #end of intro.
     return
 
-#story path
-label gabriel1:
-    n "Oh!{w=0.25} Hey,{w=0.25} Gabriel!{w=0.25} How was your nap?"
-    g "It's not done...{w=0.25} I'm about to go back to sleep,{w=0.25} but..."
-    g "Piapia...{w=0.25} did you make a purchase recently?"
-    $ story_index = 2
-    menu:
-        "Yes":
-            $ story_index = 0
-            g "That's okay...{w=0.25} Just don't forget to let me know ahead of time."
-            return
-        "No":
-            $ story_index = 0
-            g "Umm...{w=0.25} yeah you did,{w=0.25} but that's okay..."
-            g "Just let me know next time,{w=0.25} and don't make a habit of lying..."
-            return
-    label .ignore1:
-        $ story_index = 3
-        g "Did you buy something!?"
-        menu:
-            "Yes":
-                pass
-            "No":
-                pass
-    label .ignore2:
-        g "You're not even listening..."
-        n "It's okay.{w=0.25} I can handle this."
-        g "Are you sure?"
-        
-    return
 
-#story path
-label gabriel2:
-    g "Piapia,{w=0.25} I gave you that card because I wanted you to be able to practice some autonomy."
-    g "You've been so responsible iwith it up until now.{w=0.25} What happened!?"
+#storypath
+label gabrielroute:
+    g "Piapia,{w=0.25} I gave you that card because I wanted you to be able to practice some autonomy." #if you spent money these show
+    g "You've been so responsible with it up until now.{w=0.25} What happened?"
+    menu:
+        "Nothing":
+            pass
+    c 'Nothing "happened," Gabriel.{w=0.25} I\'m fine.'
+
+    g "Just how much money did you spend on this thing,{w=0.25} anyway...?"
+    if money_spent > 300:
+        g "JESUS CHRIST-"
+        g "[money_spent] DOLLARS!?"
+        jump givemeyourphone
+    #call screen givephone
     return
 
 #storypath
@@ -163,7 +140,7 @@ label realed:
     c "Ed!"
     c "You look handsome today."
     #email notification
-    c "Oh,{w=0.25} one second."
+    e "Oh,{w=0.25} one second."
     #it's an email sent to the entire building. It reads
     #Intervention Scheduling:
     #Hello all,
@@ -204,7 +181,7 @@ label jorkinit:
                     n "{cps=*0.5}Nooooo{/cps} you're not!"
                     c "{i}Yes,{w=0.25}{/i} I am!"
                     "Niecy gives Cassiopeia one more chance to tell the truth before..."
-                    "Hold on,{w=0.25} before what?{w=0.25} What's she gonna do!?{w=0.25} Her lips curl into a mischievous smile..."
+                    "Hold on,{w=0.25} before what?{w=0.25} What's she gonna do!?"
                     menu:
                         "I'm totally jorkin' it, dog":
                             n "Then you don't have a problem with me joining you,{w=0.25} do you?{w=0.25} {i}If{/i} that's what you're doing."
@@ -244,7 +221,7 @@ label jorkinit:
                                     c "Yeah."
                                     "Niecy sighs."
                                     show cg covers 2 with Dissolve(0.2)
-                                    n "Cas...{w=0.25} {size=*0.85}Cassie.{/size}{w=0.25} You have an important decision to make:{w=0.25}{p=0.25}Which is more important to you?{w=0.25} Your girlfriend,{w=0.25} or your fucking telephone?"
+                                    n "Well,{w=0.25} Cas...{w=0.25} {size=*0.85}Cassie.{/size}{w=0.25} You have an important decision to make:{w=0.25}{p=0.25}Which is more important to you?{w=0.25} Your girlfriend,{w=0.25} or your fucking telephone?"
                                     menu:
                                         "Touch of a woman":
                                             show cg covers 2 with Dissolve(0.2)
@@ -258,7 +235,7 @@ label jorkinit:
                                             "Cassiopeia shrinks into his bed."
                                             n "No?"
                                             c "We can!{w=0.25} I just...{w=0.25} I don't...{w=0.25} I don't know what I was thinking.{w=0.25} I don't know why I said that."
-                                            n "I don't either..."
+                                            n "I don't either,{w=0.25} but something must be wrong."
                                             
                                             return
 
@@ -289,7 +266,7 @@ label cantfeelshit:
     "Nothing happened..."
     return
 
-#event
+#event ed
 label quieres:
     #show ed
     e "Yo."
@@ -323,6 +300,80 @@ label quieres:
         show screen deliciousgummy
     return
 
+#event gabriel
+label gabriel1:
+    n "Hello? {nw=0.5}"
+    n "Hey,{w=0.25} Gabriel!{w=0.25} How was your nap?"
+    g "It's not done...{w=0.25} I'm about to go back to sleep,{w=0.25} but..."
+    g "Piapia...{w=0.25} did you make a purchase recently?"
+    $ story_index = 2
+    menu:
+        "Yes":
+            $ story_index = 0
+            g "That's okay...{w=0.25} Just don't forget to let me know ahead of time."
+            return
+        "No":
+            $ story_index = 0
+            g "Umm...{w=0.25} yeah you did,{w=0.25} but that's okay..."
+            g "Just let me know next time,{w=0.25} and don't make a habit of lying..."
+            return
+    label .ignore1:
+        $ story_index = 3
+        g "Did you buy something!?"
+        menu:
+            "Yes":
+                pass
+            "No":
+                pass
+    label .ignore2:
+        g "You're not even listening..."
+        n "It's okay.{w=0.25} I can handle this."
+        if niecy_irritation > 3:
+            g "No,{w=0.25} you look genuinely irritated already. {w=0.25}You aren't typically like that with him."
+            n "I know, {w=0.25}but I have to try..."
+            g "Sweetheart. {w=0.25}Let me talk to him. {w=0.25}I'll straighten him out."
+            n "Oh... {w=0.25}okay..."
+            jump gabrielroute
+        else:
+            g "Are you sure,{w=0.25} sweetheart?"
+            n "Positive."
+            g "All right,{w=0.25} I'll leave you to it...{w=0.25} but Cassiopeia?"
+            #stop spending my money on gacha games. cg and sound.       
+
+        
+    return
+
+#event gabriel
+label gabriel3:
+    #play sound door slamming open
+    #show gabriel rage
+    return
+
+#event ending
+label instakill:
+    #if music is playing stop music
+    #show cg instakill
+    return
+
+label givemeyourphone:
+    g "THAT'S IT."
+    g "CASSIOPEIA."
+    g "GIVE ME YOUR PHONE."
+    #callscreen givephone
+    return
+
+#ending
+label escapeseq:
+    return
+
+#ending
+label gavephone:
+    #show the give phone cgs
+    g "Now, you can have this back just as soon as you write a "
+    c ""
+    return
+
+
 #ending
 label weed:
     #stop auto forward
@@ -335,13 +386,9 @@ label weed:
     "Cassiopeia greened out!"
     return
 
-
-
 #ending
 label scammer:
 
-
-    
     c "Ah!{w=0.25} Uh-oh..."
     i "Cassiopeia?"
     #screenshake
@@ -351,6 +398,9 @@ label scammer:
     i "Gabriel. {w=0.25}...Wipe your drool."
     #gabriel wipes his drool
     i "What's going on?"
+    g "This little shit thinks he can pull a fast one on me!"
+    i "Can he?"
+    g "Not the point."
     g "Tell him stop spending my money on gacha games."
     i "Why?{w=0.25} He's not a child.{w=0.25} He can handle himself."
     c "Yeah,{w=0.25} I-I can handle myself!"
@@ -390,6 +440,41 @@ label scammer:
 
     return
 
+#ending
+label impostorconfront:
+    $ impostor_name = "NOT Ed..."
+    i "You're too late, {w=0.25}trickster warlock with an incoherent political ideology."
+    i "My plan is already in motion."
+    c "You're definitely more attractive,{w=0.25} but you're so cruel to me!"
+    return
+
+
+#ending
+label trueend:
+
+    return
+
+
+#ending
+label theguy:
+    #if the phone is on screen hide the phone
+    c "I got the guy."
+    n "You got the guy?" #Speaker depends on who's on screen right now. 
+    c "I got the guy! {w=0.25}Oh my god,{w=0.25} I got the guy!"
+    #persistent variable is commented out for testing other routes.
+    #$ persistent.got_the_guy = True
+    return
+
+#alternate intro
+label postguy:
+    "It's a lazy Saturday at the Spelltower,{w=0.25} and Cassiopeia is nowhere to be found."
+    "Last week on Sunday,{w=0.25} when he tried to log in,{w=0.25} he got an error message saying the game needed to be updated."
+    "He was sure his game was up-to-date,{w=0.25} but since he didn't know how to fix the error,{w=0.25} he had no choice but to set the game aside."
+    "It made him realize how pointless it all was."
+    "After all,{w=0.25} he wasn't even having fun."
+    "Well,{w=0.25} he hasn't thought about that game for a while."
+    "He's on a date with Niecy right now and he couldn't be happier."
+    return
 
 #placeholder
 label partone:

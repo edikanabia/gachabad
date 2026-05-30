@@ -4,13 +4,19 @@ default persistent.true_reset_visible = False
 default persistent.completed_playthroughs = 0
 default persistent.first_playthrough = True
 
-#story path flags
-default persistent.got_the_guy = False
-default persistent.girlfriend_flag = True
-default persistent.ed_not_niecy = False
+#story path and ending flags
+default persistent.got_the_guy = False #roll the guy by random chance
+default persistent.girlfriend_flag = True #have gabriel ask you if your game is more important than your girlfriend
+default found_gf_flag = False #nonpersisted flag that merely exists to prevent the player from acquiring the flag before finishing a route.
+default persistent.ed_appears = False 
+default persistent.seen_ed = False #set to true adter the player meets ed for the first time
 
-#ending flags
-default persistent.scammer_flag = False
+default persistent.impostor_seen = False #encounter impostor ed for the first time.
+default persistent.gabriel_complete = False #reach either end of a gabriel route
+default persistent.ed_complete = False #reach the end of the ed route
+default persistent.niecy_complete = False #reach the normal ending
+
+
 
 #endregion
 
@@ -19,12 +25,12 @@ default persistent.scammer_flag = False
 
 init 0 python:
     impostor_name = ""
-    if persistent.scammer_flag:
+    if persistent.seen_ed:
         impostor_name = "Ed?"
     else:
         impostor_name = "Ed"
 
-    repeat_count = 0
+    repeat_requests = 0
     since_last_repeat = 0 #increments every line.
     repeat_active = True
 
@@ -204,7 +210,7 @@ default guy_end = False
 
 default current_guy = test_guy_0
 
-default gems = 150
+default gems = 115
 define pull_cost = 7
 
 default list_of_pulls = []
@@ -223,13 +229,8 @@ init 2 python:
         pass
 
 
-#timer mechanics
+#timer and money mechanics
 
-default seconds = 0
-default seconds_10s = 0
-default minutes = 0
-default minutes_10s = 0
-default hours = 3
 
 init python:
     import decimal as d
@@ -273,12 +274,14 @@ init python:
     def buy_time(amount_in_seconds, price):
         global time_elapsed
         global current_time
+        global gems
         total_passed_time = time_elapsed + amount_in_seconds
         time_check = max_time.seconds - total_passed_time
         update_money(price)
         if time_check < 0:
             current_time = max_time
             time_elapsed = 0
+            gems += 50
             return
         else:
             time_elapsed += amount_in_seconds
@@ -290,15 +293,16 @@ init python:
 
 
 #phone interrupt mechanic
-default story_index = 0 #where in the story the player is
-default gabriel_present = False #true if gabriel is on screen
-default will_bother_niecy = False #true if an action will bother niecy at a particular moment
-default niecy_tolerance = 0 #counts the number of times you've irritated her
+
 #endregion
 
 #story variables/inventory
+default story_index = 0 #where in the story the player is
+default gabriel_present = False #true if gabriel is on screen
+
+default niecy_irritation = 0 #counts the number of times you've irritated her
+
 default has_gummy = False
-default gummy_line_countdown = 5 #after five lines, the greenout scene will play (unless you reach another ending.)
 
 #region Images and Transforms
 
@@ -400,8 +404,8 @@ image niecy uhoh = Image("ch_niecy_uhoh.png")
 #region Characters
 
 define c = Character("Cassiopeia")
-define n = Character("Niecy")
-define g = Character("Gabriel")
+define n = Character("Niecy", image="niecy")
+define g = Character("Gabriel", image="gabriel")
 define e = Character("Ed")
 define i = Character("impostor_name", dynamic=True)
 

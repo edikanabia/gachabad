@@ -14,6 +14,7 @@ label lookuptable(index):
         #in start, after Niecy asks how long he's gonna play the game
         n "Cas?{w=0.25} Did you hear me?"
         n "How long is this going to take?"
+        c "Huh!?"
         $ renpy.pop_call()
         jump start.phonereturn1
     elif index == 2:
@@ -45,7 +46,7 @@ label lookuptable(index):
 #game mechanic
 label repeatcheck:
     #flags will change the specifics of who says what
-    $ repeat_count += 1
+    $ repeat_requests += 1
     $ repeat_active = False #disable the repeat that button
 
     if since_last_repeat <= 4:
@@ -110,23 +111,3 @@ label rolldisplay(pulls):
     $ can_pull = True
     return
 
-#ending
-label theguy:
-    #if the phone is on screen hide the phone
-    c "I got the guy."
-    n "You got the guy?" #Speaker depends on who's on screen right now. 
-    c "I got the guy! {w=0.25}Oh my god,{w=0.25} I got the guy!"
-    #persistent variable is commented out for testing other routes.
-    #$ persistent.got_the_guy = True
-    return
-
-label endthegame:
-    return
-
-label postguy:
-    "It's a lazy Saturday at the Spelltower,{w=0.25} and Cassiopeia is nowhere to be found."
-    "Last week on Sunday,{w=0.25} when he tried to log in,{w=0.25} he got an error message saying the game needed to be updated."
-    "Cassiopeia was sure his game was up-to-date,{w=0.25} but since he didn't know how to fix this error,{w=0.25} he had no choice but to set the game aside."
-    "Well,{w=0.25} he hasn't thought about that game for a while."
-    "He's on a date with Niecy right now and he couldn't be happier."
-    return

@@ -265,6 +265,15 @@ style choice_button_text is default:
 
 #######################
 
+screen tutorialize():
+    frame:
+        textbutton "Done" action Return()
+        align (0.5, 0.5)
+
+
+
+#########################
+
 ## Position "repeat that" button at the bottom right, above the dialogue box
 transform repeatthatpos:
     align (1.0, 0.70)
@@ -282,9 +291,10 @@ screen repeatthat():
 
 ############################
 
+#debug screens
 #Position the button stand-in for the phone at the center of the screen
 transform testphonepos:
-    align (0.65, 0.5)
+    align (0.5, 0.65)
 
 #the button stand-in calls the phone-lut with the current story_index if the index isn't 0.
 screen testphone():
@@ -301,9 +311,6 @@ screen testphone2():
             sensitive (can_pull == True)
             action [Show("rolldisplay", transition=None, pulls=10)]
         at truecenter
-    
-
-
 
 screen gachadebug():
     vbox:
@@ -316,6 +323,8 @@ screen gachadebug():
         text "Can pull: [can_pull]"
         #textbutton "pull_toggle" action ToggleScreen("rolldisplay")
 
+##### Mechanics screens
+#controls the gacha pulls
 screen rolldisplay(pulls):
     default pulls = 1
 
@@ -352,34 +361,38 @@ screen rolldisplay(pulls):
     on "hide" action [SetVariable("can_pull", True), list_of_pulls.clear]
     pass
 
-#transform gacha_get():
+#controls the timer, allows it to continue counting down ingame
+screen countdown():
+    vbox:
+        #text "[hours]:[minutes_10s][minutes]:[seconds_10s][seconds]"
+        text "[current_time] remaining. \nGet gems when the timer resets!" color "#0000"
+        xalign 0.5 yalign 0.5
+        timer 1.0 action Function(decrement_timer) repeat True
 
 
-
-screen phone():
+#### Phone screens
+screen shop():
+    tag phone
     drag:
         imagemap:
             auto "sc_phone_shop_%s.png"
             hotspot (20, 80, 43,43) action [IncrementVariable("gems", 99), Function(update_money, gem_price_1)]
         
+screen banner():
+    tag phone
+
+screen timer():
+    tag phone
+    text "[current_time]" align (0.5, 0.5)
 
 
-
-
+#####Story Screens
 screen deliciousgummy():
     imagebutton idle "sc_gummy.png" hover "sc_gummy_hover.png" pos (1500, 650) action [Hide(screen=None), Call("cantfeelshit")]
 
-screen timer():
-    text "Get gems when the timer finishes. Buy Luna Clocks to make this timer go down faster! [current_time]" color "#0000"
-
-
-#this screen will become the timer countdown in the game
-screen countdown():
-    vbox:
-        #text "[hours]:[minutes_10s][minutes]:[seconds_10s][seconds]"
-        text "[current_time] remaining. \nGet gems when the timer resets!"
-        xalign 0.5 yalign 0.5
-        timer 1.0 action Function(decrement_timer) repeat True
+screen givephone():
+    #an imagemap with hotspots that also get tooltips. one returns a jump to escape sequence and the other to the normal gabriel ending.
+    pass
 
 screen storefront():
     vbox:
@@ -951,9 +964,11 @@ screen preferences():
 
                     label _("Auto-Forward Time")
                     hbox:
-                        textbutton _("Short") action Preference("auto-forward time", 1)
+                        textbutton _("Very Short") action Preference("auto-forward time", 1)
+                        textbutton _("Short") action Preference("auto-forward time", 7)
                         textbutton _("Medium") action Preference("auto-forward time", 15)
-                        textbutton _("Long") action Preference("auto-forward time", 30)
+                        textbutton _("Long") action Preference("auto-forward time", 22)
+                        textbutton _("Very Long") action Preference("auto-forward time", 30)
 
                 vbox:
 
