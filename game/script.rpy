@@ -57,10 +57,10 @@ label start:
             "Disconnected from space,{w=0.25} disconnected from time,{w=0.25} in the recesses and crevices,{w=0.25} in the lulls in speech,{w=0.25} in thought."
             "Nowheres are everywhere,{w=0.25} created and collapsed in an instant.{w=0.25} Thousands of millions of people have wandered into a nowhere at least once."
             "These nowheres are collectively known as the Void."
-            "Cassiopeia settles into his nowhere,{w=0.25} his eyelids hanging half-open under his phone's bluish glow, {w=0.25}veiled to the people mulling about the Spelltower."
-            "At least that's what would have happened if he live didn't in a world where his familiar tormentor the warlock Ed is The Premier Void-Hopper."
-            
+            "Cassiopeia settles into his nowhere,{w=0.25} his eyelids hanging half-open under his phone's bluish glow, {w=0.25}veiled to the people mulling about the Spelltower..."
             jump realed
+        "Get out of bed and greet your beautiful girlfriend":
+            jump trueend
 
     #play sound fwoom
     show bg white with Dissolve(1.0) #wipe up
@@ -115,48 +115,112 @@ label start:
     #end of intro.
     return
 
+#storypath
+label niecyroute:
+    show bg room cassiopeia with dissolve
+    show niecy with dissolve at center
+    
+    n "So,{w=0.25} like,{w=0.25} you've been spending a lot of time playing this game,{w=0.25} right?"
+
+    return
+
 
 #storypath
 label gabrielroute:
+    g "So!{w=0.25} Tell me,{w=0.25} what is this game?{w=0.25} What's it about?"
+    # idea: nested menu options that if they time out gabriel will say something different. mechanic change: we're just gonna make a choice menu timer time out thing
+    menu:
+        "It's an RPG...":
+            $ game_genre = "RPG"
+            pass
+        "It's an idle game...":
+            $ game_genre = "idle game"
+            pass
+        "It's an action-adventure game...":
+            $ game_genre = "action-adventure game"
+            pass
+    
+    menu:
+        "About":
+            pass
+    
+    
+    label .ignore1:
+        g "If you can't tell me,{w=0.25} there's no reason for you to keep playing it."
+    
+    #join in here at gabriel2
     g "Piapia,{w=0.25} I gave you that card because I wanted you to be able to practice some autonomy." #if you spent money these show
     g "You've been so responsible with it up until now.{w=0.25} What happened?"
     menu:
         "Nothing":
             pass
     c 'Nothing "happened," Gabriel.{w=0.25} I\'m fine.'
+    g "But you're not fine,{w=0.25} Piapia. {w=0.25}You're ignoring Niecy."
+    g "You came into my room and you told me, {w=0.25}\"I love this woman,{w=0.25} Gabriel.\"{w=0.25} Is that not what you did?"
+    g "You told me she was the love of your life."
+
 
     g "Just how much money did you spend on this thing,{w=0.25} anyway...?"
     if money_spent > 300:
         g "JESUS CHRIST-"
         g "[money_spent] DOLLARS!?"
         jump givemeyourphone
-    #call screen givephone
+
     return
 
 #storypath
 label realed:
     show cg covers 3 with Dissolve(0.2)
     e "Yo.{w=0.25} Get up."
-    c "Ed!"
-    c "You look handsome today."
-    #email notification
-    e "Oh,{w=0.25} one second."
-    #it's an email sent to the entire building. It reads
-    #Intervention Scheduling:
-    #Hello all,
-    #Cassiopeia thinks I'm hot despite dating our beatuiful and intelligent receptionist and bookkeeper Niecy.
-    #Please respond to this email with availability so we can arrange an intervention about the perils of cheating.
-    #Best,
-    #Dr. Mulligan, Tower Mage
-    #It already has a response.
-    #Re: Intervention Scheduling
-    #Ken Klippenstein: UNTAG ME
-    
-    c "Ed,{w=0.25} you're so mean to me."
-    e "Tell it to the judge."
-    c ""
-    
-    e "I'm a trickster,{w=0.25} not a terrorist."
+    "He's so assertive Cassiopeia has no choice but to oblige."
+    show bg room cassiopeia
+    #show ed neutral
+    hide cg with dissolve
+    c "So we're not even saying hello anymore?"
+    e "I've never said hello to you before in my life.{w=0.25} I'm here to tell you to get off that phone and go be with your wife."
+    c "Dude,{w=0.25} I'm gonna... {w=0.25}just as soon as I can get some items and characters that will-{nw=0.5}"
+    e "Ahem:{w=0.25} I'm here to tell you to get off that phone {w=0.1}{i}now.{/i}"
+    c "Don't...{w=0.25} You can't talk to me like that."
+    e "What?"
+    c "You can't talk to me like that!{w=0.25} You can't just go back to pretending like you hate me!"
+    e "Au contraire,{w=0.25} my friend. {w=0.25}T'is an act of love."
+    e "I'm telling you this because if you break Niecy's heart,{w=0.25} I beat the shit outta you. {w=0.25}Simple as."
+    c "No,{w=0.25} no,{w=0.25} no! {w=0.25}You weren't like this last week!{w=0.25} You were different!"
+    e "What?"
+    c "You were different!{w=0.25} You had a different demeanor,{w=0.25} a different tone... {w=0.25}different!{w=0.25} You were different!"
+    e "..."
+    e "Elaborate on that."
+    c "Last week,{w=0.25} you approached me."
+    c "I got all tense,{w=0.25} like usual, {w=0.25}but instead of teasing me, {w=0.25}you said hello."
+    c "We even spoke for a while. {w=0.25}We told each other jokes and stuff. {w=0.25}Then you told me about the game. {w=0.25}You said you were playing it!"
+    c "That's why I started...{w=0.25} I thought it was something I could connect with...{w=0.25} um..."
+    c "Well,{w=0.25} yeah. {w=0.25}Yeah. {w=0.25}I talked to you last week and you were cool."
+    c "Not like now."
+    e "Well?"
+    e "That's impossible because last week I was in Dubai."
+    c "Dubai? {w=0.25}That's not very woke of you."
+    e "..."
+    e "{size=*0.85}(He's right,{w=0.25} but...){/size}"
+    e "Listen,{w=0.25} you didn't find any of that suspicious?"
+    c "Well,{w=0.25} you definitely didn't look as hot as you do now,{w=0.25} but...{nw=0.5}"
+    e "{size=*0.85}I didn't look what now?{/size}{nw=0.5}"
+    c "I don't know,{w=0.25} I wanted to talk to you."
+    c "...I thought you changed."
+    e "Change takes a lot longer than a week when you're as old as I am."
+    c "You keep saying that. {w=0.25}You don't look a day older than 30."
+    e "So I've been told." #smug
+    e "But I'm sure last week I was the same as ever.{w=0.25} Because I don't remember a lick of this."
+    c "What!?{w=0.25} But that's..."
+    e "If I didn't know any better,{w=0.25} I'd be offended you would ever accuse me of playing a video game."
+    c "You're not lying to me,{w=0.25} are you?"
+    e "I already told you I was in Dubai.{w=0.25} I lie to make myself look better, {w=0.25}not worse."
+    c "So what now?{w=0.25} What happens now?"
+    #ed smug
+    e "What happens is you go be with your wife and forget you ever saw anything."
+    e "I have some business to take care of."
+
+    #edpath complete (optional for completion)
+
     return
 
 
@@ -189,18 +253,20 @@ label jorkinit:
                                 "I don't":
                                     #there's also the idea for the game loop here where you pull out your phone and she gets mad at you
                                     #if you click on it.
-                                    #c "I'm not in the mood for anything really intense,{w=0.25} though."
-                                    #n "That's OK. Let's just cuddle."
-                                    #"She shuffles into bed with Cassiopeia."
-                                    #show phone, start autoplay
-                                    #n "This is nice, {w=0.25}isn't it?"
-                                    #if phoneclick
-                                    #n "Cassiopeia, {w=0.25}are you serious right now? {w=0.25}You can't get off your phone long enough to just cuddle with me?"
-                                    #c "I can't-{w=0.25} I don't-"
-                                    #n "Sweetheart, {w=0.25}this is what I was saying. {w=0.25}You've been glued to that thing since you got it."
-                                    #n "Can't you just spend time in the moment?"
-                                    #c "No! {w=0.25}I can't stop!{w=0.25} I can't stop thinking about it!"
-                                    #
+                                    c "I'm not in the mood for anything really intense,{w=0.25} though."
+                                    n "That's OK.{w=0.25} Let's just cuddle."
+                                    "She shuffles into bed with him."
+                                    n "This is nice, {w=0.25}isn't it?"
+                                    #show screen banner with Dissolve(5.0)
+                                    "Niecy presses her head into the crook of his neck."
+                                    "..."
+                                    "..."
+                                    n "...you're warm."
+                                    "..."
+                                    "..."
+                                    "..."
+                                    #hide screen phone with None
+
                                     n "Wow!{w=0.25} {size=*0.75}Oh wow...{/size}"
                                     n "Well!{w=0.25} Here I go!"
                                     #fade to white
@@ -221,11 +287,15 @@ label jorkinit:
                                     c "Yeah."
                                     "Niecy sighs."
                                     show cg covers 2 with Dissolve(0.2)
-                                    n "Well,{w=0.25} Cas...{w=0.25} {size=*0.85}Cassie.{/size}{w=0.25} You have an important decision to make:{w=0.25}{p=0.25}Which is more important to you?{w=0.25} Your girlfriend,{w=0.25} or your fucking telephone?"
+                                    c "I was worried you would think it was silly."
+                                    n "I mean,{w=0.25} it's a video game.{w=0.25} All video games are a bit silly."
+                                    c "I know,{w=0.25} but I can't really put it down.{w=0.25} The game. {w=0.25}That's the silly part..."
+                                    n "That's...{w=0.25} concerning,{w=0.25} but it really just comes to this:{w=0.25}{p=0.25}Which is more important to you?{w=0.25} Your girlfriend,{w=0.25} or your {cps=*0.5}fffffff{/cps}ucking telephone?"
                                     menu:
                                         "Touch of a woman":
                                             show cg covers 2 with Dissolve(0.2)
                                             n "Good answer,{w=0.25} sweet pea.{w=0.25} Now,{w=0.25} c'mere!"
+                                            "For the rest of the afternoon,{w=0.25} Cassiopeia forgot all about the guy that he wanted..."
                                             return
                                         "My goddamn telephone":
 
@@ -235,12 +305,12 @@ label jorkinit:
                                             "Cassiopeia shrinks into his bed."
                                             n "No?"
                                             c "We can!{w=0.25} I just...{w=0.25} I don't...{w=0.25} I don't know what I was thinking.{w=0.25} I don't know why I said that."
-                                            n "I don't either,{w=0.25} but something must be wrong."
-                                            
+                                            n "I don't either.{w=0.25} I was really hoping you would pick me. {w=0.25}Your girlfriend."
+                                            c "I'm sorry...{w=0.25} I'm sorry.{w=0.25} Can I make this right?"
+                                            n "You can...{w=0.25} As a matter of fact,{w=0.25} you should..."
+                                            c "Um.{w=0.25} You're more important.{w=0.25} I love you."
                                             return
 
-
-                                    pass
                             pass
                         "Okay fine I'm on my stupid phone":
                             pass
@@ -260,6 +330,50 @@ label jorkinit:
     jump start.showphone
     return
 
+label evenwhile:
+    n "Cassiopeia, {w=0.25}are you serious right now? {w=0.25}You can't get off your phone long enough to just cuddle with me?"
+    c "No! {w=0.25}I can't!{w=0.25} I can't even stop thinking about it!"
+    c "I...{w=0.25} I don't even think I like playing it all that much,{w=0.25} but when I don't play it and get the rewards,{w=0.25} I get all itchy!{w=0.25} I don't know why..."
+    
+    return
+
+#event ending niecy
+label edunlock:
+    #play sound crash
+    n "What on earth was that!?"
+    #footsteps, go into the hallway
+    e "Goddammit,{w=0.25} I knew I wasn't high...{w=0.25} After him!"
+    e "He's going to ruin video games forever!"
+    i "You're too late,{w=0.25} servants of the well-dressed nonbinary drag queen with an incoherent political ideology!"
+    i "I've already launched the animated series for your precious Cassiopeia's favorite game.{w=0.25} It will live in the public consciousness for the rest of the century!"
+    i "People the world over will willingly degrade their relationships and jeopardize their finances because they can't stop playing our game..."
+    i "More and more studios will make games just like it in the hopes that they can replicate our success..."
+    i "In mere months,{w=0.25} the gaming landscape will be awash with psychological manipulation and unscrupulous busineess practices!"
+    i "No developer is safe!{w=0.25} Ohoho,{w=0.25} it's delightful!"
+    e "Bastard!{w=0.25} Who sent you!?"
+    i "Well,{w=0.25} well,{w=0.25} well,{w=0.25} if it isn't the immortal warlock himself!"
+    i "Did you think we would forget your little stint in the Trickster God Wars?"
+    i "But no worries,{w=0.25} my friend! {w=0.25}We know just how much you {i}love{/i} your earthly delights."
+    i "So we've decided you can have a front row seat to the enshittification of everything you love!"
+    i "Ahahahahahahahahahahaha-{nw}"
+    #show cg neck snap
+    g "I've had enough of that guy."
+    c "Ed,{w=0.25} did they say you were immortal?"
+    g 'No,{w=0.25} Piapia,{w=0.25} they said he was "infertile."{w=0.25} Immortals aren\'t real.'
+    c "Oh.{w=0.25} Right."
+    #play sound horse
+    c "Of horse."
+    e "Well.{w=0.25} You got them.{w=0.25} So,{w=0.25} thanks,{w=0.25} Gabriel."
+    n "But they said we're too late,{w=0.25} and I think they're right..."
+    n "Games like Cassiopeia's are everywhere already.{w=0.25} And they're seriously popular."
+    #show cg pan out
+    n "There's nothing we can do..."
+
+    $ persistent.ed_complete = True
+
+    return
+
+#event ed
 label cantfeelshit:
     "..."
     $ spontaneous_handler.add_spontaneous(greenout)
@@ -340,13 +454,27 @@ label gabriel1:
             g "All right,{w=0.25} I'll leave you to it...{w=0.25} but Cassiopeia?"
             #stop spending my money on gacha games. cg and sound.       
 
-        
+    return
+
+label gabriel2:
+    show gabriel annoyed
+    g "Cassiopeia!{w=0.25} I can see you spending decent money on this thing instead of an afternoon out!"
+    $ story_index = 5
+    g "Surely,{w=0.25} this game can't be more important than your girlfriend."
+    $ found_gf_flag = True
+    menu:
+        "It isn't":
+            pass
+    c "I'm not ignoring her!"
+    g "Then why are you tap tap tapping when she's standing right in front of you!?"
+    g "Don't make me come in here again!"
     return
 
 #event gabriel
 label gabriel3:
     #play sound door slamming open
     #show gabriel rage
+    jump givemeyourphone
     return
 
 #event ending
@@ -364,13 +492,25 @@ label givemeyourphone:
 
 #ending
 label escapeseq:
+    #show the escape sequence
+    
+    jump scammer
     return
 
 #ending
 label gavephone:
     #show the give phone cgs
-    g "Now, you can have this back just as soon as you write a "
-    c ""
+    g "Good."
+    g "You can have this back in a week."
+    "Gabriel sighs."
+    g "I hate to patronize like this,{w=0.25} but..."
+    g "Piapia.{w=0.25} You know I love you. {w=0.25}But you understand,{w=0.25} this is wrong,{w=0.25} right?"
+    c "...I don't think it's wrong to play a game."
+    "Gabriel groans,{w=0.25} realizing he has no way to make Cassiopeia understand his perspective."
+    g "Well,{w=0.25} give it a week and you'll forget all about it. {w=0.25}OK?"
+    c "..." #pouting
+    g "{i}OK?{/i}"
+    c "OK..."
     return
 
 
@@ -395,24 +535,28 @@ label scammer:
     g "{size=*2}Cassiopeia!{/size}"  #probably a lot more angry
     #show gabriel
     g "Oh,{w=0.25} good,{w=0.25} you caught him."
-    i "Gabriel. {w=0.25}...Wipe your drool."
-    #gabriel wipes his drool
-    i "What's going on?"
+    i "Gabriel. {w=0.25}What's going on?"
     g "This little shit thinks he can pull a fast one on me!"
     i "Can he?"
     g "Not the point."
-    g "Tell him stop spending my money on gacha games."
+    g "Tell him to learn how to behave when he talks to me."
     i "Why?{w=0.25} He's not a child.{w=0.25} He can handle himself."
     c "Yeah,{w=0.25} I-I can handle myself!"
-    g "No,{w=0.25} you've developed a gambling addiction over a mediocre RPG."
-    i "Well...{w=0.25} It's not gambling if there's no monetary value involved."
-
-    g "I've been trying to talk sense into him all day!{w=0.25} He needs to hear it from someone like you."
+    g "No,{w=0.25} clearly,{w=0.25} you can't,{w=0.25} since you ran away like a child afraid to face a consequence."
+    i "Why are you reprimanding him like a child?"
+    g "Some things need reprimanding,{w=0.25} {i}sweetness.{/i} {w=0.25}He's been spending my money on gacha games."
+    i "What's the harm in that?{w=0.25} It's just a video game."
+    g "Absolutely not.{w=0.25} Piapia almost got a gambling habit before I nipped in the bud."
+    i "It's not legally gambling if the prize has no real-world monetary value.{w=0.25}"
+    i "And no one's forcing him to pay for it,{w=0.25} either. {w=0.25}People play for free all the time."
+    i "I'm sure he's just spending a little extra because he likes the game."
+    g "No,{w=0.25} that thing is preying on his poor impulse control!{w=0.25} It's got its hooks in his brain already."
+    g "I've been trying to talk sense into him all day!{w=0.25} Tell him!{w=0.25} He needs to hear it from someone like you."
     i 'What do you mean "someone like me?"'
     g "You know,{w=0.25} someone who can embarrass him into straightening out!{w=0.25} You always do that."
     i "I don't know,{w=0.25} Gabriel.{w=0.25} It sounds like you bear the responsibility for this."
-    i "If you don't want him spending your money,{w=0.25} don't give him your credit card."
-    g "Oh,{w=0.25} come on.{w=0.25} I'm not a tyrant."
+    i "If you didn't want him spending your money,{w=0.25} you shouldn't have him your credit card."
+    g "Oh,{w=0.25} come on,{w=0.25} you know he doesn't have-{w=0.25} I'm not a tyrant!"
     i "Yes you are."(multiple=2)
     c "Yes you are..." (multiple=2)
     g "No,{w=0.25} I'm not-{w=0.25} I don't want to be-{w=0.25} Ngh!{w=0.25} You two are being impossible today!"
@@ -422,7 +566,7 @@ label scammer:
     i "Of course,{w=0.25} Cassiopeia.{w=0.25} I wouldn't think twice before helping you."
     c "Wow,{w=0.25} you've really changed a lot!{w=0.25} You must have had a serious change of heart."
     i "Er,{w=0.25} yes.{w=0.25} I have."
-    c "You know I'm really happy to hear that.{w=0.25} I thought it'd never happen..."
+    c "You know,{w=0.25} I'm really happy to hear that.{w=0.25} I thought it'd never happen..."
     c "I guess...{w=0.25} I'll see you around,{w=0.25} then!"
     i "See you later,{w=0.25} man."
     #show cg edphone
@@ -437,21 +581,42 @@ label scammer:
     i "Yes,{w=0.25} sir.{w=0.25} Right away,{w=0.25} sir."
     #play sound hangup
 
-
-    return
-
-#ending
-label impostorconfront:
-    $ impostor_name = "NOT Ed..."
-    i "You're too late, {w=0.25}trickster warlock with an incoherent political ideology."
-    i "My plan is already in motion."
-    c "You're definitely more attractive,{w=0.25} but you're so cruel to me!"
+    $ persistent.gabriel_complete = True
+    $ persistent.impostor_seen = True
     return
 
 
 #ending
 label trueend:
-
+    n "There you are!"
+    n "What have you been doing?{w=0.25} It's such a beautiful Saturday."
+    c "Oh...{w=0.25} I've been trying for this guy on this game I've been playing,{w=0.25} but no luck so far..."
+    c "I think I'm gonna put it down. {w=0.25}I'll pick it up later,{w=0.25} maybe."
+    n "You bored?{w=0.25} Cuz I'm bored,{w=0.25} and you sound {i}hella{/i} bored."
+    c "Yeah...{w=0.25} I'm pretty bored."
+    n "Can I chill with you for a bit?"
+    c "Sure!"
+    #cg niecy chilling on the floor
+    n "I wanna talk to the other people in the Tower but I'm pretty sure Gabriel's asleep and I don't know where Ed is."
+    n "I mean,{w=0.25} I know you and Ed don't really get along,{w=0.25} but-"
+    c "I try.{w=0.25} I really try,{w=0.25} Niecy..."
+    n "You know,{w=0.25} I think he's trying,{w=0.25} too. {w=0.25}He may not show it,{w=0.25} but-"
+    #ed bursts in with a TV and gabriel with a gamecube
+    g "Guess who's back from the liiiiiibraryyyyy!"
+    n "...you went out in your pajamas?"
+    g "Quiet,{w=0.25} you."
+    g "Someone told me you were hiding in your bed playing a game,{w=0.25} Piapia."
+    g "And I thought,{w=0.25} \'Why don't we all play together?\""
+    g "So I went out and brought home some party games."
+    g "And I brought your sister from downstairs."
+    "Orion doesn't say anything."
+    n "Hey,{w=0.25} I didn't know you could check out video games from the library!"
+    n "This is a game-changer!{w=0.25} Oh-{w=0.25} pardon the pun..."
+    e "Nah,{w=0.25} I'm in a good mood."
+    #cg controller
+    e "Yo,{w=0.25} Cassiopeia."
+    e "Get on the game." #he's smiling.
+    
     return
 
 
@@ -476,18 +641,13 @@ label postguy:
     "He's on a date with Niecy right now and he couldn't be happier."
     return
 
-#placeholder
+#test
 label partone:
     
     "{i}When you see this icon,{w=0.25} dialogue will automatically proceed based on your preferences.{/i}"
     "{i}You can change the duration of Auto-Advance in the Preferences menu.{/i}"
     return
 
-#testing
-label phoneinterrupttest:
-    g "Cassiopeia!{w=0.25} Surely,{w=0.25} this game can't be more important than your girlfriend."
-    
-    return
 
 #test loop
 label timerland:

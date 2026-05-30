@@ -8,8 +8,9 @@ default persistent.first_playthrough = True
 default persistent.got_the_guy = False #roll the guy by random chance
 default persistent.girlfriend_flag = True #have gabriel ask you if your game is more important than your girlfriend
 default found_gf_flag = False #nonpersisted flag that merely exists to prevent the player from acquiring the flag before finishing a route.
-default persistent.ed_appears = False 
-default persistent.seen_ed = False #set to true adter the player meets ed for the first time
+default persistent.ed_appears = False #set to true when the player reaches the end of the game with the ed event active
+default persistent.seen_ed = False #set to true after the player meets ed for the first time
+default found_ed_flag = False #nonpersisted flag prevents player from acquiring ed route before finishing the game with the ed event active
 
 default persistent.impostor_seen = False #encounter impostor ed for the first time.
 default persistent.gabriel_complete = False #reach either end of a gabriel route
@@ -106,8 +107,8 @@ define test_guy_1 = Guy("theguy2", "ph_brown_heart.png", 1)
 define test_guy_2 = Guy("theguy3", "ph_purple_heart.png", 2)
 define test_guy_3 = Guy("theguy4", "ph_mitski.png", 3)
 define test_guy_4 = Guy("theguy5", "ph_baba.png", 4)
-define test_the_guy = Guy("he's The GUY", "ph_the_guy.png",4, is_the_guy = True)
-define all_guys = {test_guy_0, test_guy_1, test_guy_2, test_guy_3, test_the_guy}
+define the_guy = Guy("angledevile", "guy_the_guy.png", 4, is_the_guy=True)
+define all_guys = {test_guy_0, test_guy_1, test_guy_2, test_guy_3, the_guy}
 
 
 init 1 python:
@@ -303,6 +304,10 @@ default gabriel_present = False #true if gabriel is on screen
 default niecy_irritation = 0 #counts the number of times you've irritated her
 
 default has_gummy = False
+
+default game_genre = ""
+default game_about = ""
+default game_detail3 = ""
 
 #region Images and Transforms
 

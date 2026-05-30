@@ -37,6 +37,10 @@ label lookuptable(index):
         
         $ renpy.pop_call()
         jump quieres.ignore
+    elif index == 5:
+        $ story_index = 0
+        g "Unbelievable!"
+        pass
     else:
         $ renpy.notify("No problem here.") #empty this out to nothing
         return
@@ -69,8 +73,8 @@ label repeatcheck:
 
 #game mechanic
 label facecover:
-    n "..." #shocked
-    n "{size=*0.5}At least pretend to pay attention...{/size}"
+    n confuse "..." #shocked
+    n concern "{size=*0.5}At least pretend to pay attention...{/size}"
     return
 
 label rolldisplay(pulls):
