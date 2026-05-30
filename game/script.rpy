@@ -118,7 +118,7 @@ label start:
 #storypath
 label niecyroute:
     show bg room cassiopeia with dissolve
-    show niecy with dissolve at center
+    show niecy with dissolve
     
     n "So,{w=0.25} like,{w=0.25} you've been spending a lot of time playing this game,{w=0.25} right?"
 
