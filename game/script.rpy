@@ -9,6 +9,7 @@ label start:
     #jump scammer
     #show screen gachadebug
     #jump theendlessloop
+    jump givemeyourphone
     if persistent.got_the_guy:
         jump postguy
     else:
@@ -473,7 +474,7 @@ label gabriel2:
 #event gabriel
 label gabriel3:
     #play sound door slamming open
-    #show gabriel rage
+    show gabriel rage
     jump givemeyourphone
     return
 
@@ -487,7 +488,7 @@ label givemeyourphone:
     g "THAT'S IT."
     g "CASSIOPEIA."
     g "GIVE ME YOUR PHONE."
-    #callscreen givephone
+    call screen givephone
     return
 
 #ending

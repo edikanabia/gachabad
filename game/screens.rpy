@@ -271,6 +271,10 @@ screen tutorialize():
         align (0.5, 0.5)
 
 
+#########################
+
+
+
 
 #########################
 
@@ -392,6 +396,11 @@ screen deliciousgummy():
 
 screen givephone():
     #an imagemap with hotspots that also get tooltips. one returns a jump to escape sequence and the other to the normal gabriel ending.
+    imagemap:
+        auto "cg_givephone_%s.png"
+        hotspot (300,525,289,403) action Jump("gavephone")
+        hotspot (1178,722,346,330) action Jump("escapeseq")
+
     pass
 
 screen storefront():
