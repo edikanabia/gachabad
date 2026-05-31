@@ -265,10 +265,19 @@ style choice_button_text is default:
 
 #######################
 
-screen tutorialize():
+screen tutorialbox1():
     frame:
-        textbutton "Done" action Return()
+        padding (60, 30, 20, 30)
         align (0.5, 0.5)
+        vbox:
+            xsize 300
+            text "When you see this icon on screen," textalign 0.5
+            add "autoplay" align (0.5, 0.5)
+            text "the dialogue will advance without input." textalign 0.5
+            textbutton "Done" action Return() xalign 0.5
+            
+screen autoplayactive():
+    add "autoplay" pos (1600, 750)
 
 
 #########################
@@ -280,7 +289,7 @@ screen tutorialize():
 
 ## Position "repeat that" button at the bottom right, above the dialogue box
 transform repeatthatpos:
-    align (1.0, 0.70)
+    align (0.5, 0.70)
 
 # Repeat That? mechanic button is active when it can be clicked and disabled when it cannot be
 screen repeatthat():
@@ -296,7 +305,10 @@ screen repeatthat():
 screen timed_menu(time_allotted, label):
     default time = time_allotted
     timer 0.01 repeat True action If(time > 0, true=IncrementScreenVariable("time", -0.01), false=[ Hide(), Jump(label)])
-    bar value time range time_allotted align((0.5, 0.5))
+    fixed:
+        xsize 800
+        bar value time range time_allotted align((0.5, 0.5))
+        align (0.5, 0.5)
     pass
 
 ############################
@@ -427,6 +439,7 @@ screen shop(x,y):
                 hotspot (98, 395, 137, 25) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Function(buy_time, 10800,time_price_5)]
 
                 hotspot (49, 393, 32, 33) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("banner", x=current_phone.x, y=current_phone.y)] #left arrow
+                text "{image=ui_gems.png} [gems]" pos (155, 70) color "#A470CC"
             
 screen banner(x,y):
     tag phone
@@ -444,10 +457,11 @@ screen banner(x,y):
                 auto "sc_phone_banner_%s.png"
                 hotspot (54, 201,170,79) sensitive (persistent.bought_the_guy == False) action Jump("instakill")
                 hotspot (52, 294, 73, 90) sensitive (can_pull == True) action [Call("roll", 1)]#[Show("rolldisplay", transition=None, pulls=1)]#
-                hotspot (152, 294, 73, 90) sensitive (can_pull == True) action [Call("roll", 10)]#[Show("rolldisplay", transition=None, pulls=10)]#
+                hotspot (152, 294, 73, 90) sensitive (can_pull == True and not gacha_puller.get_is_first_roll) action [Call("roll", 10)]#[Show("rolldisplay", transition=None, pulls=10)]#
 
-                hotspot (49, 393, 32, 33) sensitive (can_pull == True) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("timer",  x=current_phone.x, y=current_phone.y)] #left arrow
-                hotspot (195, 393, 32, 33) sensitive (can_pull == True) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("shop",  x=current_phone.x, y=current_phone.y)] #right arrow
+                hotspot (49, 393, 32, 33) sensitive (can_pull == True and not gacha_puller.get_is_first_roll) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("timer",  x=current_phone.x, y=current_phone.y)] #left arrow
+                hotspot (195, 393, 32, 33) sensitive (can_pull == True and not gacha_puller.get_is_first_roll) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("shop",  x=current_phone.x, y=current_phone.y)] #right arrow
+                text "{image=ui_gems.png} [gems]" pos (40, 70) color "#3a2e62"
 
 
 screen timer(x,y):
@@ -466,13 +480,15 @@ screen timer(x,y):
                 auto "sc_phone_timer_%s.png"
                 hotspot (195, 393, 32, 33) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("banner",   x=current_phone.x, y=current_phone.y)] #right arrow
                 text "[current_time]" align (0.5, 0.4) color "#A470CC"
+                text "{image=ui_gems.png} [gems]" pos (40, 70) color "#A470CC"
 
 
 screen showguy(guys):
     vbox:
         for guy in guys:
-            add guy.image
-    timer 1.0 action Hide()
+            add Image(guy.image, oversample=4) xysize (100,100) fit "contain"
+        text "Get!"
+    timer 2.0 action Hide()
     on "hide" action list_of_pulls.clear
     pass
 
@@ -1060,11 +1076,14 @@ screen preferences():
 
                     label _("Auto-Forward Time")
                     hbox:
-                        textbutton _("Very Short") action Preference("auto-forward time", 1)
-                        textbutton _("Short") action Preference("auto-forward time", 7)
-                        textbutton _("Medium") action Preference("auto-forward time", 15)
-                        textbutton _("Long") action Preference("auto-forward time", 22)
-                        textbutton _("Very Long") action Preference("auto-forward time", 30)
+                        bar value Preference("auto-forward time")
+                    
+                    label _("Delay Time")
+                    text "The time to wait before advancing through the autoplay segments."
+                    hbox:
+                        textbutton "Short" action [SetVariable("delay", short_delay[0]),SetVariable("qdelay", short_delay[1])]
+                        textbutton "Medium" action [SetVariable("delay", medium_delay[0]),SetVariable("qdelay", medium_delay[1])]
+                        textbutton "Long" action  [SetVariable("delay", long_delay[0]),SetVariable("qdelay", long_delay[1])]
 
                 vbox:
 

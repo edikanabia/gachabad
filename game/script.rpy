@@ -14,9 +14,6 @@ label start:
         jump postguy
     else:
         pass
-    #$ greenout.lines_until = renpy.random.randint(0,3)
-    #$ spontaneous_handler.add_spontaneous(greenout)
-    
     #show screen repeatthat
     #show screen testphone2
     $ story_index = -1
@@ -24,7 +21,12 @@ label start:
     #call screen tutorialize
     
     #jump gabriel2
-    "It's a lazy Saturday at the Spelltower,{w=0.25} and everyone is cooped up indoors..." 
+    if persistent.niecy_complete:
+        if persistent.gabriel_complete:
+            if persistent.ed_complete:
+                $ persistent.true_end
+
+    "It's a lazy Saturday at the Spelltower,{w=0.25} and everyone is cooped up indoors..."
     "Especially Cassiopeia.{w=0.25} Cassiopeia has been enamored with a new game he downloaded onto his new phone just last week!"
     "It's called...{w=0.25} um...{w=0.25} Well,{w=0.25} he can't remember what it's called.{w=0.25} But he's absolutely hooked!"
     $ story_index = 0
@@ -34,32 +36,28 @@ label start:
     "So now he has to play it under the covers,{w=0.25} where no one can see his shame."
 
     "The guy Cassiopeia wants is in the time-limited banner today.{w=0.25} It's the last opportunity to get him before the next season starts—tomorrow!"
+    #show the guy for a bit
     "It would be a good time to try for the guy during some downtime."
     call screen banner (phonexpos, phoneypos)
-    show screen countdown
     #the first roll will always fail
 
     #hide screen banner
 
     #play sound door_open
-    label .areyou:
-        "???" "Cassiopeia?{w=0.25} Are you in here?"
+    "???" "Cassiopeia?{w=0.25} Are you in here?"
     "He knows that voice.{w=0.25} It's Niecy!"
     "...she cannot see him playing this game!"
     #show screen timed_menu (5, "timeout")
     menu:
         "Say no":
-            hide screen timed_menu
             "Cassiopeia thinks he hears someone chuckle."
             n "Oooookay...{w=0.25} I guess he's not in here!"
             pass
         "Shake your head":
-            hide screen timed_menu
             #play sound covers
             n "Did something move under the... {nw=0.5}"
             #play sound footsteps
         "Don't move or say anything" if persistent.ed_not_niecy:
-            hide screen timed_menu
             "Cassiopeia lay on his bed in silence until he hears the footsteps recede."
             "Now he's in the dark and quiet."
             "Underneath his blanket fort (com-fort-er?) is the perfect nowhere to do nothing."
@@ -69,7 +67,6 @@ label start:
             "Cassiopeia settles into his nowhere,{w=0.25} his eyelids hanging half-open under his phone's bluish glow, {w=0.25}veiled to the people mulling about the Spelltower..."
             jump realed
         "Get out of bed and greet your beautiful girlfriend" if persistent.true_end:
-            hide screen timed_menu
             jump trueend
 
     #play sound fwoom
@@ -87,7 +84,7 @@ label start:
             "She throws the cover back over him and leaves the room."
             "The end!"
             #it's not a dusty game without an early false ending!
-            $ persistent.true_reset_visible = True #move this to the other endings when building
+            #$ persistent.true_reset_visible = True #move this to the other endings when building
             return
         "Say it's porn to chase her off": #if persistent.girlfriend_flag
             jump jorkinit
@@ -125,29 +122,219 @@ label start:
     label .phonereturn1:
         $ story_index = 0
     n "...we definitely need to talk."
-
+    c "Huh...?"
+    c "Y-yeah, {w=0.25}we can talk."
+    #call screen tutorialbox1
+    jump niecynomoney
     #end of intro.
     return
 
-#test
-label timeout:
-    n "You timed me out, you sly dog!"
+#storypath
+label niecynomoney:
+    scene bg room cassiopeia
+    show niecy neutral with dissolve
+    show screen autoplayactive with Dissolve(0.2)
+    nauto "So,{w=0.25} like,{w=0.25} you've been spending a lot of time playing this game,{w=0.25} but you haven't spent any money on it,{w=0.25} right?{nw=[delay]}"
+    nauto "I'm assuming not, {w=0.25}but I'm sure you can see the tradeoff.{nw=[delay]}"
+    nauto "You are kind of selling your time instead of separating with your money...{nw=[delay]}"
+    nauto "And,{w=0.25} like, {w=0.25}I think time is very precious!{w=0.25} We only have so much of it.{nw=[delay]}"
+    nauto "That makes sense,{w=0.25} right?{nw=[delay]}"
+
+    show screen timed_menu( q_delay,"niecynomoney.ignore1")
+    menu:
+        "Makes sense to me":
+            pass
+        "I don't get it":
+            hide screen timed_menu
+            nauto "Well,{w=0.25} it's like...{nw=[delay]}"
+            nauto "Other players spend money on the game to get increased rewards.{nw=[delay]}"
+            nauto "If you {i}don't{/i} spend that money,{w=0.25} you have a significantly decreased chance of getting those same rewards.{nw=[delay]}"
+            nauto "Of course,{w=0.25} games that used to have very clear and obvious pay-to-win schemes didn't have a very high reputation...{nw=[delay]}"
+            nauto "So developers started emphasizing how far you could get by playing for free.{w=0.25} You'd still have access to the same rewards as any other player.{nw=[delay]}"
+            nauto "The thing is,{w=0.25} if you can buy your way out of having to grind for items,{w=0.25} that game is implicitly putting a price on the time its players spend grinding.{nw=[delay]}"
+            if persistent.impostor_seen:
+                call quieres
+                nauto "Anyway...{nw=[delay]}"
+            show screen timed_menu(q_delay, "helloooo")
+            menu:
+                n "You with me so far?"
+                "Ye":
+                    hide screen timed_menu
+                    pass
+                "Nah":
+                    hide screen timed_menu
+                    nauto "Uh, {w=0.25}basically what you need to know is what you save on money you pay in time.{nw=[delay]}"
+                    cauto "Philosophical.{nw=[delay]}"
+                    nauto "No, {w=0.25}it's very literal...{nw=[delay]}"
+                    nauto "Anyways!{nw=[delay]}"
+                    jump niecynomoney.sadness
+
+            show screen timed_menu(q_delay, "niecynomoney.ignore1_1")        
+            menu helloooo:
+                n "Cassiopeia?"
+                "I'm with you":
+                    pass
+
+                "My head's spinning":
+                    hide screen timed_menu
+                    nauto "Uh, {w=0.25}basically what you need to know is what you save on money you pay in time.{nw=[delay]}"
+                    cauto "Philosophical.{nw=[delay]}"
+                    nauto "No, {w=0.25}it's very literal...{nw=[delay]}"
+                    nauto "Anyways!{nw=[delay]}"
+                    jump niecynomoney.sadness
+
+            pass
+    hide screen timed_menu
+    nauto "Great.{w=0.25} How much does it cost to purchase this season's Guy?{nw=[delay]}"
+    cauto "Thousand bucks.{nw=[delay]}"
+    nauto "Oh hell no.{w=0.25} How much did it cost to buy last season's Guy?{nw=[delay]}"
+    cauto "Like, {w=0.25}forty, {w=0.25}from what I saw online...{nw=[delay]}"
+    nauto "See? {size=*0.8}That proves my point a {i}lot{/i} better...{/size}{nw=[delay]}"
+    nauto "This company thinks your... {w=0.25}how long have you been grinding? Since you woke up?{nw=[delay]}"
+    nauto "Which is usually around 9 am or so...{nw=[delay]}"
+    nauto "This company thinks five hours of your time is worth forty dollars.{nw=[delay]}"
+    cauto "Woah...{nw=[delay]}"
+    nauto "Right!{w=0.25} So...{nw=[delay]}"
+    nauto "A-and I'm not trying to alarm you or anything,{w=0.25} but...{nw=[delay]}"
+    label .sadness:
+        nauto "I got a bit sad when I saw how easily you can give your time to this game.{nw=[delay]}"
+    menu:
+        "Why?":
+            cauto "It's not like it's a person.{nw=[delay]}"
+            nauto "It's exactly the fact that it's not a person that's making me upset,{w=0.25} Cas.{nw=[delay]}"
+            nauto "It took a lot for us to get to where we're at now, {w=0.25}y'know?{nw=[delay]}"
+            nauto "We barely get days like this that are just...{w=0.25} calm.{nw=[delay]}"
+            jump niecynomoney.sadtimeout
+        "I get you":
+            nauto "So then why do you..."
+            show screen timed_menu(short_delay[1], "niecynomoney.ignore1_1")
+            menu:
+                "Why do I what":
+                    hide screen timed_menu
+                    nauto "...no,{w=0.25} I can't stop you from playing a game.{nw=[delay]}"
+                    nauto "I'm not an authoritarian.{nw=[delay]}"
+                    jump niecynomoney.afterignore1
+                "I'll stop playing the game":
+                    hide screen timed_menu
+                    hide screen autoplayactive
+                    $ will_capture_click = True
+                    n "..."
+                    n "Really?"
+                    n "Like,{w=0.25} we can go out today?"
+                    menu:
+                        "We can go out today":
+                            $ renpy.hide_screen("phone")
+                            hide screen timed_menu
+                            $ will_capture_click
+                            jump niecyendhappy
+        
+        
+    
+    label .ignore1:
+        $ niecy_irritation += 1
+        nauto concern "...or you could just ignore me.{w=0.25} That's cool, {w=0.25}too...{nw=[delay]}"
+        jump niecynomoney.afterignore1
+
+    label .ignore1_1:
+        nauto "Never mind...{nw=[delay]}"
+        jump niecynomoney.afterignore1
+
+    label .sadtimeout:
+        cauto "Mm-hm.{nw=[delay]}"
+        nauto "Days like these are rare.{w=0.25} And I don't wanna feel like I'm squandering it,{w=0.25} you feel?{nw=[delay]}"
+        $ story_index = 7
+        $ will_capture_click = True
+        cauto "Mm-hm...{nw=[delay]}"
+        nauto "Even if I'm just laying still for a bit next to you,{w=0.25} just enjoying your presence.{nw=[delay]}"
+        nauto "I wanna do {i}something.{/i} I wanna really stretch the moment...{nw=[delay]}"
+        "...{nw=[delay]}"
+        $ will_capture_click = False
+        $ story_index = 0
+        nauto "Cassiopeia?{nw=[delay]}"
+        menu:
+            "Yes?":
+                pass
+            "Be quiet":
+                nauto unimpressed "!?{nw=[delay]}"
+                nauto smile open "Ah...{w=0.25} yeah...{nw=[delay]}"
+                pass
+        nauto smile close "Actually,{w=0.25} this is fine...{nw=[delay]}"
+        jump niecyendnormal
+
+
+    label .iwish:
+        $ niecy_irritation += 1
+        nauto confuse "...{nw=[delay]}"
+        nauto "{size=0.75}I really wish you wouldn't use your phone while I'm trying to talk to you...{/size}"
+
+    label .afterignore1:
+        nauto "Let's see... {size=*0.8}What else...{/size}{nw=[delay]}"
+
+    nauto "How many hours have you put into the game so far?"
+    
+    show screen timed_menu (q_delay,"niecynomoney.team")
+    menu hours:
+        "Eh, not a lot":
+            nauto "...Cassiopeia,{w=0.25} I think that might be more than the amount of hours we've spent on a date together.{nw=[delay]}"
+            cauto "Really?{w=0.25} I don't think it's that much.{nw=[delay]}"
+            nauto "But that's exactly my point. It might not be much time to you but it is time better served somewhere else.{nw=[delay]}"
+        "Nunya":
+            nauto "It most definitely is my business,{w=0.25} Cassiopito.{nw=[delay]}"
+            "Cassiopeia firmly shakes his head.{nw=[delay]}" (advance=False)
+            nauto "It's my business if it cuts into my time.{nw=[delay]}"
+            cauto "It's not your business and it's not your time{nw=[delay]}"
+            nauto "Yes it is.{nw=0.25}"
+            cauto "No it's not.{nw=0.25}"
+            nauto "Yes it is!{nw=0.25}"
+            cauto "No,{w=0.25} it's not!{nw=0.25}"
+            pass
+    label .team:        
+        nauto "Cassiopeia, {w=0.25}we're supposed to be a team.{nw=[delay]}"
+    nauto "What does it mean if I have to go looking for you in the middle of the day because you're hiding from me?{nw=[delay]}"
+    nauto "And it goes back to what I was saying earlier:{w=0.25} time is literally money.{nw=[delay]}"
+    nauto "Like,{w=0.25} I really think this game is bad for you.{nw=[delay]}"
+    
+    menu:
+        "I disagree":
+            pass
+    
+    label .justhink:
+        hide screen autoplayactive
+        n angry "OK,{w=0.25} well,{w=0.25} just think about it,{w=0.25} OK!?"
+        jump niecyendsad
+
+
+    label .stopclick:
+        hide screen autoplayactive
+        n "Oh.{w=0.25} So you were just... {w=0.25}lying?"
+        jump niecyendsad
+
     return
 
 #storypath
-label niecyroute:
-    show bg room cassiopeia with dissolve
-    show niecy with dissolve
-    
-    n "So,{w=0.25} like,{w=0.25} you've been spending a lot of time playing this game,{w=0.25} right?"
-
+label niecymoney:
+    $ money_route = True
+    nauto "Okay... so.{nw=[delay]}"
+    nauto "Spending money on the game is definitely a step in the wrong direction, but we can work it out. {nw=[delay]}"
+    nauto "What did you end up buying?{nw=[delay]}"
+    menu:
+        "Gems":
+            pass
+        "Clocks (to get more gems)":
+            pass
+    cauto "I really wish I could just buy the guy outright,{w=0.25} though.{nw=[delay]}"
+    nauto "Do not do that under any circumstances.{nw=[delay]}"
+    if persistent.bought_the_guy:
+        cauto "You don't need to tell me twice.{nw=[delay]}"
+    else:
+        cauto "Understood...{nw=[delay]}"
     return
-
 
 #storypath
 label gabrielroute:
-    g "So!{w=0.25} Tell me,{w=0.25} what is this game?{w=0.25} What's it about?"
-    # idea: nested menu options that if they time out gabriel will say something different. mechanic change: we're just gonna make a choice menu timer time out thing
+    gauto "So!{w=0.25} Tell me,{w=0.25} what is this game?{w=0.25} What's it about?{nw=[delay]}"
+    
+    show screen timed_menu( q_delay,"gabrielroute.ignore1")
     menu:
         "It's an RPG...":
             $ game_genre = "RPG"
@@ -158,32 +345,69 @@ label gabrielroute:
         "It's an action-adventure game...":
             $ game_genre = "action-adventure game"
             pass
-    
+    hide screen timed_menu
+
+    show screen timed_menu( q_delay,"gabrielroute.ignore2")
     menu:
-        "About":
+        "About a princess...":            
+            pass
+        "About an entourage...":
+            pass
+        "About a frog...":
+            pass
+    hide screen timed_menu
+
+    show screen timed_menu( q_delay,"gabrielroute.ignore2")
+    menu:
+        "Who explores a vast continent.":
+            pass
+        "Who must uncover the mystery of their past.":
+            pass
+        "Who must battle hordes of monsters.":
             pass
     
+    gauto "Okay,{w=0.25} I see...{nw=[delay]}"
+    gauto "{size=*0.75}It doesn't seem terribly original...{/size}{nw=[delay]}"
+
+    gauto "What do you like about it?{nw=[delay]}"
+    menu:
+        "The Guys":
+            pass
+        "I don't like it":
+            hide screen autoplayactive
+            g "Huh!? {w=0.25}So what's all the hubbub for?!"
+            g "You've been stressing out your dear girlfriend over a game you {i}don't{/i} like?"
+            g "It's just you and a couple of dumb bitches telling each other \"exactly!\""
+            g "Give me that!"
+            "Before he even has a chance to react,{w=0.25} Gabriel snatches the phone from Cassiopeia's hand..."
+            jump gavephone
+            pass
+    gauto "Right... the Guys."
     
     label .ignore1:
-        g "If you can't tell me,{w=0.25} there's no reason for you to keep playing it."
-    
-    #join in here at gabriel2
-    g "Piapia,{w=0.25} I gave you that card because I wanted you to be able to practice some autonomy." #if you spent money these show
-    g "You've been so responsible with it up until now.{w=0.25} What happened?"
-    menu:
-        "Nothing":
-            pass
-    c 'Nothing "happened," Gabriel.{w=0.25} I\'m fine.'
-    g "But you're not fine,{w=0.25} Piapia. {w=0.25}You're ignoring Niecy."
-    g "You came into my room and you told me, {w=0.25}\"I love this woman,{w=0.25} Gabriel.\"{w=0.25} Is that not what you did?"
-    g "You told me she was the love of your life."
+        gauto "If you can't even tell me,{w=0.25} there's no reason for you to keep playing it.{nw=[delay]}"
+        jump gabrielroute.afterignore
 
+    
+    label .ignore2:
+        gauto "Can't even finish the thought?{nw=[delay]}"
+        jump gabrielroute.afterignore
+    
+    label .afterignore:
+        gauto "Anyway...{nw=[delay]}"
+    
 
     g "Just how much money did you spend on this thing,{w=0.25} anyway...?"
     if money_spent > 300:
-        g "JESUS CHRIST-"
-        g "[money_spent] DOLLARS!?"
+        gauto "JESUS CHRIST-{nw=0.5}"
+        gauto "[money_spent] DOLLARS!?"
         jump givemeyourphone
+    elif money_spent <= 300 and money_spent >= 100:
+        gauto "[money_spent] dollars?{w=0.25} You're killing me,{w=0.25} man."
+    elif money_spent < 100:
+        gauto "Less than a hundred bucks,{w=0.25} huh?"
+        gauto "It's still not great for such a short period of playing, {w=0.25}but I guess I..."
+        gauto "No. I still don't condone this, Piapia. Go be with your wife."
 
     return
 
@@ -219,7 +443,7 @@ label realed:
     e "That's impossible because last week I was in Dubai."
     c "Dubai? {w=0.25}That's not very woke of you."
     e "..."
-    e "{size=*0.85}(He's right,{w=0.25} but...){/size}"
+    e impressed "{size=*0.85}(He's right,{w=0.25} but...){/size}"
     e "Listen,{w=0.25} you didn't find any of that suspicious?"
     c "Well,{w=0.25} you definitely didn't look as hot as you do now,{w=0.25} but...{nw=0.5}"
     e "{size=*0.85}I didn't look what now?{/size}{nw=0.5}"
@@ -227,9 +451,8 @@ label realed:
     c "...I thought you changed."
     e "Change takes a lot longer than a week when you're as old as I am."
     c "You keep saying that. {w=0.25}You don't look a day older than 30."
-    e "So I've been told." #smug
+    e smug "So I've been told." #smug
     e "But I'm sure last week I was the same as ever.{w=0.25} Because I don't remember a lick of this."
-    c "What!?{w=0.25} But that's..."
     e "If I didn't know any better,{w=0.25} I'd be offended you would ever accuse me of playing a video game."
     c "You're not lying to me,{w=0.25} are you?"
     e "I already told you I was in Dubai.{w=0.25} I lie to make myself look better, {w=0.25}not worse."
@@ -274,11 +497,14 @@ label jorkinit:
                                     #if you click on it.
                                     c "I'm not in the mood for anything really intense,{w=0.25} though."
                                     n "That's OK.{w=0.25} Let's just cuddle."
+                                    show bg black
+                                    hide cg covers with dissolve
+
                                     "She shuffles into bed with him."
-                                    show screen banner with Dissolve(5.0)
+                                    show screen banner (phonexpos, phoneypos) with Dissolve(5.0)
                                     $ story_index = 6
                                     $ will_capture_click = True
-                                    "..."
+                                    "...{nw=1.0}"
                                     n "This is nice, {w=0.25}isn't it?{nw=1.0}"
                                     "...{nw=1.0}"
                                     "Niecy presses her head into the crook of his neck.{nw=1.0}"
@@ -290,6 +516,7 @@ label jorkinit:
                                     "...{nw=1.0}"
                                     "Cassiopeia feels something light and tingly underneath his chin.{nw=1.0}"
                                     $ will_capture_click = False
+                                    $ block_spontaneous
                                     hide screen phone
                                     c "Niecy?"
                                     n "Mm-hm?"
@@ -329,11 +556,15 @@ label jorkinit:
                                         "My goddamn telephone":
                                             n "Tch!"
                                             n "To think you've experienced love...{w=0.25} On your {cps=*0.5}fffffff{/cps}ucking telephone!{w=0.25} Get real!"
+                                            #david lynch ending
 
                                             return
 
                             pass
                         "Okay fine I'm on my stupid phone":
+                            n "You don't have to call it stupid."
+                            c "It is stupid. {w=0.25}Gabriel said I was stupid for playing it,{w=0.25} right?"
+                            n "I understand his concern but I don't think he was right to say that to you."
                             pass
 
                 "Drop the façade":
@@ -352,6 +583,10 @@ label jorkinit:
     return
 
 label evenwhile:
+    $ will_capture_click = False
+    if renpy.get_screen("phone") != None:
+        $ renpy.hide_screen("phone")
+    hide screen countdown
     n "Cassiopeia, {w=0.25}are you serious right now? {w=0.25}You can't get off your phone long enough to just cuddle with me?"
     c "No! {w=0.25}I can't!{w=0.25} I can't even stop thinking about it!"
     c "I...{w=0.25} I don't even think I like playing it all that much,{w=0.25} but when I don't play it,{w=0.25} I get all itchy!{w=0.25} I don't know why!"
@@ -367,12 +602,46 @@ label evenwhile:
     n "Really?{w=0.25} When?"
     c "Last week or so... {w=0.25}But it's weird..."
     c "These days when I ask him about it, {w=0.25}he says he doesn't know what I'm talking about."
-    n "Huh. {w=0.25}Now I'm {i}really{/i} concerned."
+    n "Huh. {w=0.25}That is weird."
+    "A beat between the two.{w=0.25} Then Cassiopeia breaks the silence."
     c "I'm sorry... {w=0.25}I completely ruined the mood."
-
-
+    n "Heh...{w=0.25} Says who?"
+    c "Says...{w=0.25} um..."
+    "He catches on."
+    c "Ah."
     
     return
+
+label niecyendhappy:
+    n "O...OK!"
+    n "Where should we go!?"
+    c "I thought you had somewhere in mind."
+    n "I..."
+    n "I forgot."
+    $ persistent.niecy_complete = True
+
+label niecyendnormal
+    n "Welp!"
+    n "That's all I wanted say!"
+    n "Hope you'll consider it."
+    if found_ed_flag:
+        jump edunlock
+    n "If you get the Guy today,{w=0.25} let me know so I can make plans before it gets too late to go out."
+    n "Later,{w=0.25} Cas!"
+    $ persistent.niecy_complete = True
+
+label niecyendsad:
+
+    n "I don't really have anything else to add..."
+    if found_ed_flag:
+        jump edunlock
+
+    n "I hope that was valuable... {w=0.25}If you ever get that Guy,{w=0.25} just let me know..."
+    c "Mm-hm."
+    n "See you around, {w=0.25}Cassiopeia..."
+    $ persistent.niecy_complete = True
+    return
+
 
 #event ending niecy
 label edunlock:
@@ -413,24 +682,27 @@ label edunlock:
 #event ed
 label cantfeelshit:
     "..."
-    $ spontaneous_handler.add_spontaneous(greenout)
+    $ spontaneous_handler.add_spontaneous(Spontaneous("weed", 0, "weed", jump=True, lines_until=5))
     "Nothing happened..."
     return
 
 #event ed
 label quieres:
-    #show ed
-    e "Yo."
-    n "What's up?"
-    e "Anyone else see a demon prowling around?{w=0.25} I thought I saw one go into the break room."
-    n "Maybe it's because you took the Edible That Makes You See Demons and Forget You Took the Edible That Makes You See Demons?"
-    e "Oh yeah...{w=0.25} That's probably one of my best inventions."
-    n "It's not even close to your top 75."
-    e "Everyone's a critic." #ed annoyed
-    e "Yo C-man,{w=0.25} you want one?"
+    $ found_ed_flag = True
+    $ block_repeat = True
+    show ed neutral:
+        xalign 0.75
+    e "Yo.{nw=[delay]}"
+    n "What's up?{nw=[delay]}"
+    e "Anyone else see a demon prowling around?{w=0.25} I thought I saw one go into the break room.{nw=[delay]}"
+    n "Maybe it's because you took the Edible That Makes You See Demons and Forget You Took the Edible That Makes You See Demons?{nw=[delay]}"
+    e "Oh yeah...{w=0.25} That's probably one of my best inventions.{nw=[delay]}"
+    n "It's not even close to your top 75.{nw=[delay]}"
+    e "Everyone's a critic.{nw=[delay]}" #ed annoyed
+    e "Yo C-man,{w=0.25} you want one?{nw=[delay]}"
     $ will_capture_click = True
     $ story_index = 4
-    show screen timed_menu ("quieres.ignore")
+    show screen timed_menu (q_delay,"quieres.ignore")
     menu:
         "Sure":
             pass
@@ -444,87 +716,143 @@ label quieres:
     pause 1.0
     show maskedcutin as cutin2 with dissolve
 
-    label .ignore:
-        e "See ya."
+
     hide cutin with dissolve
     hide cutin2 with dissolve
 
+    eauto "See ya.{nw=[delay]}"
     if has_gummy:
-        c "So...{w=0.25} what happens if I take this?"
-        n "Don't eat that."
+        cauto "So...{w=0.25} what happens if I take this?{nw=[delay]}"
+        nauto "Don't eat that.{nw=[delay]}"
         show screen deliciousgummy
+        $ block_repeat = False
+        return
+
+    label .ignore:
+        show ed finger
+        eauto "How many fingers am I holding up?{nw=[delay]}"
+        nauto "Leave the man alone, {w=0.25}Ed.{nw=[delay]}"
+        eauto "Tuh.{nw=[delay]}"
+    $ block_repeat = False
     return
 
 #event gabriel
 label gabriel1:
-    n "Hello? {nw=0.5}"
-    n "Hey,{w=0.25} Gabriel!{w=0.25} How was your nap?"
-    g "It's not done...{w=0.25} I'm about to go back to sleep,{w=0.25} but..."
-    g "Piapia...{w=0.25} did you make a purchase recently?"
+    show gabriel groggy:
+        xalign 0.75
+    nauto "Hey,{w=0.25} Gabriel.{w=0.25} How was your nap?{nw=[delay]}"
+    gauto "It's not done...{w=0.25} I'm about to go back to sleep,{w=0.25} but...{nw=[delay]}"
+    gauto "Piapia...{w=0.25} did you make a purchase recently?{nw=[delay]}"
     $ story_index = 2
+    show screen timed_menu(q_delay,"gabriel1.ignore0")
     menu:
         "Yes":
+            hide screen timed_menu
             $ story_index = 0
-            g "That's okay...{w=0.25} Just don't forget to let me know ahead of time."
+            gauto "That's okay...{w=0.25} Just don't forget to let me know ahead of time.{nw=[delay]}"
+            hide gabriel with dissolve
             return
         "No":
+            hide screen timed_menu
             $ story_index = 0
-            g "Umm...{w=0.25} yeah you did,{w=0.25} but that's okay..."
-            g "Just let me know next time,{w=0.25} and don't make a habit of lying..."
+            gauto annoyed "Umm...{w=0.25} yeah you did,{w=0.25} but that's okay...{nw=[delay]}"
+            gauto "I can see the purchases on my phone,{w=0.25} you know.{w=0.25} The buzzing woke me up.{nw=[delay]}"
+            gauto neutral "It's OK this time,{w=0.25} but don't make a habit of lying...{nw=[delay]}"
+            hide gabriel with dissolve
             return
+    label .ignore0:
+        gauto "Cassiopeia!{nw=[delay]}"
+
     label .ignore1:
         $ story_index = 3
-        g "Did you buy something!?"
+        gauto "Did you buy something!?{nw=[delay]}"
+        show screen timed_menu(q_delay,"gabriel1.phoneignore")
+        $ will_capture_click = True
         menu:
             "Yes":
-                pass
+                $ will_capture_click = False
+                gauto "I thought so.{nw=[delay]}"
             "No":
-                pass
+                gauto "Yeah, {w=0.25}well, {w=0.25}I see a purchase right here, {w=0.25}so.{nw=[delay]}"
+        jump gabriel1.answer2
+
+    label .phoneignore:
+        $ will_capture_click = False
+        gauto "You're not even listening...{nw=[delay]}"
+        nauto "It's okay.{w=0.25} I can handle this.{nw=[delay]}"
+
+    
     label .ignore2:
-        g "You're not even listening..."
-        n "It's okay.{w=0.25} I can handle this."
-        if niecy_irritation > 3:
-            g "No,{w=0.25} you look genuinely irritated already. {w=0.25}You aren't typically like that with him."
-            n "I know, {w=0.25}but I have to try..."
-            g "Sweetheart. {w=0.25}Let me talk to him. {w=0.25}I'll straighten him out."
-            n "Oh... {w=0.25}okay..."
+        if niecy_irritation > 2:
+            gauto "No,{w=0.25} you look genuinely irritated already. {w=0.25}You aren't typically like that with him.{nw=[delay]}"
+            nauto "I know, {w=0.25}but I have to try...{nw=[delay]}"
+            gauto "Sweetheart. {w=0.25}Let me talk to him. {w=0.25}I'll straighten him out.{nw=[delay]}"
+            nauto "Oh... {w=0.25}okay...{nw=[delay]}"
+            hide niecy with dissolve
             jump gabrielroute
         else:
-            g "Are you sure,{w=0.25} sweetheart?"
-            n "Positive."
-            g "All right,{w=0.25} I'll leave you to it...{w=0.25} but Cassiopeia?"
-            #stop spending my money on gacha games. cg and sound.       
+            gauto "Are you sure,{w=0.25} sweetheart?{nw=[delay]}"
+            nauto "Positive.{nw=[delay]}"
+            gauto "All right,{w=0.25} I'll leave you to it...{w=0.25} but Cassiopeia?{nw=[delay]}"
+            gauto "Stop spending my money on gacha games.{nw=[delay]}"
+            hide gabriel
+            #stop spending my money on gacha games. cg and sound. fade to white. hide cg. 
+            return     
+    label .answer2:
+        gauto "Listen,{w=0.25} whatever it is you bought,{w=0.25} keep it under 50 bucks.{nw=[delay]}"
+        gauto "I'm going back to bed.{nw=[delay]}"
+        nauto "See ya.{nw=[delay]}"
+        gauto "Mm-hm.{nw=[delay]}"
 
     return
 
+label gabriel4:
+    gauto "Come on.{w=0.25} Again?{nw=[delay]}"
+    gauto "Piapia,{w=0.25} I gave you that card because I wanted you to be able to practice some autonomy.{nw=[delay]}"
+    gauto "You've been so responsible with it up until now.{w=0.25} What happened?{nw=[delay]}"
+    cauto 'Nothing "happened,"{w=0.25} Gabriel.{w=0.25} I\'m fine.{nw=[delay]}'
+    gauto "But you're not fine,{w=0.25} Piapia. {w=0.25}You're holed up in your room and playing on your phone,{w=0.25} spending money you've never spent before.{nw=[delay]}"
+    gauto "This?{w=0.25} Can't continue. {w=0.25}Something's got to give.{nw=[delay]}"
+
+    return
+
+
 label gabriel2:
-    show gabriel annoyed
-    g "Cassiopeia!{w=0.25} I can see you spending decent money on this thing instead of an afternoon out!"
+    show gabriel annoyed:
+        xalign 0.75
+    gauto "Cassiopeia!{w=0.25} I can see you spending decent money on this thing instead of an afternoon out!{nw=[delay]}"
     $ story_index = 5
-    g "Surely,{w=0.25} this game can't be more important than your girlfriend."
+    gauto "Surely,{w=0.25} this game can't be more important than your girlfriend.{nw=[delay]}"
     $ found_gf_flag = True
     $ will_capture_click = True
     menu:
         "It isn't":
             pass
     $ will_capture_click = False
-    c "I'm not ignoring her!"
-    g "Then why are you tap tap tapping when she's standing right in front of you!?"
-    g "Don't make me come in here again!"
+    cauto "I'm not ignoring her!{nw=[delay]}"
+    gauto "Then why are you tap tap tapping when she's standing right in front of you!?{nw=[delay]}"
+    label .thereturn:
+        gauto "Don't make me come in here again!{nw=[delay]}"
+    hide gabriel
     return
 
 #event gabriel
 label gabriel3:
     #play sound door slamming open
-    show gabriel rage
+    show gabriel rage:
+        xalign 0.75
+    pause 1.0
+
     jump givemeyourphone
     return
 
 #event ending
 label instakill:
+    show bg black
+    pause 1.0
     #if music is playing stop music
     #show cg instakill
-    #$ persistent.bought_the_guy = True
+    $ persistent.bought_the_guy = True
     return
 
 label givemeyourphone:
@@ -537,6 +865,7 @@ label givemeyourphone:
 #ending
 label escapeseq:
     #show the escape sequence
+    "As Cassiopeia makes a mad dash for the halls,{w=0.25} he runs into an unfamiliar familiar face..."
     
     jump scammer
     return
@@ -547,14 +876,15 @@ label gavephone:
     g "Good."
     g "You can have this back in a week."
     "Gabriel sighs."
-    g "I hate to patronize like this,{w=0.25} but..."
-    g "Piapia.{w=0.25} You know I love you. {w=0.25}But you understand,{w=0.25} this is wrong,{w=0.25} right?"
-    c "...I don't think it's wrong to play a game."
+    g "Piapia.{w=0.25} You know I love you. {w=0.25}But you understand what you did was wrong,{w=0.25} right?"
+    c "No,{w=0.25} actually. {w=0.25}I don't think it's wrong to play a game."
     "Gabriel groans,{w=0.25} realizing he has no way to make Cassiopeia understand his perspective."
     g "Well,{w=0.25} give it a week and you'll forget all about it. {w=0.25}OK?"
     c "..." #pouting
     g "{i}OK?{/i}"
     c "OK..."
+    $ persistent.gabriel_complete = True
+    #set flag end of gabriel route
     return
 
 

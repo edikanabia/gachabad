@@ -43,12 +43,24 @@ label lookuptable(index):
         $ story_index = 0
         $ renpy.pop_call()
         g "Unbelievable!"
+        g "Cassiopeia!"
+        jump gabriel2.thereturn
         return
     elif index == 6:
         $story_index = 0
         $ will_capture_click = False
         $ renpy.pop_call()
         jump evenwhile
+    elif index==7:
+        $ story_index=0
+        $ will_capture_click = False
+        $ renpy.pop_call()
+        jump niecynomoney.iwish
+    elif index ==8:
+        $ story_index=0
+        $ will_capture_click = False
+        $ renpy.pop_call()
+        jump niecynomoney.stopclick        
     else:
         $ renpy.notify("No problem here.") #empty this out to nothing
         return
@@ -61,15 +73,31 @@ label repeatcheck:
     #flags will change the specifics of who says what
     $ repeat_requests += 1
     $ repeat_active = False #disable the repeat that button
+    if gabriel_present:
+        g "Absofuckinglutely not."
+        return
+
+    if block_repeat:
+        n "Not now,{w=0.25} Cassiopeia."
 
     if since_last_repeat <= 4:
-        n "What?{w=0.2} No!{w=0.2} Pay attention."
+        n "You can't have forgotten that quickly.{w=0.25} C'mon,{w=0.25} man."
         $ since_last_repeat = 0
         $ repeat_active = True #reeneable the repeat that button
         return
 
+    elif repeat_requests >= 10:
+        if repeat_requests == 10:
+            n "Cas...{w=0.25} I feel like you ask me to repeat everything these days."
+            $ niecy_irritation +=1
+        else:
+            n "Fine..."
+        call screen history (_with_none=False) as menu with dissolve
+        with dissolve
+
     elif since_last_repeat > 4:
-        n "Sure,{w=0.2} I can do that."
+        n "Hm?" 
+        n "Sure.{w=0.25} So what I was saying was..."
         call screen history(_with_none=False) as menu with dissolve 
         with dissolve
     
@@ -86,10 +114,31 @@ label facecover:
     n concern "{size=*0.5}At least pretend to pay attention...{/size}"
     return
 
+
+label gabrielcheck:
+    $ block_spontaneous = True
+    $ story_index = 0
+    $ gabriel_triggered = False
+    if gabrieltriggercount <= 0:
+        $ gabrieltriggercount+=1
+        call gabriel1
+    elif money_spent >=300:
+        jump gabriel3
+    elif gabrieltriggercount == 1:
+        $ gabrieltriggercount +=1
+        call gabriel2
+    elif gabrieltriggercount ==2:
+        $ gabrieltriggercount +=1
+        call gabriel4
+    else:
+        return
+        
+
 label roll(pulls):
     $ can_pull = False
     $ gems_to_spend = pulls * pull_cost
     if gems_to_spend > gems:
+        $ renpy.notify("Not enough gems!")
         #show text "Not enough gems!"
         #hide text with dissolve
         $ can_pull = True
@@ -117,7 +166,7 @@ label roll(pulls):
     show screen showguy (list_of_pulls)
     $ can_pull = True
     if will_capture_click:
-        $renpy.pop_call()
+        $ renpy.pop_call()
         call lookuptable(story_index)
     return
 

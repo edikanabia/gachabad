@@ -25,6 +25,8 @@ default persistent.true_end = False
 
 #region Gameplay Variables
 #Gacha pull mechanics
+default is_time_money = False
+default block_spontaneous = False
 
 init 0 python:
     impostor_name = ""
@@ -66,7 +68,17 @@ init 0 python:
             self.current_spontaneous = None
             
         def add_spontaneous(self, spontaneous):
-            self.current_spontaneous = spontaneous #we'll see if we can pull the data from just the object
+            global block_spontaneous
+            if block_spontaneous:
+                return
+            if self.current_spontaneous == None:
+                self.current_spontaneous = spontaneous #we'll see if we can pull the data from just the object
+                return
+            else:
+                if self.current_spontaneous.priority < spontaneous:
+                    self.current_spontaneous = spontaneous
+                else:
+                    return
             
             
         def update_spontaneous(self, event, interact=True, **kwargs):
@@ -96,7 +108,6 @@ init 0 python:
     greenout_time = 0
             
 
-define greenout = Spontaneous("weed", 0, "weed", jump=True, lines_until=5)
 define spontaneous_handler = SpontaneousHandler()
 define config.all_character_callbacks = [count_repeat, spontaneous_handler.update_spontaneous]
 
@@ -109,14 +120,52 @@ define test_guy_1 = Guy("theguy2", "ph_brown_heart.png", 1)
 define test_guy_2 = Guy("theguy3", "ph_purple_heart.png", 2)
 define test_guy_3 = Guy("theguy4", "ph_mitski.png", 3)
 define test_guy_4 = Guy("theguy5", "ph_baba.png", 4)
+
+
+define guy_horse_r = Guy("Red Horse Girl", "guy_horse_red.png", 1)
+define guy_horse_o = Guy("Orange Horse Girl", "guy_horse_orange.png", 4)
+define guy_horse_y = Guy("Yellow Horse Girl", "guy_horse_red.png", 0)
+define guy_horse_l = Guy("Lime Horse Girl", "guy_horse_lime.png", 1)
+define guy_horse_g = Guy("Green Horse Girl", "guy_horse_green.png", 0)
+define guy_horse_t = Guy("Teal Horse Girl", "guy_horse_teal.png", 2)
+define guy_horse_bl = Guy("Blue Horse Girl", "guy_horse_blue.png", 0)
+define guy_horse_pi = Guy("pink Horse Girl", "guy_horse_pink.png", 3)
+define guy_horse_pr = Guy("Purple Horse Girl", "guy_horse_purple.png", 2)
+
+define guy_cat_r = Guy("Red Cat Girl", "guy_cat_red.png", 1)
+define guy_cat_o = Guy("Orange Cat Girl", "guy_cat_orange.png", 4)
+define guy_cat_y = Guy("Yellow Cat Girl", "guy_cat_yellow.png", 0)
+define guy_cat_g = Guy("Green Cat Girl", "guy_cat_green.png", 1)
+define guy_cat_gb = Guy("Green-Brown Cat Girl", "guy_cat_brown_green.png", 4)
+define guy_cat_bl = Guy("Blue Cat Girl", "guy_cat_blue.png", 0)
+define guy_cat_pr = Guy("Purple Cat Girl", "guy_cat_purple.png", 2)
+
+
 define the_guy = Guy("angledevile", "guy_the_guy.png", 4, is_the_guy=True)
-define all_guys = {test_guy_0, test_guy_1, test_guy_2, test_guy_3, the_guy}
+define all_guys = {
+    guy_horse_r,
+    guy_horse_o,
+    guy_horse_y,
+    guy_horse_l,
+    guy_horse_g,
+    guy_horse_t,
+    guy_horse_bl,
+    guy_horse_pi,
+    guy_horse_pr,
+    guy_cat_r,
+    guy_cat_o,
+    guy_cat_y,
+    guy_cat_g,
+    guy_cat_gb,
+    guy_cat_bl,
+    guy_cat_pr,
+    the_guy}
 
 
 init 1 python:
     class Gacha:
         total_rolls = 0
-        pity_threshold = 25
+        pity_threshold = 50
         def __init__(self, set_of_all_guys):
             self.__total_rolls = 0
             self.__pity_count = 0
@@ -216,10 +265,17 @@ default phonexpos = 360
 default phoneypos = 300
 default current_phone = None
 
+define short_delay = (1.0, 3.0)
+define medium_delay = (2.0, 5.0)
+define long_delay = (3.0, 7.0)
+default q_delay = medium_delay[1]
+default delay = medium_delay[0]
+
 default will_capture_click = False #set to true when a click on the phone will make niecy react
 default click_captured = False
-default gems = 150
+default gems = 257
 define pull_cost = 7
+default money_route = False
 
 default list_of_pulls = []
 
@@ -273,10 +329,13 @@ init python:
         #since we only need to add money, it won't be too complex.
         #it accepts one argument.
         global money_spent
-        global trigger_gabriel
+        global gabriel_triggered
+        global spontaneous_handler
         money_spent += amount
-        if trigger_gabriel:
-            renpy.call("lookuptable",5)
+        if gabriel_triggered == False:
+            spontaneous_handler.add_spontaneous()
+
+        
 
     import datetime as dt
     timer_started = False
@@ -322,7 +381,7 @@ init python:
 #story variables/inventory
 default story_index = 0 #where in the story the player is
 default gabriel_present = False #true if gabriel is on screen
-default trigger_gabriel = False #variable that sets off instakill
+default gabriel_triggered = False #true if there's no spontaneous queued 
 
 default niecy_irritation = 0 #counts the number of times you've irritated her
 
@@ -332,6 +391,8 @@ default game_genre = ""
 default game_about = ""
 default game_detail3 = ""
 
+define gabriel_spontaneous = Spontaneous("gabrielcheck", 1, "gabriel", jump=False, lines_until = 7)
+default gabrieltriggercount = 0
 #region Images and Transforms
 
 
@@ -420,6 +481,37 @@ image niecy angry = Image("ch_niecy_angry.png")
 image niecy relief = Image("ch_niecy_relief.png")
 image niecy uhoh = Image("ch_niecy_uhoh.png")
 
+#ed's talksprites
+#pose 1
+image ed neutral = Image("ch_ed_neutral.png")
+image ed concern = Image("ch_ed_concern.png")
+image ed eyebrow = Image("ch_ed_eyebrow.png")
+image ed impressed = Image("ch_ed_impressed.png")
+image ed smug = Image("ch_ed_smug.png")
+image ed annoyed = Image("ch_ed_annoyed.png")
+
+#pose 2
+image ed finger:
+    choice:
+        "ch_ed_finger_1.png"
+    choice:
+        "ch_ed_finger_2.png"
+    choice:
+        "ch_ed_finger_3.png"
+    choice:
+        "ch_ed_finger_4.png"
+
+
+#additional ui
+image ctc:
+    "ui_ctc.png"
+    xoffset 10
+    yoffset 5
+
+image autoplay:
+    "ui_autoplay.png"
+
+
 #endregion
 
 #region Audio
@@ -430,12 +522,16 @@ image niecy uhoh = Image("ch_niecy_uhoh.png")
 #endregion
 
 #region Characters
-
-define c = Character("Cassiopeia")
-define n = Character("Niecy", image="niecy")
-define g = Character("Gabriel", image="gabriel")
-define e = Character("Ed")
-define i = Character("impostor_name", dynamic=True)
+define narrator = Character(ctc="ctc")
+define c = Character("Cassiopeia", ctc="ctc")
+define cauto = Character("Cassiopeia", advance=False)
+define n = Character("Niecy", image="niecy", ctc="ctc")
+define nauto = Character("Niecy", image="niecy",  advance=False)
+define g = Character("Gabriel", image="gabriel", ctc="ctc")
+define gauto = Character("Gabriel", image="gabriel", advance=False)
+define e = Character("Ed",image="ed", ctc="ctc")
+define eauto = Character("Ed",image="ed", advance=False)
+define i = Character("impostor_name", dynamic=True, ctc="ctc")
 
 
 #impostor name is Ed unless the game has been cleared
