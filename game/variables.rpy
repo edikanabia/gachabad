@@ -11,13 +11,15 @@ default found_gf_flag = False #nonpersisted flag that merely exists to prevent t
 default persistent.ed_appears = False #set to true when the player reaches the end of the game with the ed event active
 default persistent.seen_ed = False #set to true after the player meets ed for the first time
 default found_ed_flag = False #nonpersisted flag prevents player from acquiring ed route before finishing the game with the ed event active
+default persistent.bought_the_guy = False #if you buy the guy instead of trying for the guy
+
 
 default persistent.impostor_seen = False #encounter impostor ed for the first time.
 default persistent.gabriel_complete = False #reach either end of a gabriel route
 default persistent.ed_complete = False #reach the end of the ed route
 default persistent.niecy_complete = False #reach the normal ending
 
-
+default persistent.true_end = False
 
 #endregion
 
@@ -210,11 +212,17 @@ default can_pull = True
 default guy_end = False
 
 default current_guy = test_guy_0
+default phonexpos = 360
+default phoneypos = 300
+default current_phone = None
 
-default gems = 115
+default will_capture_click = False #set to true when a click on the phone will make niecy react
+default click_captured = False
+default gems = 150
 define pull_cost = 7
 
 default list_of_pulls = []
+
 
 init 2 python:
     class PullGuy(Action):
@@ -228,6 +236,17 @@ init 2 python:
             return current_guy
 
         pass
+    def capture_click(drag):
+        global will_capture_click
+        global story_index
+        global click_captured
+        if will_capture_click:
+            will_capture_click = False
+            click_captured = True
+            renpy.restart_interaction()
+            return
+        else:
+            return
 
 
 #timer and money mechanics
@@ -254,7 +273,10 @@ init python:
         #since we only need to add money, it won't be too complex.
         #it accepts one argument.
         global money_spent
+        global trigger_gabriel
         money_spent += amount
+        if trigger_gabriel:
+            renpy.call("lookuptable",5)
 
     import datetime as dt
     timer_started = False
@@ -300,6 +322,7 @@ init python:
 #story variables/inventory
 default story_index = 0 #where in the story the player is
 default gabriel_present = False #true if gabriel is on screen
+default trigger_gabriel = False #variable that sets off instakill
 
 default niecy_irritation = 0 #counts the number of times you've irritated her
 

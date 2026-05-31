@@ -276,7 +276,7 @@ screen tutorialize():
 
 
 
-#########################
+######################### Gameplay/text progression
 
 ## Position "repeat that" button at the bottom right, above the dialogue box
 transform repeatthatpos:
@@ -292,6 +292,12 @@ screen repeatthat():
     else:
         textbutton "repeat that?":
             at repeatthatpos
+
+screen timed_menu(time_allotted, label):
+    default time = time_allotted
+    timer 0.01 repeat True action If(time > 0, true=IncrementScreenVariable("time", -0.01), false=[ Hide(), Jump(label)])
+    bar value time range time_allotted align((0.5, 0.5))
+    pass
 
 ############################
 
@@ -341,28 +347,47 @@ screen rolldisplay(pulls):
 
     #checks how many gems the player is going to spend
     default gems_to_spend = pulls * pull_cost
-    if gems_to_spend > gems:
-        text "Not enough gems!"
-        timer 1.0 action [Return(), Hide()] #kicks the player out of this screen
-    else:
-        #clears the list if it's not empty
+    frame:
+        background "#0000"
+        modal True
+        if gems_to_spend > gems:
+            text "Not enough gems!"
+            timer 1.0 action [ Hide()] #kicks the player out of this screen
+        else:
+            #clears the list if it's not empty
 
-        if pulls >= 10:
-            # ten-pulls get one additional bonus pull
-            $ pulls +=1
-        
-        #Roll all the guys in the number of pulls, populating the list
-        for pull in range(0, pulls):
-            timer 0.01 action PullGuy()
-        if list_of_pulls:
-            add DynamicImage(list_of_pulls[current_pull_index].image)
-            if list_of_pulls[current_pull_index].is_the_guy:
-                timer 1.0 action [Return(), Jump("theguy"), Hide()]
-            elif current_pull_index < final_pull_index:
-                timer 1.0 action IncrementScreenVariable("current_pull_index") repeat True
-            else:
-                timer 1.0 action [Return(), Hide()]
+            if pulls >= 10:
+                # ten-pulls get one additional bonus pull
+                $ pulls +=1
+            
+            #Roll all the guys in the number of pulls, populating the list
+            for pull in range(0, pulls):
+                timer 0.01 action PullGuy()
+            
+            if list_of_pulls:
+                add DynamicImage(list_of_pulls[current_pull_index].image)
+                if list_of_pulls[current_pull_index].is_the_guy:
+                    timer 1.0 action [Jump("theguy"), Hide()]
+                elif current_pull_index < final_pull_index:
+                    timer 1.0 action IncrementScreenVariable("current_pull_index") repeat True
+                else:
+                    timer 1.0 action [Hide()]
     on "hide" action [SetVariable("can_pull", True), list_of_pulls.clear]
+    pass
+
+#gacha pull refactor
+screen gachapull(pulls):
+    default pulls = 1
+    default gems_to_spend = pulls * pull_cost
+    if gems_to_spend > gems:
+        text "Not enough gems!" align (0.5, 0.5)
+        timer 1.0 action Hide()
+        pass
+    else:
+
+        pass
+    timer 1.0 action Hide()
+    on "hide" action [SetVariable("can_pull", True)]
     pass
 
 #controls the timer, allows it to continue counting down ingame
@@ -375,19 +400,81 @@ screen countdown():
 
 
 #### Phone screens
-screen shop():
-    tag phone
-    drag:
-        imagemap:
-            auto "sc_phone_shop_%s.png"
-            hotspot (20, 80, 43,43) action [IncrementVariable("gems", 99), Function(update_money, gem_price_1)]
-        
-screen banner():
+screen shop(x,y):
     tag phone
 
-screen timer():
+    frame:
+        modal True
+        background "#0000"
+        
+        drag:
+            as current_phone
+            activated capture_click
+            if click_captured:
+                timer 0.01 action [SetVariable("click_captured", False),Call("lookuptable",story_index)]
+            pos (x,y)
+            imagemap:
+                auto "sc_phone_shop_%s.png"
+                hotspot (36, 132, 65,85) action [IncrementVariable("gems", 99), Function(update_money, gem_price_1), If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)])]
+                hotspot (106, 132, 65,85) action [IncrementVariable("gems", 599), Function(update_money, gem_price_2), If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)])]
+                hotspot (176, 133, 65,85) action [IncrementVariable("gems", 1199), Function(update_money, gem_price_3), If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)])]
+                hotspot (35, 228, 65,85) action [IncrementVariable("gems", 2399), Function(update_money, gem_price_4), If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)])]
+                hotspot (107, 227, 65,85) action [IncrementVariable("gems", 5799), Function(update_money, gem_price_5), If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)])]
+                hotspot (179, 228, 65,85) action [IncrementVariable("gems", 11599), Function(update_money, gem_price_6), If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)])]
+
+                hotspot (97, 327, 137, 25) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Function(buy_time, 1800,time_price_2)]
+                hotspot (98, 360, 137, 25) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Function(buy_time, 3600,time_price_3)]
+                hotspot (98, 395, 137, 25) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Function(buy_time, 10800,time_price_5)]
+
+                hotspot (49, 393, 32, 33) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("banner", x=current_phone.x, y=current_phone.y)] #left arrow
+            
+screen banner(x,y):
     tag phone
-    text "[current_time]" align (0.5, 0.5)
+
+    frame:
+        background "#0000"
+        modal True
+        drag:
+            as current_phone
+            activated capture_click
+            if click_captured:
+                timer 0.01 action [SetVariable("click_captured", False),Call("lookuptable",story_index)]
+            pos (x,y)
+            imagemap:
+                auto "sc_phone_banner_%s.png"
+                hotspot (54, 201,170,79) sensitive (persistent.bought_the_guy == False) action Jump("instakill")
+                hotspot (52, 294, 73, 90) sensitive (can_pull == True) action [Call("roll", 1)]#[Show("rolldisplay", transition=None, pulls=1)]#
+                hotspot (152, 294, 73, 90) sensitive (can_pull == True) action [Call("roll", 10)]#[Show("rolldisplay", transition=None, pulls=10)]#
+
+                hotspot (49, 393, 32, 33) sensitive (can_pull == True) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("timer",  x=current_phone.x, y=current_phone.y)] #left arrow
+                hotspot (195, 393, 32, 33) sensitive (can_pull == True) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("shop",  x=current_phone.x, y=current_phone.y)] #right arrow
+
+
+screen timer(x,y):
+    tag phone
+
+    frame:
+        modal True
+        background "#0000"
+        drag:
+            as current_phone
+            activated capture_click
+            if click_captured:
+                timer 0.01 action [SetVariable("click_captured", False),Call("lookuptable",story_index)]
+            pos (x,y)
+            imagemap:
+                auto "sc_phone_timer_%s.png"
+                hotspot (195, 393, 32, 33) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("banner",   x=current_phone.x, y=current_phone.y)] #right arrow
+                text "[current_time]" align (0.5, 0.4) color "#A470CC"
+
+
+screen showguy(guys):
+    vbox:
+        for guy in guys:
+            add guy.image
+    timer 1.0 action Hide()
+    on "hide" action list_of_pulls.clear
+    pass
 
 
 #####Story Screens

@@ -12,40 +12,49 @@ label lookuptable(index):
     elif index == 1:
         $ story_index = 0
         #in start, after Niecy asks how long he's gonna play the game
+        $ will_capture_click = False
+        $ renpy.pop_call()
         n "Cas?{w=0.25} Did you hear me?"
         n "How long is this going to take?"
         c "Huh!?"
-        $ renpy.pop_call()
         jump start.phonereturn1
     elif index == 2:
         #Gabriel appearing for the first time
         $ story_index = 0
-        g "Cassiopeia!"
         $ renpy.pop_call()
+        g "Cassiopeia!"
         jump gabriel1.ignore1
     elif index == 3:
+        #time out
         $ story_index = 0
+        $ renpy.pop_call()
         g "Are you kidding me!?"
         n "He's been glued to this thing for hours,{w=0.25} apparently.{w=0.25} Don't mind him."
-        $ renpy.pop_call()
         jump gabriel1.ignore2
     elif index == 4:
+        #time out
         $ story_index = 0
+        $ renpy.pop_call()
         e "How many fingers am I holding up?"
         n "Leave the man alone,{w=0.25} Ed."
         e "Whatever."
-        
-        $ renpy.pop_call()
         jump quieres.ignore
     elif index == 5:
         $ story_index = 0
+        $ renpy.pop_call()
         g "Unbelievable!"
-        pass
+        return
+    elif index == 6:
+        $story_index = 0
+        $ will_capture_click = False
+        $ renpy.pop_call()
+        jump evenwhile
     else:
         $ renpy.notify("No problem here.") #empty this out to nothing
         return
 
     return
+
 
 #game mechanic
 label repeatcheck:
@@ -77,13 +86,12 @@ label facecover:
     n concern "{size=*0.5}At least pretend to pay attention...{/size}"
     return
 
-label rolldisplay(pulls):
+label roll(pulls):
     $ can_pull = False
     $ gems_to_spend = pulls * pull_cost
     if gems_to_spend > gems:
-        show text "Not enough gems!"
-        pause 1.0
-        hide text with dissolve
+        #show text "Not enough gems!"
+        #hide text with dissolve
         $ can_pull = True
         return
     $ gems -= gems_to_spend
@@ -91,27 +99,25 @@ label rolldisplay(pulls):
     $ iterator = 0
     while iterator < pulls:
         $ current_guy = gacha_puller.pull_guy()
-        
-        image guy:
-            current_guy.image
-            align (0.5, 0.5)
+        $ list_of_pulls.append(current_guy)
 
-        show guy with dissolve
+        #show guy with dissolve
         #show text "the guy's name"
         
-        pause 1.0
-        hide guy with dissolve
+        #hide guy with dissolve
         #hide text with dissolve
         #it might help to end the pulls early and jump out of the loop the moment cassiopeia pulls the guy
-        if current_guy.is_the_guy:
-            $ guy_end = True
+        #if current_guy.is_the_guy:
+            #$ guy_end = True
             #but as of right now, jumping directly from the loop,
             #$ renpy.pop_call()
             #jump theguy
-            return
+            #return
         $ iterator += 1
-    
-
+    show screen showguy (list_of_pulls)
     $ can_pull = True
+    if will_capture_click:
+        $renpy.pop_call()
+        call lookuptable(story_index)
     return
 

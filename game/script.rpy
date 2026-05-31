@@ -9,7 +9,7 @@ label start:
     #jump scammer
     #show screen gachadebug
     #jump theendlessloop
-    jump givemeyourphone
+    #jump givemeyourphone
     if persistent.got_the_guy:
         jump postguy
     else:
@@ -22,6 +22,8 @@ label start:
     $ story_index = -1
     #call quieres #testing the weed mechanic
     #call screen tutorialize
+    
+    #jump gabriel2
     "It's a lazy Saturday at the Spelltower,{w=0.25} and everyone is cooped up indoors..." 
     "Especially Cassiopeia.{w=0.25} Cassiopeia has been enamored with a new game he downloaded onto his new phone just last week!"
     "It's called...{w=0.25} um...{w=0.25} Well,{w=0.25} he can't remember what it's called.{w=0.25} But he's absolutely hooked!"
@@ -33,25 +35,31 @@ label start:
 
     "The guy Cassiopeia wants is in the time-limited banner today.{w=0.25} It's the last opportunity to get him before the next season starts—tomorrow!"
     "It would be a good time to try for the guy during some downtime."
-    #call screen banner
+    call screen banner (phonexpos, phoneypos)
+    show screen countdown
     #the first roll will always fail
 
     #hide screen banner
 
     #play sound door_open
-    "???" "Cassiopeia?{w=0.25} Are you in here?"
+    label .areyou:
+        "???" "Cassiopeia?{w=0.25} Are you in here?"
     "He knows that voice.{w=0.25} It's Niecy!"
     "...she cannot see him playing this game!"
+    #show screen timed_menu (5, "timeout")
     menu:
         "Say no":
+            hide screen timed_menu
             "Cassiopeia thinks he hears someone chuckle."
             n "Oooookay...{w=0.25} I guess he's not in here!"
             pass
         "Shake your head":
+            hide screen timed_menu
             #play sound covers
             n "Did something move under the... {nw=0.5}"
             #play sound footsteps
         "Don't move or say anything" if persistent.ed_not_niecy:
+            hide screen timed_menu
             "Cassiopeia lay on his bed in silence until he hears the footsteps recede."
             "Now he's in the dark and quiet."
             "Underneath his blanket fort (com-fort-er?) is the perfect nowhere to do nothing."
@@ -60,7 +68,8 @@ label start:
             "These nowheres are collectively known as the Void."
             "Cassiopeia settles into his nowhere,{w=0.25} his eyelids hanging half-open under his phone's bluish glow, {w=0.25}veiled to the people mulling about the Spelltower..."
             jump realed
-        "Get out of bed and greet your beautiful girlfriend":
+        "Get out of bed and greet your beautiful girlfriend" if persistent.true_end:
+            hide screen timed_menu
             jump trueend
 
     #play sound fwoom
@@ -80,7 +89,7 @@ label start:
             #it's not a dusty game without an early false ending!
             $ persistent.true_reset_visible = True #move this to the other endings when building
             return
-        "Say it's porn to chase her off" if persistent.girlfriend_flag:
+        "Say it's porn to chase her off": #if persistent.girlfriend_flag
             jump jorkinit
     
     "Cassiopeia turns the screen so Niecy can see."
@@ -97,12 +106,16 @@ label start:
     c "Hm?"
     n "Does that sound good?"
     c "Yeah,{w=0.25} hang on."
-    show screen testphone 
-    n "Okay...{nw=1.0}"
+    show screen banner (phonexpos, phoneypos) 
+    label .aftertestphone:
+        n "Okay...{nw=1.0}"
     n "Um,{w=0.25} how long is that gonna take?"
     $ story_index = 1
+    $ will_capture_click = True
+
     menu:
         "Uhhh...":
+            $ will_capture_click = False
             $ story_index = 0
             c "Until I get the guy I want?"
             n "Well...{w=0.25} I don't want to be dismissive,{w=0.25} but...{w=0.25} can it wait?"
@@ -114,6 +127,11 @@ label start:
     n "...we definitely need to talk."
 
     #end of intro.
+    return
+
+#test
+label timeout:
+    n "You timed me out, you sly dog!"
     return
 
 #storypath
@@ -257,19 +275,29 @@ label jorkinit:
                                     c "I'm not in the mood for anything really intense,{w=0.25} though."
                                     n "That's OK.{w=0.25} Let's just cuddle."
                                     "She shuffles into bed with him."
-                                    n "This is nice, {w=0.25}isn't it?"
-                                    #show screen banner with Dissolve(5.0)
-                                    "Niecy presses her head into the crook of his neck."
+                                    show screen banner with Dissolve(5.0)
+                                    $ story_index = 6
+                                    $ will_capture_click = True
                                     "..."
-                                    "..."
-                                    n "...you're warm."
-                                    "..."
-                                    "..."
-                                    "..."
-                                    #hide screen phone with None
-
+                                    n "This is nice, {w=0.25}isn't it?{nw=1.0}"
+                                    "...{nw=1.0}"
+                                    "Niecy presses her head into the crook of his neck.{nw=1.0}"
+                                    "...{nw=1.0}"
+                                    "...{nw=1.0}"
+                                    n "...you're warm.{nw=1.0}"
+                                    "...{nw=1.0}"
+                                    "...{nw=1.0}"
+                                    "...{nw=1.0}"
+                                    "Cassiopeia feels something light and tingly underneath his chin.{nw=1.0}"
+                                    $ will_capture_click = False
+                                    hide screen phone
+                                    c "Niecy?"
+                                    n "Mm-hm?"
+                                    c "I'm ready for something more intense now."
+                                    n "Oh! {w=0.25}Already?"
+                                    c "Uh-huh."
                                     n "Wow!{w=0.25} {size=*0.75}Oh wow...{/size}"
-                                    n "Well!{w=0.25} Here I go!"
+                                    n "Well...!{w=0.25} Here I go!"
                                     #fade to white
                                     show cg white with Dissolve(2.0)
                                     "For the rest of the afternoon,{w=0.25} Cassiopeia forgot all about the guy that he wanted..."
@@ -295,21 +323,13 @@ label jorkinit:
                                     menu:
                                         "Touch of a woman":
                                             show cg covers 2 with Dissolve(0.2)
-                                            n "Good answer,{w=0.25} sweet pea.{w=0.25} Now,{w=0.25} c'mere!"
+                                            n "Good answer,{w=0.25} sweet pea."
                                             "For the rest of the afternoon,{w=0.25} Cassiopeia forgot all about the guy that he wanted..."
                                             return
                                         "My goddamn telephone":
+                                            n "Tch!"
+                                            n "To think you've experienced love...{w=0.25} On your {cps=*0.5}fffffff{/cps}ucking telephone!{w=0.25} Get real!"
 
-                                            show cg covers 0 with Dissolve(0.2)
-                                            n "Huh."
-                                            n "Can we talk about it?"
-                                            "Cassiopeia shrinks into his bed."
-                                            n "No?"
-                                            c "We can!{w=0.25} I just...{w=0.25} I don't...{w=0.25} I don't know what I was thinking.{w=0.25} I don't know why I said that."
-                                            n "I don't either.{w=0.25} I was really hoping you would pick me. {w=0.25}Your girlfriend."
-                                            c "I'm sorry...{w=0.25} I'm sorry.{w=0.25} Can I make this right?"
-                                            n "You can...{w=0.25} As a matter of fact,{w=0.25} you should..."
-                                            c "Um.{w=0.25} You're more important.{w=0.25} I love you."
                                             return
 
                             pass
@@ -334,7 +354,23 @@ label jorkinit:
 label evenwhile:
     n "Cassiopeia, {w=0.25}are you serious right now? {w=0.25}You can't get off your phone long enough to just cuddle with me?"
     c "No! {w=0.25}I can't!{w=0.25} I can't even stop thinking about it!"
-    c "I...{w=0.25} I don't even think I like playing it all that much,{w=0.25} but when I don't play it and get the rewards,{w=0.25} I get all itchy!{w=0.25} I don't know why..."
+    c "I...{w=0.25} I don't even think I like playing it all that much,{w=0.25} but when I don't play it,{w=0.25} I get all itchy!{w=0.25} I don't know why!"
+    c "I'm sorry, {w=0.25}Niecy! {w=0.25}I want to spend time with you!{w=0.25} I really do!{w=0.25} I don't know what's wrong with me!"
+    n "Woah,{w=0.25} woah, {w=0.25}woah! {w=0.25}Cas, {w=0.25}it's okay!"
+    c "I'm sorry... {w=0.25}I didn't mean to yell like that."
+    n "It's all right... {w=0.25}I'm not mad as much as I am worried about you, {w=0.25}y'know?"
+    n "I don't think there's anything {i}wrong{/i} with you, {w=0.25}Cas."
+    n "You've never experienced a game like this before, {w=0.25}so it's no wonder it's got you in a chokehold."
+    n "It's just the nature of that kind of game. {w=0.25}It's designed to suck people in."
+    n "How'd you even get into this game, {w=0.25}anyway?"
+    c "Ed told me about it."
+    n "Really?{w=0.25} When?"
+    c "Last week or so... {w=0.25}But it's weird..."
+    c "These days when I ask him about it, {w=0.25}he says he doesn't know what I'm talking about."
+    n "Huh. {w=0.25}Now I'm {i}really{/i} concerned."
+    c "I'm sorry... {w=0.25}I completely ruined the mood."
+
+
     
     return
 
@@ -392,12 +428,16 @@ label quieres:
     n "It's not even close to your top 75."
     e "Everyone's a critic." #ed annoyed
     e "Yo C-man,{w=0.25} you want one?"
+    $ will_capture_click = True
     $ story_index = 4
+    show screen timed_menu ("quieres.ignore")
     menu:
         "Sure":
             pass
         "What did you call me":
             pass
+    hide screen timed_menu
+    $ will_capture_click = False
     $ has_gummy = True
     show cutin gummy1 with dissolve:
         align (0.2, 0.4)
@@ -463,9 +503,11 @@ label gabriel2:
     $ story_index = 5
     g "Surely,{w=0.25} this game can't be more important than your girlfriend."
     $ found_gf_flag = True
+    $ will_capture_click = True
     menu:
         "It isn't":
             pass
+    $ will_capture_click = False
     c "I'm not ignoring her!"
     g "Then why are you tap tap tapping when she's standing right in front of you!?"
     g "Don't make me come in here again!"
@@ -482,6 +524,7 @@ label gabriel3:
 label instakill:
     #if music is playing stop music
     #show cg instakill
+    #$ persistent.bought_the_guy = True
     return
 
 label givemeyourphone:
@@ -662,7 +705,7 @@ label timerland:
 #test loop
 label theendlessloop:
     while True:
-        show screen phone
+        #show screen phone
         show screen testphone2
         "Click the gacha button and mark the result."
         if guy_end:
