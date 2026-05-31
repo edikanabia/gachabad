@@ -620,7 +620,7 @@ label niecyendhappy:
     n "I forgot."
     $ persistent.niecy_complete = True
 
-label niecyendnormal
+label niecyendnormal:
     n "Welp!"
     n "That's all I wanted say!"
     n "Hope you'll consider it."
