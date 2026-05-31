@@ -1,4 +1,4 @@
-﻿# The script of the game goes in this file.
+# The script of the game goes in this file.
 
 # The game starts here.
 
@@ -619,6 +619,7 @@ label niecyendhappy:
     n "I..."
     n "I forgot."
     $ persistent.niecy_complete = True
+    return
 
 label niecyendnormal:
     n "Welp!"
@@ -629,6 +630,7 @@ label niecyendnormal:
     n "If you get the Guy today,{w=0.25} let me know so I can make plans before it gets too late to go out."
     n "Later,{w=0.25} Cas!"
     $ persistent.niecy_complete = True
+    return
 
 label niecyendsad:
 
