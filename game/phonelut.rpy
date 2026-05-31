@@ -3,7 +3,8 @@ label lookuptable(index):
     #index is equal to a global variable that keeps track of where in the script you are
     #the test index is -1. if the index is null or 0, nothing happens.
     #it looks like we'll be manually setting the regions in which a phone interaction will trigger a dialogue.
-
+    if renpy.get_screen("timed_menu")!= None:
+        hide screen timed_menu
     if index == -1:
         $ story_index = 0
         #test index
@@ -116,6 +117,8 @@ label facecover:
 
 
 label gabrielcheck:
+    if renpy.get_screen("timed_menu")!= None:
+        hide screen timed_menu
     $ block_spontaneous = True
     $ story_index = 0
     $ gabriel_triggered = False
@@ -134,7 +137,7 @@ label gabrielcheck:
         return
         
 
-label roll(pulls):
+label roll(pulls=0):
     $ can_pull = False
     $ gems_to_spend = pulls * pull_cost
     if gems_to_spend > gems:
@@ -163,7 +166,8 @@ label roll(pulls):
             #jump theguy
             #return
         $ iterator += 1
-    show screen showguy (list_of_pulls)
+    if pulls > 0:
+        show screen showguy (list_of_pulls)
     $ can_pull = True
     if will_capture_click:
         $ renpy.pop_call()

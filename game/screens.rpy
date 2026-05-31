@@ -457,10 +457,10 @@ screen banner(x,y):
                 auto "sc_phone_banner_%s.png"
                 hotspot (54, 201,170,79) sensitive (persistent.bought_the_guy == False) action Jump("instakill")
                 hotspot (52, 294, 73, 90) sensitive (can_pull == True) action [Call("roll", 1)]#[Show("rolldisplay", transition=None, pulls=1)]#
-                hotspot (152, 294, 73, 90) sensitive (can_pull == True and not gacha_puller.get_is_first_roll) action [Call("roll", 10)]#[Show("rolldisplay", transition=None, pulls=10)]#
+                hotspot (152, 294, 73, 90) sensitive (can_pull == True and not is_first_pull) action [Call("roll", 10)]#[Show("rolldisplay", transition=None, pulls=10)]#
 
-                hotspot (49, 393, 32, 33) sensitive (can_pull == True and not gacha_puller.get_is_first_roll) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("timer",  x=current_phone.x, y=current_phone.y)] #left arrow
-                hotspot (195, 393, 32, 33) sensitive (can_pull == True and not gacha_puller.get_is_first_roll) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("shop",  x=current_phone.x, y=current_phone.y)] #right arrow
+                hotspot (49, 393, 32, 33) sensitive (can_pull == True and not is_first_pull) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("timer",  x=current_phone.x, y=current_phone.y)] #left arrow
+                hotspot (195, 393, 32, 33) sensitive (can_pull == True and not is_first_pull) action [If(will_capture_click, true=[SetVariable("will_capture_click", False),Call("lookuptable",story_index)]), Show("shop",  x=current_phone.x, y=current_phone.y)] #right arrow
                 text "{image=ui_gems.png} [gems]" pos (40, 70) color "#3a2e62"
 
 

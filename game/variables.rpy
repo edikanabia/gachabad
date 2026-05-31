@@ -75,7 +75,7 @@ init 0 python:
                 self.current_spontaneous = spontaneous #we'll see if we can pull the data from just the object
                 return
             else:
-                if self.current_spontaneous.priority < spontaneous:
+                if self.current_spontaneous.priority < spontaneous.priority:
                     self.current_spontaneous = spontaneous
                 else:
                     return
@@ -278,7 +278,7 @@ define pull_cost = 7
 default money_route = False
 
 default list_of_pulls = []
-
+default is_first_pull = True
 
 init 2 python:
     class PullGuy(Action):
@@ -331,9 +331,10 @@ init python:
         global money_spent
         global gabriel_triggered
         global spontaneous_handler
+        global gabriel_spontaneous
         money_spent += amount
         if gabriel_triggered == False:
-            spontaneous_handler.add_spontaneous()
+            spontaneous_handler.add_spontaneous(gabriel_spontaneous)
 
         
 
@@ -386,6 +387,7 @@ default gabriel_triggered = False #true if there's no spontaneous queued
 default niecy_irritation = 0 #counts the number of times you've irritated her
 
 default has_gummy = False
+default block_repeat = False
 
 default game_genre = ""
 default game_about = ""

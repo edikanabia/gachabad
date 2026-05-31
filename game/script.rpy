@@ -40,6 +40,7 @@ label start:
     "It would be a good time to try for the guy during some downtime."
     call screen banner (phonexpos, phoneypos)
     #the first roll will always fail
+    $ is_first_pull = False
 
     #hide screen banner
 
@@ -86,7 +87,7 @@ label start:
             #it's not a dusty game without an early false ending!
             #$ persistent.true_reset_visible = True #move this to the other endings when building
             return
-        "Say it's porn to chase her off": #if persistent.girlfriend_flag
+        "Say it's porn to chase her off" if persistent.girlfriend_flag:
             jump jorkinit
     
     "Cassiopeia turns the screen so Niecy can see."
@@ -104,6 +105,7 @@ label start:
     n "Does that sound good?"
     c "Yeah,{w=0.25} hang on."
     show screen banner (phonexpos, phoneypos) 
+    show screen countdown
     label .aftertestphone:
         n "Okay...{nw=1.0}"
     n "Um,{w=0.25} how long is that gonna take?"
@@ -122,9 +124,10 @@ label start:
     label .phonereturn1:
         $ story_index = 0
     n "...we definitely need to talk."
-    c "Huh...?"
+    c "Whuh...?"
     c "Y-yeah, {w=0.25}we can talk."
     #call screen tutorialbox1
+    show screen repeatthat
     jump niecynomoney
     #end of intro.
     return
@@ -155,12 +158,12 @@ label niecynomoney:
             if persistent.impostor_seen:
                 call quieres
                 nauto "Anyway...{nw=[delay]}"
-            show screen timed_menu(q_delay, "helloooo")
+            show screen timed_menu(q_delay, "niecynomoney.beforehello")
             menu:
                 n "You with me so far?"
                 "Ye":
                     hide screen timed_menu
-                    pass
+                    jump niecynomoney.withme
                 "Nah":
                     hide screen timed_menu
                     nauto "Uh, {w=0.25}basically what you need to know is what you save on money you pay in time.{nw=[delay]}"
@@ -168,7 +171,9 @@ label niecynomoney:
                     nauto "No, {w=0.25}it's very literal...{nw=[delay]}"
                     nauto "Anyways!{nw=[delay]}"
                     jump niecynomoney.sadness
-
+            label .beforehello:
+                hide screen timed_menu
+            
             show screen timed_menu(q_delay, "niecynomoney.ignore1_1")        
             menu helloooo:
                 n "Cassiopeia?"
@@ -185,7 +190,8 @@ label niecynomoney:
 
             pass
     hide screen timed_menu
-    nauto "Great.{w=0.25} How much does it cost to purchase this season's Guy?{nw=[delay]}"
+    label .withme:
+        nauto "Great.{w=0.25} How much does it cost to purchase this season's Guy?{nw=[delay]}"
     cauto "Thousand bucks.{nw=[delay]}"
     nauto "Oh hell no.{w=0.25} How much did it cost to buy last season's Guy?{nw=[delay]}"
     cauto "Like, {w=0.25}forty, {w=0.25}from what I saw online...{nw=[delay]}"
@@ -198,15 +204,18 @@ label niecynomoney:
     nauto "A-and I'm not trying to alarm you or anything,{w=0.25} but...{nw=[delay]}"
     label .sadness:
         nauto "I got a bit sad when I saw how easily you can give your time to this game.{nw=[delay]}"
+    show screen timed_menu (q_delay, "niecynomoney.sadtimeout")
     menu:
         "Why?":
+            hide screen timed_menu
             cauto "It's not like it's a person.{nw=[delay]}"
             nauto "It's exactly the fact that it's not a person that's making me upset,{w=0.25} Cas.{nw=[delay]}"
             nauto "It took a lot for us to get to where we're at now, {w=0.25}y'know?{nw=[delay]}"
             nauto "We barely get days like this that are just...{w=0.25} calm.{nw=[delay]}"
             jump niecynomoney.sadtimeout
         "I get you":
-            nauto "So then why do you..."
+            hide screen timed_menu
+            nauto "So then why do you...{nw=[delay]}"
             show screen timed_menu(short_delay[1], "niecynomoney.ignore1_1")
             menu:
                 "Why do I what":
@@ -217,6 +226,7 @@ label niecynomoney:
                 "I'll stop playing the game":
                     hide screen timed_menu
                     hide screen autoplayactive
+                    hide screen repeatthat
                     $ will_capture_click = True
                     n "..."
                     n "Really?"
@@ -773,8 +783,10 @@ label gabriel1:
         menu:
             "Yes":
                 $ will_capture_click = False
+                hide screen timed_menu
                 gauto "I thought so.{nw=[delay]}"
             "No":
+                hide screen timed_menu
                 gauto "Yeah, {w=0.25}well, {w=0.25}I see a purchase right here, {w=0.25}so.{nw=[delay]}"
         jump gabriel1.answer2
 
