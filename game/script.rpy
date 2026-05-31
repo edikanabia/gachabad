@@ -24,7 +24,7 @@ label start:
     if persistent.niecy_complete:
         if persistent.gabriel_complete:
             if persistent.ed_complete:
-                $ persistent.true_end
+                $ persistent.true_end = True
 
     "It's a lazy Saturday at the Spelltower,{w=0.25} and everyone is cooped up indoors..."
     "Especially Cassiopeia.{w=0.25} Cassiopeia has been enamored with a new game he downloaded onto his new phone just last week!"
@@ -58,7 +58,7 @@ label start:
             #play sound covers
             n "Did something move under the... {nw=0.5}"
             #play sound footsteps
-        "Don't move or say anything" if persistent.ed_not_niecy:
+        "Don't move or say anything" if persistent.seen_ed:
             "Cassiopeia lay on his bed in silence until he hears the footsteps recede."
             "Now he's in the dark and quiet."
             "Underneath his blanket fort (com-fort-er?) is the perfect nowhere to do nothing."
