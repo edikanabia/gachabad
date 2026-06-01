@@ -156,7 +156,7 @@ label niecynomoney:
             nauto "So developers started emphasizing how far you could get by playing for free.{w=0.25} You'd still have access to the same rewards as any other player.{nw=[delay]}"
             nauto "The thing is,{w=0.25} if you can buy your way out of having to grind for items,{w=0.25} that game is implicitly putting a price on the time its players spend grinding.{nw=[delay]}"
             if persistent.impostor_seen:
-                call quieres
+                call quieres from _call_quieres
                 nauto "Anyway...{nw=[delay]}"
             show screen timed_menu(q_delay, "niecynomoney.beforehello")
             menu:
@@ -391,8 +391,9 @@ label gabrielroute:
             g "Give me that!"
             "Before he even has a chance to react,{w=0.25} Gabriel snatches the phone from Cassiopeia's hand..."
             jump gavephone
-            pass
+            
     gauto "Right... the Guys."
+    jump gabrielroute.money
     
     label .ignore1:
         gauto "If you can't even tell me,{w=0.25} there's no reason for you to keep playing it.{nw=[delay]}"
@@ -406,7 +407,7 @@ label gabrielroute:
     label .afterignore:
         gauto "Anyway...{nw=[delay]}"
     
-
+    label .money:
     g "Just how much money did you spend on this thing,{w=0.25} anyway...?"
     if money_spent > 300:
         gauto "JESUS CHRIST-{nw=0.5}"

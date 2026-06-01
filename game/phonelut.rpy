@@ -52,16 +52,16 @@ label lookuptable(index):
         $ will_capture_click = False
         $ renpy.pop_call()
         jump evenwhile
-    elif index==7:
+    elif index == 7:
         $ story_index=0
         $ will_capture_click = False
         $ renpy.pop_call()
         jump niecynomoney.iwish
-    elif index ==8:
+    elif index == 8:
         $ story_index=0
         $ will_capture_click = False
         $ renpy.pop_call()
-        jump niecynomoney.stopclick        
+        jump niecynomoney.stopclick
     else:
         $ renpy.notify("No problem here.") #empty this out to nothing
         return
@@ -124,15 +124,15 @@ label gabrielcheck:
     $ gabriel_triggered = False
     if gabrieltriggercount <= 0:
         $ gabrieltriggercount+=1
-        call gabriel1
+        call gabriel1 from _call_gabriel1
     elif money_spent >=300:
         jump gabriel3
     elif gabrieltriggercount == 1:
         $ gabrieltriggercount +=1
-        call gabriel2
+        call gabriel2 from _call_gabriel2
     elif gabrieltriggercount ==2:
         $ gabrieltriggercount +=1
-        call gabriel4
+        call gabriel4 from _call_gabriel4
     else:
         return
         
@@ -171,6 +171,6 @@ label roll(pulls=0):
     $ can_pull = True
     if will_capture_click:
         $ renpy.pop_call()
-        call lookuptable(story_index)
+        call lookuptable(story_index) from _call_lookuptable
     return
 
