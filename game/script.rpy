@@ -427,23 +427,23 @@ label realed:
     e "Yo.{w=0.25} Get up."
     "He's so assertive Cassiopeia has no choice but to oblige."
     show bg room cassiopeia
-    #show ed neutral
+    show ed neutral
     hide cg with dissolve
     c "So we're not even saying hello anymore?"
     e "I've never said hello to you before in my life.{w=0.25} I'm here to tell you to get off that phone and go be with your wife."
     c "Dude,{w=0.25} I'm gonna... {w=0.25}just as soon as I can get some items and characters that will-{nw=0.5}"
-    e "Ahem:{w=0.25} I'm here to tell you to get off that phone {w=0.1}{i}now.{/i}"
+    e "Ahem:{w=0.25} I'm here to tell you to get off that phone {w=0.1}{i}now.{/i}" #screenshake?
     c "Don't...{w=0.25} You can't talk to me like that."
-    e "What?"
+    e "Excuse me?"
     c "You can't talk to me like that!{w=0.25} You can't just go back to pretending like you hate me!"
     e "Au contraire,{w=0.25} my friend. {w=0.25}T'is an act of love."
     e "I'm telling you this because if you break Niecy's heart,{w=0.25} I beat the shit outta you. {w=0.25}Simple as."
     c "No,{w=0.25} no,{w=0.25} no! {w=0.25}You weren't like this last week!{w=0.25} You were different!"
-    e "What?"
     c "You were different!{w=0.25} You had a different demeanor,{w=0.25} a different tone... {w=0.25}different!{w=0.25} You were different!"
     e "..."
     e "Elaborate on that."
     c "Last week,{w=0.25} you approached me."
+    e "I find that hard to believe, {w=0.25}but go on."
     c "I got all tense,{w=0.25} like usual, {w=0.25}but instead of teasing me, {w=0.25}you said hello."
     c "We even spoke for a while. {w=0.25}We told each other jokes and stuff. {w=0.25}Then you told me about the game. {w=0.25}You said you were playing it!"
     c "That's why I started...{w=0.25} I thought it was something I could connect with...{w=0.25} um..."
@@ -460,7 +460,7 @@ label realed:
     c "I don't know,{w=0.25} I wanted to talk to you."
     c "...I thought you changed."
     e "Change takes a lot longer than a week when you're as old as I am."
-    c "You keep saying that. {w=0.25}You don't look a day older than 30."
+    c "You say that a lot. {w=0.25}You don't look a day older than 30."
     e smug "So I've been told." #smug
     e "But I'm sure last week I was the same as ever.{w=0.25} Because I don't remember a lick of this."
     e "If I didn't know any better,{w=0.25} I'd be offended you would ever accuse me of playing a video game."
@@ -566,6 +566,8 @@ label jorkinit:
                                         "My goddamn telephone":
                                             n "Tch!"
                                             n "To think you've experienced love...{w=0.25} On your {cps=*0.5}fffffff{/cps}ucking telephone!{w=0.25} Get real!"
+                                            c "Eep!"
+                                            n "Now do as you're told,{w=0.25} boy!"
                                             #david lynch ending
 
                                             return
@@ -693,8 +695,9 @@ label edunlock:
 
 #event ed
 label cantfeelshit:
+    $ weedlines = renpy.random.randint(3,15)
     "..."
-    $ spontaneous_handler.add_spontaneous(Spontaneous("weed", 0, "weed", jump=True, lines_until=5))
+    $ spontaneous_handler.add_spontaneous(Spontaneous("weed", 0, "weed", jump=True, lines_until=weedlines))
     "Nothing happened..."
     return
 
@@ -704,14 +707,14 @@ label quieres:
     $ block_repeat = True
     show ed neutral:
         xalign 0.75
-    e "Yo.{nw=[delay]}"
-    n "What's up?{nw=[delay]}"
-    e "Anyone else see a demon prowling around?{w=0.25} I thought I saw one go into the break room.{nw=[delay]}"
-    n "Maybe it's because you took the Edible That Makes You See Demons and Forget You Took the Edible That Makes You See Demons?{nw=[delay]}"
-    e "Oh yeah...{w=0.25} That's probably one of my best inventions.{nw=[delay]}"
-    n "It's not even close to your top 75.{nw=[delay]}"
-    e "Everyone's a critic.{nw=[delay]}" #ed annoyed
-    e "Yo C-man,{w=0.25} you want one?{nw=[delay]}"
+    eauto "Yo.{nw=[delay]}"
+    nauto "What's up?{nw=[delay]}"
+    eauto "Anyone else see a demon prowling around?{w=0.25} I thought I saw one go into the break room.{nw=[delay]}"
+    nauto "Maybe it's because you took the Edible That Makes You See Demons and Forget You Took the Edible That Makes You See Demons?{nw=[delay]}"
+    eauto "Oh yeah...{w=0.25} That's probably one of my best inventions.{nw=[delay]}"
+    nauto "It's not even close to your top 75.{nw=[delay]}"
+    eauto "Everyone's a critic.{nw=[delay]}" #ed annoyed
+    eauto "Yo C-man,{w=0.25} you want one?{nw=[delay]}"
     $ will_capture_click = True
     $ story_index = 4
     show screen timed_menu (q_delay,"quieres.ignore")
@@ -737,6 +740,7 @@ label quieres:
         cauto "So...{w=0.25} what happens if I take this?{nw=[delay]}"
         nauto "Don't eat that.{nw=[delay]}"
         show screen deliciousgummy
+        #play sound pop
         $ block_repeat = False
         return
 
