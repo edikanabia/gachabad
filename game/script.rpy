@@ -513,6 +513,7 @@ label jorkinit:
                                     "She shuffles into bed with him."
                                     show screen banner (phonexpos, phoneypos) with Dissolve(5.0)
                                     $ story_index = 6
+                                    $ block_spontaneous = True
                                     $ will_capture_click = True
                                     "...{nw=1.0}"
                                     n "This is nice, {w=0.25}isn't it?{nw=1.0}"
@@ -526,7 +527,7 @@ label jorkinit:
                                     "...{nw=1.0}"
                                     "Cassiopeia feels something light and tingly underneath his chin.{nw=1.0}"
                                     $ will_capture_click = False
-                                    $ block_spontaneous
+                                    
                                     hide screen phone
                                     c "Niecy?"
                                     n "Mm-hm?"
@@ -1058,4 +1059,12 @@ label theendlessloop:
         "Click the gacha button and mark the result."
         if guy_end:
             jump theguy
+    return
+
+#testing casrun
+label casruntest:
+    while True:
+        show bg white
+        show casrun2 at truecenter
+        "He runnin'!"
     return

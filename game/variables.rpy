@@ -70,14 +70,23 @@ init 0 python:
         def add_spontaneous(self, spontaneous):
             global block_spontaneous
             if block_spontaneous:
+                # can't add a spontaneous event if the game flag blocks it
                 return
             if self.current_spontaneous == None:
-                self.current_spontaneous = spontaneous #we'll see if we can pull the data from just the object
+                self.current_spontaneous = spontaneous #if nothing is queued, add the spontaneous
                 return
             else:
                 if self.current_spontaneous.priority < spontaneous.priority:
+                    line_count = 0
+                    if self.current_spontaneous.lines_until < spontaneous.lines_until:
+                        line_count = self.current_spontaneous.lines_until
+                    else:
+                        line_count = spontaneous.lines_until
                     self.current_spontaneous = spontaneous
+                    self.current_spontaneous.lines_until = line_count
+                    #I want the spontaneous event to take on the number of lines left 
                 else:
+                    #return from this block if the new spontaneous is of an equal or lower priority
                     return
             
             
@@ -104,8 +113,6 @@ init 0 python:
 
             else:
                 return
-
-    greenout_time = 0
             
 
 define spontaneous_handler = SpontaneousHandler()
@@ -415,8 +422,32 @@ image cg covers 4 = Image("cg_covers_4.png")
 #image cg thatsit
 #chase sequence cg might be more elaborate
 
+image casrun:
+    block:
+        "ph_caschase_0.png"
+        pause 0.24
+        "ph_caschase_2.png"
+        pause 0.24
+        "ph_caschase_4.png"
+        pause 0.24
+        "ph_caschase_5.png"
+        pause 0.24
+        repeat
+
+image casrun2:
+    block:
+        "ph_caschase2_0.png"
+        pause 0.12
+        "ph_caschase2_2.png"
+        pause 0.12
+        "ph_caschase2_4.png"
+        pause 0.12
+        "ph_caschase2_5.png"
+        pause 0.12
+        repeat
+
 #cutins
-#note: to show multiple cutins at once, use the "as" statement to dyanmically assign a new tag to the second cutin
+#note: to show multiple cutins at once, use the "as" statement to dyanmically assign a new tag to subsequent cutins
 transform handpos:
     pos (800, 700)
     pause 1.0

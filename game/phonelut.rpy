@@ -75,11 +75,18 @@ label repeatcheck:
     $ repeat_requests += 1
     $ repeat_active = False #disable the repeat that button
     if gabriel_present:
-        g "Absofuckinglutely not."
+        g "Abso-fucking-lutely not."
+        #these lines need to be in blocks that return early
+        $ since_last_repeat = 0
+        $ repeat_active = True #reeneable the repeat that button
         return
 
     if block_repeat:
         n "Not now,{w=0.25} Cassiopeia."
+        #these lines need to be in blocks that return early
+        $ since_last_repeat = 0
+        $ repeat_active = True #reeneable the repeat that button
+        return
 
     if since_last_repeat <= 4:
         n "You can't have forgotten that quickly.{w=0.25} C'mon,{w=0.25} man."
