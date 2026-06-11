@@ -357,6 +357,7 @@ init python:
         if current_time.seconds <= 0:
             current_time = max_time
             time_elapsed = 0
+            gems += 50
             return
         time_elapsed += 1
         current_time = dt.timedelta(seconds=max_time.seconds-time_elapsed)
