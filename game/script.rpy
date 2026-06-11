@@ -760,6 +760,7 @@ label quieres:
 label gabriel1:
     show gabriel groggy:
         xalign 0.75
+        yalign 1.0
     nauto "Hey,{w=0.25} Gabriel.{w=0.25} How was your nap?{nw=[delay]}"
     gauto "It's not done...{w=0.25} I'm about to go back to sleep,{w=0.25} but...{nw=[delay]}"
     gauto "Piapia...{w=0.25} did you make a purchase recently?{nw=[delay]}"
@@ -842,6 +843,7 @@ label gabriel4:
 label gabriel2:
     show gabriel annoyed:
         xalign 0.75
+        yalign 1.0
     gauto "Cassiopeia!{w=0.25} I can see you spending decent money on this thing instead of an afternoon out!{nw=[delay]}"
     $ story_index = 5
     gauto "Surely,{w=0.25} this game can't be more important than your girlfriend.{nw=[delay]}"
@@ -863,6 +865,7 @@ label gabriel3:
     #play sound door slamming open
     show gabriel rage:
         xalign 0.75
+        yalign 1.0
     pause 1.0
 
     jump givemeyourphone

@@ -6,7 +6,7 @@ default persistent.first_playthrough = True
 
 #story path and ending flags
 default persistent.got_the_guy = False #roll the guy by random chance
-default persistent.girlfriend_flag = True #have gabriel ask you if your game is more important than your girlfriend
+default persistent.girlfriend_flag = False #have gabriel ask you if your game is more important than your girlfriend
 default found_gf_flag = False #nonpersisted flag that merely exists to prevent the player from acquiring the flag before finishing a route.
 default persistent.ed_appears = False #set to true when the player reaches the end of the game with the ed event active
 default persistent.seen_ed = False #set to true after the player meets ed for the first time
@@ -217,7 +217,7 @@ init 1 python:
         def pull_guy(self):
             global current_guy
             if self.__is_first_roll == True:
-                this_guy = self.__gacha_rand(self.__first_pool) #first pull randomizer
+                this_guy = self.__gacha_rand(self.__normal_pool) #change to normal pull makes it possible to pull the guy on the first try.
                 self.__is_first_roll = False #turns off first pull flag
                 self.__total_rolls += 1 #keeps track of all rolls
                 self.__pity_count += 1 #keeping track of the pity roll counter
@@ -354,6 +354,7 @@ init python:
     def decrement_timer():
         global time_elapsed
         global current_time
+        global gems
         if current_time.seconds <= 0:
             current_time = max_time
             time_elapsed = 0
