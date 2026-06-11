@@ -263,7 +263,7 @@ style choice_button is default:
 style choice_button_text is default:
     properties gui.text_properties("choice_button")
 
-#######################
+####################### Visualization and System screens
 
 screen tutorialbox1():
     frame:
@@ -279,6 +279,14 @@ screen tutorialbox1():
 screen autoplayactive():
     add "autoplay" pos (1600, 750)
 
+screen endscreen(newPath=False, trueend=False):
+    
+    frame:
+        background "#000"
+        text "You've reached an ending!" align (0.5, 0.5)
+        showif newPath == True:
+            text "A new path is available." align (0.5, 0.575)
+        textbutton "Finish" action MainMenu(confirm=False) align (0.5, 0.65)
 
 #########################
 

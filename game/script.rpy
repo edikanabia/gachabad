@@ -83,7 +83,7 @@ label start:
             "Cassiopeia holds the phone close to his chest and shakes his head."
             "Niecy assumes he must be looking at something lascivious,{w=0.25} like exposed ankles or toe tanlines."
             "She throws the cover back over him and leaves the room."
-            "The end!"
+            call screen endscreen
             #it's not a dusty game without an early false ending!
             #$ persistent.true_reset_visible = True #move this to the other endings when building
             return
