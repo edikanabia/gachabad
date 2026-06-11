@@ -118,8 +118,8 @@ label repeatcheck:
 
 #game mechanic
 label facecover:
-    n confuse "..." #shocked
-    n concern "{size=*0.5}At least pretend to pay attention...{/size}"
+    nauto confuse "...{nw=[delay]}" #shocked
+    nauto concern "{size=*0.5}At least pretend to pay attention...{/size}{nw=[delay]}"
     return
 
 
@@ -154,11 +154,14 @@ label roll(pulls=0):
         $ can_pull = True
         return
     $ gems -= gems_to_spend
+    $ theguygotten = False
 
     $ iterator = 0
     while iterator < pulls:
         $ current_guy = gacha_puller.pull_guy()
         $ list_of_pulls.append(current_guy)
+        if current_guy.is_the_guy:
+            $ theguygotten = True
 
         #show guy with dissolve
         #show text "the guy's name"
@@ -175,6 +178,9 @@ label roll(pulls=0):
         $ iterator += 1
     if pulls > 0:
         show screen showguy (list_of_pulls)
+    if theguygotten:
+        jump theguy
+
     $ can_pull = True
     if will_capture_click:
         $ renpy.pop_call()

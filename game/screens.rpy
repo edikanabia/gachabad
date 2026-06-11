@@ -355,6 +355,7 @@ screen gachadebug():
 
 ##### Mechanics screens
 #controls the gacha pulls
+##OBSOLETE
 screen rolldisplay(pulls):
     default pulls = 1
 
@@ -387,7 +388,7 @@ screen rolldisplay(pulls):
             if list_of_pulls:
                 add DynamicImage(list_of_pulls[current_pull_index].image)
                 if list_of_pulls[current_pull_index].is_the_guy:
-                    timer 1.0 action [Jump("theguy"), Hide()]
+                    timer 1.0 action [Jump("theguy"), Hide()] #it's a jump so it should end the game
                 elif current_pull_index < final_pull_index:
                     timer 1.0 action IncrementScreenVariable("current_pull_index") repeat True
                 else:
@@ -608,6 +609,7 @@ screen navigation():
         if main_menu:
 
             textbutton _("Start") action Start()
+            textbutton _("Reset Persistent") action [Function(persistent._clear),Function(renpy.full_restart)]
 
         else:
 
@@ -615,8 +617,6 @@ screen navigation():
 
             textbutton _("Save") action ShowMenu("save")
         
-        if persistent.true_reset_visible:
-            textbutton _("Reset") action [Function(persistent._clear),Function(renpy.full_restart)]
 
         textbutton _("Load") action ShowMenu("load")
 

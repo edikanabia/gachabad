@@ -275,7 +275,7 @@ label niecynomoney:
     label .iwish:
         $ niecy_irritation += 1
         nauto confuse "...{nw=[delay]}"
-        nauto "{size=0.75}I really wish you wouldn't use your phone while I'm trying to talk to you...{/size}"
+        nauto "{size=*0.75}I really wish you wouldn't use your phone while I'm trying to talk to you...{/size}"
 
     label .afterignore1:
         nauto "Let's see... {size=*0.8}What else...{/size}{nw=[delay]}"
@@ -298,8 +298,10 @@ label niecynomoney:
             nauto "Yes it is!{nw=0.25}"
             cauto "No,{w=0.25} it's not!{nw=0.25}"
             pass
-    label .team:        
-        nauto "Cassiopeia, {w=0.25}we're supposed to be a team.{nw=[delay]}"
+    
+    label niecynomoney.team:   
+        nauto "Cassiopeia, {w=0.25}we're supposed to be a team.{nw=[delay]}"     
+
     nauto "What does it mean if I have to go looking for you in the middle of the day because you're hiding from me?{nw=[delay]}"
     nauto "And it goes back to what I was saying earlier:{w=0.25} time is literally money.{nw=[delay]}"
     nauto "Like,{w=0.25} I really think this game is bad for you.{nw=[delay]}"
@@ -314,7 +316,7 @@ label niecynomoney:
         jump niecyendsad
 
 
-    label .stopclick:
+    label niecynomoney.stopclick:
         hide screen autoplayactive
         n "Oh.{w=0.25} So you were just... {w=0.25}lying?"
         jump niecyendsad
@@ -455,8 +457,9 @@ label realed:
     e "..."
     e impressed "{size=*0.85}(He's right,{w=0.25} but...){/size}"
     e "Listen,{w=0.25} you didn't find any of that suspicious?"
-    c "Well,{w=0.25} you definitely didn't look as hot as you do now,{w=0.25} but...{nw=0.5}"
-    e "{size=*0.85}I didn't look what now?{/size}{nw=0.5}"
+    c "Well,{w=0.25} you definitely didn't look as hot {nw}"
+    extend "as you do now,{w=0.25} but...{nw=0.5}"(multiple=2)
+    e "{size=*0.85}what.{/size}{nw=0.5}"(multiple=2)
     c "I don't know,{w=0.25} I wanted to talk to you."
     c "...I thought you changed."
     e "Change takes a lot longer than a week when you're as old as I am."
@@ -868,9 +871,10 @@ label gabriel3:
 #event ending
 label instakill:
     show bg black
-    pause 1.0
+    window hide
     #if music is playing stop music
     #show cg instakill
+    pause 2.0
     $ persistent.bought_the_guy = True
     return
 
@@ -881,7 +885,7 @@ label givemeyourphone:
     call screen givephone
     return
 
-#ending
+#setpiece
 label escapeseq:
     #show the escape sequence
     "As Cassiopeia makes a mad dash for the halls,{w=0.25} he runs into an unfamiliar familiar face..."
@@ -1019,8 +1023,8 @@ label theguy:
     c "I got the guy."
     n "You got the guy?" #Speaker depends on who's on screen right now. 
     c "I got the guy! {w=0.25}Oh my god,{w=0.25} I got the guy!"
-    #persistent variable is commented out for testing other routes.
-    #$ persistent.got_the_guy = True
+
+    $ persistent.got_the_guy = True
     return
 
 #alternate intro
@@ -1034,6 +1038,8 @@ label postguy:
     "He's on a date with Niecy right now and he couldn't be happier."
     return
 
+
+#####Testing Labels############################
 #test
 label partone:
     
