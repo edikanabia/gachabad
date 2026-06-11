@@ -354,6 +354,7 @@ init python:
     def decrement_timer():
         global time_elapsed
         global current_time
+        global gems
         if current_time.seconds <= 0:
             current_time = max_time
             time_elapsed = 0
