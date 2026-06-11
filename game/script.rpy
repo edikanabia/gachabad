@@ -156,7 +156,7 @@ label niecynomoney:
             nauto "So developers started emphasizing how far you could get by playing for free.{w=0.25} You'd still have access to the same rewards as any other player.{nw=[delay]}"
             nauto "The thing is,{w=0.25} if you can buy your way out of having to grind for items,{w=0.25} that game is implicitly putting a price on the time its players spend grinding.{nw=[delay]}"
             if persistent.impostor_seen:
-                call quieres
+                call quieres from _call_quieres
                 nauto "Anyway...{nw=[delay]}"
             show screen timed_menu(q_delay, "niecynomoney.beforehello")
             menu:

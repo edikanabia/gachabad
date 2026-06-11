@@ -131,15 +131,15 @@ label gabrielcheck:
     $ gabriel_triggered = False
     if gabrieltriggercount <= 0:
         $ gabrieltriggercount+=1
-        call gabriel1
+        call gabriel1 from _call_gabriel1
     elif money_spent >=300:
         jump gabriel3
     elif gabrieltriggercount == 1:
         $ gabrieltriggercount +=1
-        call gabriel2
+        call gabriel2 from _call_gabriel2
     elif gabrieltriggercount ==2:
         $ gabrieltriggercount +=1
-        call gabriel4
+        call gabriel4 from _call_gabriel4
     else:
         return
         
@@ -184,6 +184,6 @@ label roll(pulls=0):
     $ can_pull = True
     if will_capture_click:
         $ renpy.pop_call()
-        call lookuptable(story_index)
+        call lookuptable(story_index) from _call_lookuptable
     return
 
