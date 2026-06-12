@@ -3,6 +3,9 @@
 # The game starts here.
 
 label start:
+    $ block_spontaneous = True
+    $ block_repeat = False
+    $ spontaneous_handler.clear()
     #scene cg ceiling
     scene bg black
     #jump casruntest
@@ -109,7 +112,7 @@ label start:
     show screen countdown
     label .aftertestphone:
         n "Okay...{nw=1.0}"
-    n "Um,{w=0.25} how long is that gonna take?"
+    n "Um,{w=0.25} how long is that gonna take?{nw=1.0}"
     $ story_index = 1
     $ will_capture_click = True
 
@@ -125,8 +128,7 @@ label start:
     label .phonereturn1:
         $ story_index = 0
     n "...we definitely need to talk."
-    c "Whuh...?"
-    c "Y-yeah, {w=0.25}we can talk."
+
     #call screen tutorialbox1
     show screen repeatthat
     jump niecynomoney

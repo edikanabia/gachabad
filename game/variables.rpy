@@ -114,6 +114,9 @@ init 0 python:
             else:
                 return
             
+            def clear(self):
+                self.current_spontaneous = None
+            
 
 define spontaneous_handler = SpontaneousHandler()
 define config.all_character_callbacks = [count_repeat, spontaneous_handler.update_spontaneous]
