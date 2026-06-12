@@ -987,8 +987,14 @@ label scammer:
     i "Yes,{w=0.25} sir.{w=0.25} Right away,{w=0.25} sir."
     #play sound hangup
 
+    $ newPath = False
+
+    #if this flag is false you'll get the new path dialogue
+    if not persistent.impostor_seen:
+        $ newPath = True
     $ persistent.gabriel_complete = True
     $ persistent.impostor_seen = True
+    call screen endscreen (newPath=newPath)
     return
 
 
@@ -1023,6 +1029,7 @@ label trueend:
     e "Yo,{w=0.25} Cassiopeia."
     e "Get on the game." #he's smiling.
     
+    call screen endscreen(trueend=True)
     return
 
 
@@ -1032,6 +1039,7 @@ label theguy:
     c "I got the guy."
     n "You got the guy?" #Speaker depends on who's on screen right now. 
     c "I got the guy! {w=0.25}Oh my god,{w=0.25} I got the guy!"
+    call screen endscreen
 
     $ persistent.got_the_guy = True
     return

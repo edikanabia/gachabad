@@ -114,8 +114,8 @@ init 0 python:
             else:
                 return
             
-            def clear(self):
-                self.current_spontaneous = None
+        def clear(self):
+            self.current_spontaneous = None
             
 
 define spontaneous_handler = SpontaneousHandler()
