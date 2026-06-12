@@ -141,7 +141,10 @@ label gabrielcheck:
         $ gabrieltriggercount +=1
         call gabriel4
     else:
+        $ block_spontaneous = False
         return
+    
+    return
         
 
 label roll(pulls=0):

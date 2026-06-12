@@ -5,6 +5,7 @@
 label start:
     #scene cg ceiling
     scene bg black
+    #jump casruntest
     #show screen testphone2
     #jump scammer
     #show screen gachadebug
@@ -819,6 +820,7 @@ label gabriel1:
             gauto "All right,{w=0.25} I'll leave you to it...{w=0.25} but Cassiopeia?{nw=[delay]}"
             gauto "Stop spending my money on gacha games.{nw=[delay]}"
             hide gabriel
+            $ block_spontaneous = False
             #stop spending my money on gacha games. cg and sound. fade to white. hide cg. 
             return     
     label .answer2:
@@ -836,6 +838,7 @@ label gabriel4:
     cauto 'Nothing "happened,"{w=0.25} Gabriel.{w=0.25} I\'m fine.{nw=[delay]}'
     gauto "But you're not fine,{w=0.25} Piapia. {w=0.25}You're holed up in your room and playing on your phone,{w=0.25} spending money you've never spent before.{nw=[delay]}"
     gauto "This?{w=0.25} Can't continue. {w=0.25}Something's got to give.{nw=[delay]}"
+    $ block_spontaneous = False
 
     return
 
@@ -857,6 +860,7 @@ label gabriel2:
     gauto "Then why are you tap tap tapping when she's standing right in front of you!?{nw=[delay]}"
     label .thereturn:
         gauto "Don't make me come in here again!{nw=[delay]}"
+    $ block_spontaneous = False
     hide gabriel
     return
 
