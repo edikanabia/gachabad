@@ -147,6 +147,9 @@ define guy_cat_gb = Guy("Green-Brown Cat Girl", "guy_cat_brown_green.png", 4)
 define guy_cat_bl = Guy("Blue Cat Girl", "guy_cat_blue.png", 0)
 define guy_cat_pr = Guy("Purple Cat Girl", "guy_cat_purple.png", 2)
 
+define guyland = Guy("Guyland Grace", "guy_ryland.png", 4)
+define guyver = Guy("The Guyver", "guy_driver.png", 3)
+define guy_dark = Guy("Darkness Bloodedge", "guy_darkness.png", 2)
 
 define the_guy = Guy("angledevile", "guy_the_guy.png", 4, is_the_guy=True)
 define all_guys = {
@@ -166,7 +169,10 @@ define all_guys = {
     guy_cat_gb,
     guy_cat_bl,
     guy_cat_pr,
-    the_guy}
+    the_guy,
+    guyland,
+    guyver,
+    guy_dark}
 
 
 init 1 python:
