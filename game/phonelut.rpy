@@ -133,6 +133,7 @@ label gabrielcheck:
         $ gabrieltriggercount+=1
         call gabriel1 from _call_gabriel1
     elif money_spent >=300:
+        $ renpy.pop_call()
         jump gabriel3
     elif gabrieltriggercount == 1:
         $ gabrieltriggercount +=1
@@ -141,7 +142,10 @@ label gabrielcheck:
         $ gabrieltriggercount +=1
         call gabriel4 from _call_gabriel4
     else:
+        $ block_spontaneous = False
         return
+    
+    return
         
 
 label roll(pulls=0):
