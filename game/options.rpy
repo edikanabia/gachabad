@@ -23,7 +23,7 @@ define gui.show_name = False
 
 ## The version of the game.
 
-define config.version = "3.0"
+define config.version = "3.1"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
@@ -211,4 +211,4 @@ init python:
 # define build.itch_project = "renpytom/test-project"
 
 # Rollback is not enabled for this game (it is a game about paying attention.)
-# define config.rollback_enabled = False
+define config.rollback_enabled = False
