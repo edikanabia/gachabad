@@ -280,18 +280,18 @@ screen autoplayactive():
     add "autoplay" pos (1600, 750)
 
 screen endscreen(newPath=False, trueend=False):
-    
-    frame:
-        background "#000"
-        vbox:
-            if trueend:
-                text "You've reached the end. Thanks for playing!"
-            else:
-                text "You've reached an ending!"
-            showif newPath == True:
-                text "A new path is available."
-            textbutton "Finish" action MainMenu(confirm=False) 
-            align (0.5,0.5)
+    add Solid("#000")
+            
+    vbox:
+        if trueend:
+            text "You've reached the end. Thanks for playing!" xalign 0.5
+        else:
+            text "You've reached an ending!" xalign 0.5
+        showif newPath == True:
+            text "A new path is available." xalign 0.5
+        textbutton "Finish" action MainMenu(confirm=False) xalign 0.5
+        align (0.5,0.5)
+
 
 
 #########################

@@ -133,6 +133,7 @@ label gabrielcheck:
         $ gabrieltriggercount+=1
         call gabriel1
     elif money_spent >=300:
+        $ renpy.pop_call()
         jump gabriel3
     elif gabrieltriggercount == 1:
         $ gabrieltriggercount +=1

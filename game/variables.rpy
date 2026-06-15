@@ -417,17 +417,20 @@ image bg room cassiopeia = Image("bg_cas_room.png")
 
 image cg white = Solid("#fff")
 image cg green = Solid("#486316")
+
 image cg covers 0 = Image("cg_covers_0.png")
 image cg covers 1 = Image("cg_covers_1.png")
 image cg covers 2 = Image("cg_covers_2.png")
 image cg covers 3 = Image("cg_covers_3.png")
 image cg covers 4 = Image("cg_covers_4.png")
+
+image cg instakill = Image("cg_instakill.png")
 #image cg ceiling
 #image cg warning
 #image cg thatsit
 #chase sequence cg might be more elaborate
 
-image casrun:
+image casrun slow:
     block:
         "ph_caschase_0.png"
         pause 0.24
@@ -439,7 +442,7 @@ image casrun:
         pause 0.24
         repeat
 
-image casrun2:
+image casrun fast:
     block:
         "ph_caschase2_0.png"
         pause 0.12
@@ -485,10 +488,8 @@ layeredimage cutin gummy2:
 
 image cutinraw = LayeredImageProxy("cutin gummy2")
 image maskedcutin = AlphaMask("cutinraw", "ci_gummy_mask.png")
-        
 
-        
-    
+
     
 
 

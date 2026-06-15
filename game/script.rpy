@@ -42,7 +42,7 @@ label start:
     "The guy Cassiopeia wants is in the time-limited banner today.{w=0.25} It's the last opportunity to get him before the next season starts—tomorrow!"
     #show the guy for a bit
     "It would be a good time to try for the guy during some downtime."
-    call screen banner (phonexpos, phoneypos)
+    call screen banner (phonexpos, phoneypos) with dissolve
     #the first roll will always fail
     $ is_first_pull = False
 
@@ -108,6 +108,7 @@ label start:
     c "Hm?"
     n "Does that sound good?"
     c "Yeah,{w=0.25} hang on."
+    $ block_spontaneous = False
     show screen banner (phonexpos, phoneypos) 
     show screen countdown
     label .aftertestphone:
@@ -295,7 +296,7 @@ label niecynomoney:
             nauto "It most definitely is my business,{w=0.25} Cassiopito.{nw=[delay]}"
             "Cassiopeia firmly shakes his head.{nw=[delay]}" (advance=False)
             nauto "It's my business if it cuts into my time.{nw=[delay]}"
-            cauto "It's not your business and it's not your time{nw=[delay]}"
+            cauto "It's not your business and it's not your time.{nw=[delay]}"
             nauto "Yes it is.{nw=0.25}"
             cauto "No it's not.{nw=0.25}"
             nauto "Yes it is!{nw=0.25}"
@@ -329,8 +330,8 @@ label niecynomoney:
 #storypath
 label niecymoney:
     $ money_route = True
-    nauto "Okay... so.{nw=[delay]}"
-    nauto "Spending money on the game is definitely a step in the wrong direction, but we can work it out. {nw=[delay]}"
+    nauto "Okay...{w=0.25} so.{nw=[delay]}"
+    nauto "Spending money on the game is definitely a step in the wrong direction,{w=0.25} but we can work it out. {nw=[delay]}"
     nauto "What did you end up buying?{nw=[delay]}"
     menu:
         "Gems":
@@ -389,14 +390,14 @@ label gabrielroute:
         "The Guys":
             pass
         "I don't like it":
-            hide screen autoplayactive
+            hide screen autoplayactive with dissolve
             g "Huh!? {w=0.25}So what's all the hubbub for?!"
             g "You've been stressing out your dear girlfriend over a game you {i}don't{/i} like?"
             g "It's just you and a couple of dumb bitches telling each other \"exactly!\""
             g "Give me that!"
             "Before he even has a chance to react,{w=0.25} Gabriel snatches the phone from Cassiopeia's hand..."
             jump gavephone
-            pass
+            
     gauto "Right... the Guys."
     
     label .ignore1:
@@ -644,6 +645,8 @@ label niecyendnormal:
     n "Welp!"
     n "That's all I wanted say!"
     n "Hope you'll consider it."
+    if found_gf_flag:
+        $ persistent.girlfriend_flag = True
     if found_ed_flag:
         jump edunlock
     n "If you get the Guy today,{w=0.25} let me know so I can make plans before it gets too late to go out."
@@ -775,6 +778,7 @@ label gabriel1:
             $ story_index = 0
             gauto "That's okay...{w=0.25} Just don't forget to let me know ahead of time.{nw=[delay]}"
             hide gabriel with dissolve
+            $ block_spontaneous = False
             return
         "No":
             hide screen timed_menu
@@ -783,6 +787,7 @@ label gabriel1:
             gauto "I can see the purchases on my phone,{w=0.25} you know.{w=0.25} The buzzing woke me up.{nw=[delay]}"
             gauto neutral "It's OK this time,{w=0.25} but don't make a habit of lying...{nw=[delay]}"
             hide gabriel with dissolve
+            $ block_spontaneous = False
             return
     label .ignore0:
         gauto "Cassiopeia!{nw=[delay]}"
@@ -830,6 +835,7 @@ label gabriel1:
         gauto "I'm going back to bed.{nw=[delay]}"
         nauto "See ya.{nw=[delay]}"
         gauto "Mm-hm.{nw=[delay]}"
+        $ block_spontaneous = False
 
     return
 
@@ -873,17 +879,16 @@ label gabriel3:
         xalign 0.75
         yalign 1.0
     pause 1.0
-
+    
     jump givemeyourphone
     return
 
 #event ending
 label instakill:
-    show bg black
+    show cg instakill
     window hide
     #if music is playing stop music
-    #show cg instakill
-    pause 2.0
+    pause 1.5
     $ persistent.bought_the_guy = True
     return
 
@@ -897,6 +902,8 @@ label givemeyourphone:
 #setpiece
 label escapeseq:
     #show the escape sequence
+    window hide
+
     "As Cassiopeia makes a mad dash for the halls,{w=0.25} he runs into an unfamiliar familiar face..."
     
     jump scammer
@@ -915,7 +922,12 @@ label gavephone:
     c "..." #pouting
     g "{i}OK?{/i}"
     c "OK..."
+
+    $ new_path = False
+    if persistent.gabriel_complete and persistent.ed_complete and not persistent.gabriel_complete:
+        $ new_path = True
     $ persistent.gabriel_complete = True
+    call screen endscreen(newPath=new_path)
     #set flag end of gabriel route
     return
 
@@ -1088,6 +1100,6 @@ label theendlessloop:
 label casruntest:
     while True:
         show bg white
-        show casrun2 at truecenter
+        show casrun fast at truecenter
         "He runnin'!"
     return
