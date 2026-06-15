@@ -30,13 +30,6 @@ define config.version = "final-jam-submission-build"
 ## triple-quotes, and leave a blank line between paragraphs.
 
 define gui.about = _p("""
-Concept: Nexus
-
-Story, Art: Dusty
-
-"Guys": Cackle, Nexus
-
-Testing: Spades
 """)
 
 
