@@ -615,7 +615,7 @@ screen navigation():
         if main_menu:
 
             textbutton _("Start") action Start()
-            textbutton _("Reset Persistent") action [Function(persistent._clear),Function(renpy.full_restart)]
+            #textbutton _("Reset Persistent") action [Function(persistent._clear),Function(renpy.full_restart)]
 
         else:
 

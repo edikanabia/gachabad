@@ -736,14 +736,15 @@ label quieres:
     hide screen timed_menu
     $ will_capture_click = False
     $ has_gummy = True
-    show cutin gummy1 with dissolve:
-        align (0.2, 0.4)
-    pause 1.0
-    show maskedcutin as cutin2 with dissolve
+    #show cutin gummy1 with dissolve:
+    #    align (0.2, 0.4)
+    #pause 1.0
+    #show maskedcutin as cutin2 with dissolve
 
+    "Ed delicately places the gummy in the open palm of Cassiopeia's hand.{nw=[delay]}"(interact=False)
 
-    hide cutin with dissolve
-    hide cutin2 with dissolve
+    #hide cutin with dissolve
+    #hide cutin2 with dissolve
 
     eauto "See ya.{nw=[delay]}"
     if has_gummy:
