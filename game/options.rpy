@@ -23,13 +23,20 @@ define gui.show_name = False
 
 ## The version of the game.
 
-define config.version = "1.0"
+define config.version = "final-jam-submission-build"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
 ## triple-quotes, and leave a blank line between paragraphs.
 
 define gui.about = _p("""
+Concept: Nexus
+
+Story, Art: Dusty
+
+"Guys": Cackle, Nexus
+
+Testing: Spades
 """)
 
 
@@ -211,4 +218,4 @@ init python:
 # define build.itch_project = "renpytom/test-project"
 
 # Rollback is not enabled for this game (it is a game about paying attention.)
-# define config.rollback_enabled = False
+define config.rollback_enabled = False
